@@ -1,4 +1,4 @@
-# ISP-voorbereiding-team-22
+#Team-22  ISP-voorbereiding webapplicatie
 
 Dit is de uitwerking van het project van team 22 in de projectweek van Thomas More in geel.  
 -
