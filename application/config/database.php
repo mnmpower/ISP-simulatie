@@ -77,7 +77,7 @@
         'dsn' => '',
         'hostname' => 'localhost',
         'username' => 'root',
-        'password' => '',
+        'password' => 'mysql',
         'database' => 'php2itf',
         'dbdriver' => 'mysqli',
         'dbprefix' => '',
