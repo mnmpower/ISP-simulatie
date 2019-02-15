@@ -78,7 +78,7 @@
         'hostname' => 'localhost',
         'username' => 'root',
         'password' => 'mysql',
-        'database' => 'php2itf',
+        'database' => 'ProjectAppTeam22',
         'dbdriver' => 'mysqli',
         'dbprefix' => '',
         'pconnect' => FALSE,
