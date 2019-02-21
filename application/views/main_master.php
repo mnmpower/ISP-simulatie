@@ -13,7 +13,6 @@
         <?php echo pasStylesheetAan("bootstrap.css"); ?>
 
         <!-- Custom CSS -->
-        <?php echo pasStylesheetAan("buttons.css"); ?>
         <?php echo pasStylesheetAan("footer.css"); ?>
         <?php echo haalJavascriptOp("jquery-3.3.1.js"); ?>
         <?php echo haalJavascriptOp("bootstrap.bundle.js"); ?>

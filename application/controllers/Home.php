@@ -4,19 +4,20 @@
 
     /**
      * @property Template $template
-	 * @property Soort_model $soort_model
+	 * @property Persoon_model $persoon_model
      */
     class Home extends CI_Controller
     {
-        // +----------------------------------------------------------
-        // | Project APP Team 22
-        // +----------------------------------------------------------
-        // | 2 ITF - 2018-2019
-        // +----------------------------------------------------------
-        // | Home controller
-        // +----------------------------------------------------------
-        // | G. Bogaerts, T. Ingelaere, S. Kempeneer,  J. Michiels, M. Michiels
-        // +----------------------------------------------------------
+
+		// +---------------------------------------------------------+ \\
+		// | ISP Project team22 - Home.php							 | \\
+		// +---------------------------------------------------------+ \\
+		// | 2 ITF - 2018-2019										 | \\
+		// +---------------------------------------------------------+ \\
+		// | Home controller 										 | \\
+		// +---------------------------------------------------------+ \\
+		// | T.Ingelaere, S. Kempeneer, J. Michiels, M. Michiels	 | \\
+		// +---------------------------------------------------------+ \\
 
         public function __construct()
         {
@@ -31,7 +32,7 @@
 			$this->load->library('session');
 			$this->load->library('pagination');
 
-			$this->load->model('product_model');
+			$this->load->model('$persoon_model');
         }
 
         public function index()
