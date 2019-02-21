@@ -78,7 +78,7 @@
         'hostname' => 'localhost',
         'username' => 'root',
         'password' => 'mysql',
-        'database' => 'ProjectAppTeam22',
+        'database' => 'team22',
         'dbdriver' => 'mysqli',
         'dbprefix' => '',
         'pconnect' => FALSE,
