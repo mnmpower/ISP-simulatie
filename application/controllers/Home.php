@@ -32,12 +32,24 @@
 			$this->load->library('session');
 			$this->load->library('pagination');
 
-			$this->load->model('$persoon_model');
+			$this->load->model('persoon_model');
         }
 
         public function index()
         {
-            $data['titel'] = 'Home';
+            $persoon =$this->persoon_model->get(1);
+            $iedereen = $persoon->naam;
+
+			$persoon =$this->persoon_model->get(2);
+			$iedereen .= ", " .$persoon->naam;
+
+			$persoon =$this->persoon_model->get(3);
+			$iedereen .= ", " .$persoon->naam;
+
+			$persoon =$this->persoon_model->get(4);
+			$iedereen .= ", " .$persoon->naam;
+
+			$data['titel'] = $iedereen;
 
             $partials = array(  'hoofding' => 'main_header',
                                 'inhoud' => 'main_inhoud',

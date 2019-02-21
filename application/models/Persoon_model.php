@@ -1,5 +1,4 @@
 <?php
-
     /**
      * @property Persoon_model $persoon_model
      */
