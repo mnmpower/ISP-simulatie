@@ -78,7 +78,7 @@
         'hostname' => 'localhost',
         'username' => 'root',
         'password' => 'mysql',
-        'database' => 'team22',
+        'database' => 'jintem_team22',
         'dbdriver' => 'mysqli',
         'dbprefix' => '',
         'pconnect' => FALSE,
