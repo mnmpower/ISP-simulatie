@@ -4,22 +4,34 @@
 
     /**
      * @property Template $template
+	 * @property Soort_model $soort_model
      */
     class Home extends CI_Controller
     {
         // +----------------------------------------------------------
-        // | Lekkerbier
+        // | Project APP Team 22
         // +----------------------------------------------------------
         // | 2 ITF - 2018-2019
         // +----------------------------------------------------------
         // | Home controller
         // +----------------------------------------------------------
-        // | M. Decabooter, J. Janssen
+        // | G. Bogaerts, T. Ingelaere, S. Kempeneer,  J. Michiels, M. Michiels
         // +----------------------------------------------------------
 
         public function __construct()
         {
             parent::__construct();
+			$this->load->helper('url');
+			$this->load->helper('form');
+			$this->load->helper('cookie');
+			$this->load->helper('notation');
+			$this->load->helper('notation_helper');
+
+
+			$this->load->library('session');
+			$this->load->library('pagination');
+
+			$this->load->model('product_model');
         }
 
         public function index()
