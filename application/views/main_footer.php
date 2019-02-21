@@ -1,7 +1,8 @@
 <footer class="footer">
-    <div class="container">
-        <!-- Rij 1 -->
-        <div class="row">
+    <!-- Footer Desktop -->
+    <div class="container desktopFooter">
+        <!-- Row 1 -->
+        <div class="row font-weight-bold">
             <div class="col-sm">
                 Team 22:
             </div>
@@ -12,10 +13,10 @@
 
             </div>
             <div class="col-sm">
-                Opdrachtgever & Coach:
+                Coach:
             </div>
         </div>
-        <!-- Rij 2 -->
+        <!-- Row 2 -->
         <div class="row">
             <div class="col-sm">
                 Michiels Maarten
@@ -30,7 +31,7 @@
                 Christel Maes
             </div>
         </div>
-        <!-- Rij 3 -->
+        <!-- Row 3 -->
         <div class="row">
             <div class="col-sm">
                 Ingelaere Tijl
@@ -45,7 +46,7 @@
 
             </div>
         </div>
-        <!-- Rij 4 -->
+        <!-- Row 4 -->
         <div class="row">
             <div class="col-sm">
                 Kempeneer Sacha
@@ -57,10 +58,10 @@
 
             </div>
             <div class="col-sm">
-
+                <img src="assets/images/omnidatafooter.png">
             </div>
         </div>
-        <!-- Rij 5 -->
+        <!-- Row 5 -->
         <div class="row">
             <div class="col-sm">
                 Michiels Jinte
@@ -75,5 +76,8 @@
 
             </div>
         </div>
+    </div>
+    <!-- Footer Small -->
+    <div class="container mobileFooter">
     </div>
 </footer>
