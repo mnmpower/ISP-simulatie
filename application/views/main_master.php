@@ -58,7 +58,6 @@
         <div class="container my-4">
             <!--            header-->
             <header class="jumbotron">
-                <?php echo $hoofding; ?>
             </header>
 
             <hr>
@@ -66,12 +65,10 @@
             <!--            pagina-inhoud-->
             <div class="row">
                 <div class="col-12 mb-2">
-                    <h2><?php echo $titel; ?></h2>
                 </div>
             </div>
 
             <div class="row">
-                <?php echo $inhoud; ?>
             </div>
 
             <hr>
