@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="nl">
 
+<!-- Inladen header, info, helpers, CSS ... -->
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,11 +14,11 @@
 
         <!-- Custom CSS -->
         <?php echo pasStylesheetAan("buttons.css"); ?>
-
+        <?php echo pasStylesheetAan("footer.css"); ?>
         <?php echo haalJavascriptOp("jquery-3.3.1.js"); ?>
         <?php echo haalJavascriptOp("bootstrap.bundle.js"); ?>
 
-        <!--        font awesome (CDN) -->
+        <!--Font awesome (CDN) -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
               integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
               crossorigin="anonymous">
@@ -29,59 +30,14 @@
     </head>
 
     <body>
-        <!--        navigatie-->
-        <nav class="navbar navbar-dark bg-dark navbar-expand-md">
-            <a class="navbar-brand" href="<?php echo site_url() ?>">Welkom!</a>
-            <button type="button" class="navbar-toggler" data-toggle="collapse"
-                    data-target="#bs-example-navbar-collapse-1">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+    <!-- Inladen hoofding -->
+    <?php echo $hoofding ?>
 
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li>
-                        <a class="nav-link" href="<?php echo site_url() . '#bootstrap'; ?>">Bootstrap</a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="<?php echo site_url() . '#jquery'; ?>">jQuery</a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="<?php echo site_url() . '#ajax'; ?>">Ajax</a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="<?php echo site_url() . '#json'; ?>">JSON</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+    <!--Inladen pagina-inhoud-->
+    <?php echo $inhoud ?>
 
-        <div class="container my-4">
-            <!--            header-->
-            <header class="jumbotron">
-            </header>
+    <!--Inladen Footer-->
+    <?php echo $footer ?>
 
-            <hr>
-
-            <!--            pagina-inhoud-->
-            <div class="row">
-                <div class="col-12 mb-2">
-                </div>
-            </div>
-
-            <div class="row">
-            </div>
-
-            <hr>
-
-            <!--            footer-->
-            <footer>
-                <div class="row">
-                    <div class="col-12">
-                        <p>Copyright 2018-2019 - Thomas More. Alle rechten voorbehouden</p>
-                    </div>
-                </div>
-            </footer>
-        </div>
     </body>
-
 </html>

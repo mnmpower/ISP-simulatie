@@ -36,10 +36,11 @@
 
         public function index()
         {
-            $data['titel'] = 'Lessen';
+            $data['titel'] = 'Home';
 
-            $partials = array('hoofding' => 'main_header',
-                'inhoud' => 'main_menu');
+            $partials = array(  'hoofding' => 'main_header',
+                                'inhoud' => 'main_inhoud',
+                                'footer' => 'main_footer');
             $this->template->load('main_master', $partials, $data);
         }
     }
