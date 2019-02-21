@@ -2,15 +2,28 @@ html {
     position: relative;
     min-height: 100%;
 }
-body {
-    /* Margin bottom by footer height */
-    margin-bottom: 120px;
-}
+
 .footer {
+    padding-top: 10px;
+    padding-bottom: 10px;
     position: absolute;
     bottom: 0;
     width: 100%;
     /* Set the fixed height of the footer here */
-    height: 120px;
+    height: 140px;
     background-color: #f5f5f5;
+}
+
+.mobileFooter {
+    display: none;
+}
+
+@media (max-width: 770px) {
+    .desktopFooter {
+        display: none;
+    }
+
+    .mobileFooter {
+        display: block;
+    }
 }
