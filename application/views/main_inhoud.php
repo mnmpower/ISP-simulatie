@@ -1,10 +1,5 @@
 <body>
 	<h1>
-		Developing in progress!
+        TEST
 	</h1>
-	<p>
-		<?php
-			echo $titel;
-		?>
-	</p>
 </body>

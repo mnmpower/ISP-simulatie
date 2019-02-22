@@ -6,7 +6,7 @@
         <span class="navbar-toggler-icon"></span>
     </button>
 
-    <!-- <div class="row">
+    <!-- <div class="row"> TIJDELIJK DOOR MERGE
         <img src="/assets/images/logos/thomasmore.jpg" alt="thomasmore">
         <a class="navbar-brand" href="<//?php echo site_url() ?>">ISP</a>
         <button type="button" class="navbar-toggler" data-toggle="collapse"
@@ -17,7 +17,7 @@
 
     </div>-->
 
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
             <?php foreach ($knoppen as $knop=>$link) {
                 echo "<li>";
@@ -25,5 +25,6 @@
                 echo "</li>";
             }?>
         </ul>
+        <a href="test" class="nav-link uitlogKnop">Uitloggen</a>
     </div>
 </nav>

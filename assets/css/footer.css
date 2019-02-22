@@ -60,4 +60,8 @@ html {
     .footer {
         height: 220px;
     }
+
+    .uitlogKnop {
+        display: none;
+    }
 }

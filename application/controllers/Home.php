@@ -37,19 +37,21 @@
 
         public function index()
         {
-            $persoon =$this->persoon_model->get(1);
-            $iedereen = $persoon->naam;
+            $data['title'] = "WIP";
 
-			$persoon =$this->persoon_model->get(2);
-			$iedereen .= ", " .$persoon->naam;
+            // $persoon =$this->persoon_model->get(1);
+            // $iedereen = $persoon->naam;
 
-			$persoon =$this->persoon_model->get(3);
-			$iedereen .= ", " .$persoon->naam;
+			// $persoon =$this->persoon_model->get(2);
+			// $iedereen .= ", " .$persoon->naam;
 
-			$persoon =$this->persoon_model->get(4);
-			$iedereen .= ", " .$persoon->naam;
+			// $persoon =$this->persoon_model->get(3);
+			// $iedereen .= ", " .$persoon->naam;
 
-			$data['titel'] = $iedereen;
+			// $persoon =$this->persoon_model->get(4);
+			// $iedereen .= ", " .$persoon->naam;
+
+			// $data['titel'] = $iedereen;
 
             // ROLLEN VAN PAGINA
             $data['maartenRol'] = null;
