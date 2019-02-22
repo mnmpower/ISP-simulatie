@@ -13,14 +13,17 @@ html {
     height: 140px;
     background-color: #f5f5f5;
 }
-    .mobileFooter {
-        display: none;
-    }
+.mobileFooter {
+    display: none;
+}
 
-    .tabletFooter {
-        display: none;
-    }
+.tabletFooter {
+    display: none;
+}
 
+.logoFooter {
+     max-height: 24px;
+ }
 
 @media (max-width: 1050px) {
     .desktopFooter {
@@ -41,6 +44,10 @@ html {
 
     .footer {
         height: 220px;
+    }
+
+    .logoFooter {
+        max-height: 50px;
     }
 }
 

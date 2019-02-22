@@ -27,7 +27,7 @@
             <div class="col-sm">Kempeneer Sacha</div>
             <div class="col-sm"></div>
             <div class="col-sm"><?php if ($sachaRol != null) {echo $sachaRol;} else {echo "-";}?></div>
-            <div class="col-sm"><img src="assets/images/logos/omnidatafooter.png"></div>
+            <div class="col-sm"><img class="logoFooter" src="assets/images/logos/omnidatafooter.png"></div>
         </div>
         <!-- Row 5 -->
         <div class="row">
@@ -74,9 +74,9 @@
     </div>
         <div class="container containerTabletLogos">
             <div class="row">
-                <div class="col-sm"><img class="logo" src="assets/images/logos/tm_standaardlogo_negatief_zw_0.png"></div>
+                <div class="col-sm"><img class="logoFooter" src="assets/images/logos/tm_standaardlogo_negatief_zw_0.png"></div>
                 <div class="col-sm"><div class="font-weight-bold">Coach:</div><div>Christel Maes</div></div>
-                <div class="col-sm align-self-center"><img class="logo" src="assets/images/logos/omnidatafooter.png"></div>
+                <div class="col-sm align-self-center"><img class="logoFooter" src="assets/images/logos/omnidatafooter.png"></div>
             </div>
         </div>
     </div>
