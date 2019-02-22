@@ -19,9 +19,9 @@
 
     <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
-            <?php foreach ($knoppen as $knop=>$link) {
+            <?php foreach ($buttons as $button=>$link) {
                 echo "<li>";
-                echo "<a class=\"nav-link\" href=\'" . site_url() . $link . "\">" . $knop . "</a>";
+                echo "<a class=\"nav-link\" href=\'" . site_url() . $link . "\">" . $button . "</a>";
                 echo "</li>";
             }?>
         </ul>
