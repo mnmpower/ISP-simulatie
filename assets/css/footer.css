@@ -13,17 +13,51 @@ html {
     height: 140px;
     background-color: #f5f5f5;
 }
+    .mobileFooter {
+        display: none;
+    }
 
-.mobileFooter {
-    display: none;
-}
+    .tabletFooter {
+        display: none;
+    }
 
-@media (max-width: 770px) {
+
+@media (max-width: 1050px) {
     .desktopFooter {
         display: none;
     }
 
     .mobileFooter {
+        display: none;
+    }
+
+    .tabletFooter {
         display: block;
+    }
+
+    .containerTabletLogos{
+        padding-top: 15px;
+    }
+
+    .footer {
+        height: 220px;
+    }
+}
+
+@media (max-width: 768px) {
+    .desktopFooter {
+        display: none;
+    }
+
+    .tabletFooter {
+        display: none;
+    }
+    
+    .mobileFooter {
+        display: block;
+    }
+
+    .footer {
+        height: 220px;
     }
 }

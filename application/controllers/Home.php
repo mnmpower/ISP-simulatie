@@ -38,6 +38,18 @@
         {
             $data['titel'] = 'Home';
 
+            // ROLLEN VAN PAGINA
+            $data['maartenRol'] = null;
+            $data['tijlRol'] = null;
+            $data['sachaRol'] = null;
+            $data['jinteRol'] = null;
+
+            $knoppen = array(  'knop1' => 'Link1',
+                'knop2' => 'Link2',
+                'knop3' => 'Link3');
+
+            $data['knoppen'] = $knoppen;
+
             $partials = array(  'hoofding' => 'main_header',
                                 'inhoud' => 'main_inhoud',
                                 'footer' => 'main_footer');
