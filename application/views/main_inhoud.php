@@ -1,3 +1,10 @@
 <body>
-<h3>Dit is de inhoud</h3>
+	<h1>
+		Developing in progress!
+	</h1>
+	<p>
+		<?php
+			echo $titel;
+		?>
+	</p>
 </body>
