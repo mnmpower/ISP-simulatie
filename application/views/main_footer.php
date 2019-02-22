@@ -12,28 +12,28 @@
         <div class="row">
             <div class="col-sm">Michiels Maarten</div>
             <div class="col-sm">Teamleider</div>
-            <div class="col-sm"><?php if ($maartenRol != null) {echo $maartenRol;} else {echo "-";}?></div>
+            <div class="col-sm"><?php echo $roles['maarten']; ?></div>
             <div class="col-sm">Christel Maes</div>
         </div>
         <!-- Row 3 -->
         <div class="row">
             <div class="col-sm">Ingelaere Tijl</div>
             <div class="col-sm">Documentbeheerder</div>
-            <div class="col-sm"><?php if ($tijlRol != null) {echo $tijlRol;} else {echo "-";}?></div>
+            <div class="col-sm"><?php echo $roles['tijl']; ?></div>
             <div class="col-sm"></div>
         </div>
         <!-- Row 4 -->
         <div class="row">
             <div class="col-sm">Kempeneer Sacha</div>
             <div class="col-sm"></div>
-            <div class="col-sm"><?php if ($sachaRol != null) {echo $sachaRol;} else {echo "-";}?></div>
+            <div class="col-sm"><?php echo $roles['sacha']; ?></div>
             <div class="col-sm"><img class="logoFooter" src="assets/images/logos/omnidatafooter.png"></div>
         </div>
         <!-- Row 5 -->
         <div class="row">
             <div class="col-sm">Michiels Jinte</div>
             <div class="col-sm"></div>
-            <div class="col-sm"><?php if ($jinteRol != null) {echo $jinteRol;} else {echo "-";}?></div>
+            <div class="col-sm"><?php echo $roles['jinte']; ?></div>
             <div class="col-sm"></div>
         </div>
     </div>
@@ -51,25 +51,25 @@
         <div class="row">
             <div class="col-sm">Michiels Maarten</div>
             <div class="col-sm">Teamleider</div>
-            <div class="col-sm"><?php if ($maartenRol != null) {echo $maartenRol;} else {echo "-";}?></div>
+            <div class="col-sm"><?php echo $roles['maarten']; ?></div>
         </div>
         <!-- Row 3 -->
         <div class="row">
             <div class="col-sm">Ingelaere Tijl</div>
             <div class="col-sm">Documentbeheerder</div>
-            <div class="col-sm"><?php if ($tijlRol != null) {echo $tijlRol;} else {echo "-";}?></div>
+            <div class="col-sm"><?php echo $roles['tijl']; ?></div>
         </div>
         <!-- Row 4 -->
         <div class="row">
             <div class="col-sm">Kempeneer Sacha</div>
             <div class="col-sm"></div>
-            <div class="col-sm"><?php if ($sachaRol != null) {echo $sachaRol;} else {echo "-";}?></div>
+            <div class="col-sm"><?php echo $roles['sacha']; ?></div>
         </div>
         <!-- Row 5 -->
         <div class="row">
             <div class="col-sm">Michiels Jinte</div>
             <div class="col-sm"></div>
-            <div class="col-sm"><?php if ($jinteRol != null) {echo $jinteRol;} else {echo "-";}?></div>
+            <div class="col-sm"><?php echo $roles['jinte']; ?></div>
         </div>
     </div>
         <div class="container containerTabletLogos">

@@ -66,6 +66,21 @@
         }
     }
 
+    function getRoles($maartenRole, $tijlRole, $sachaRole, $jinteRole) {
+        $roles = array (
+          'maarten' => $maartenRole,
+          'tijl' => $tijlRole,
+          'sacha' => $sachaRole,
+          'jinte' => $jinteRole);
+
+        foreach ($roles as $role => $value) {
+            if ($value == 'geen' OR $value == null) {
+                $roles[$role] = '-';
+            }
+        }
+        return $roles;
+    }
+
 
     /* End of file notation_helper.php */
     /* Location: helpers/notation_helper.php */

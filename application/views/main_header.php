@@ -14,7 +14,6 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <p><//?php echo $loginnaam; ?></p>
-
     </div>-->
 
     <div class="collapse navbar-collapse">
@@ -27,4 +26,5 @@
         </ul>
         <a href="test" class="nav-link uitlogKnop">Uitloggen</a>
     </div>
+
 </nav>

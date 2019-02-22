@@ -27,6 +27,7 @@
 			$this->load->helper('cookie');
 			$this->load->helper('notation');
 			$this->load->helper('notation_helper');
+            $this->load->helper('navbar_helper');
 
 
 			$this->load->library('session');
@@ -39,6 +40,7 @@
         {
             $data['title'] = "WIP";
 
+            // Code tijdelijk in comment wegens testen
             // $persoon =$this->persoon_model->get(1);
             // $iedereen = $persoon->naam;
 
@@ -51,51 +53,17 @@
 			// $persoon =$this->persoon_model->get(4);
 			// $iedereen .= ", " .$persoon->naam;
 
-			// $data['titel'] = $iedereen;
+            $data['title'] = "WIP";
 
-            // Defines tester, coder or empty for this page.
-            $data['maartenRol'] = null;
-            $data['tijlRol'] = null;
-            $data['sachaRol'] = null;
-            $data['jinteRol'] = null;
+            // Defines roles for this page (You can also use "geen" or leave roles empty!).
+            $data['roles'] = getRoles('geen','geen','geen','geen');
 
             // Gets buttons for navbar
-            $data['buttons'] = $this->getButtons('student');
+            $data['buttons'] = getNavbar('test');
 
             $partials = array(  'hoofding' => 'main_header',
                                 'inhoud' => 'main_inhoud',
                                 'footer' => 'main_footer');
             $this->template->load('main_master', $partials, $data);
-        }
-
-
-
-
-        // Function determines buttons for each role in the navbar
-        private function getButtons($role) {
-            switch ($role) {
-                case 'student':
-                    $buttons = array(  'Home' => 'Link1');
-                    break;
-                case 'docent':
-                    $buttons = array(  'Afspraken' => 'Link1',
-                        'Exporteren' => 'Link2',
-                        'Klassen' => 'Link3');
-                    break;
-                case 'ispverantwoordelijke':
-                    $buttons = array(  'Afspraken' => 'Link1',
-                        'Exporteren' => 'Link2');
-                    break;
-                case 'opleidingshoofd':
-                    $buttons = array(  'Afspraken' => 'Link1',
-                        'Exporteren' => 'Link2',
-                        'Beheer' => 'Link3');
-                    break;
-                default:
-                    $buttons = array(  'knop1' => 'Link1',
-                        'knop2' => 'Link2',
-                        'knop3' => 'Link3');
-            }
-            return $buttons;
         }
     }
