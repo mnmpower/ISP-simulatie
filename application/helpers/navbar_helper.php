@@ -3,7 +3,7 @@
 function getNavbar($role) {
     switch ($role) {
         case 'student':
-            $buttons = array(   'Home' => 'Link1');
+            $buttons = array(   'Home' => '/index.php');
             break;
 
         case 'docent':
@@ -17,7 +17,7 @@ function getNavbar($role) {
                                 'Exporteren' => 'Link2');
             break;
 
-        case 'opleidingshoofd':
+        case 'opleidingsmanager':
             $buttons = array(   'Afspraken' => 'Link1',
                                 'Exporteren' => 'Link2',
                                 'Beheer' => 'Link3');
