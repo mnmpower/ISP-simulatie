@@ -23,6 +23,10 @@
                 <?php echo form_input(array('name' => 'wachtwoord', 'id' => 'wachtwoord', 'class' => "form-control", 'placeholder' => "Wachtwoord", 'type' => 'password')); ?>
             </div>
             <?php echo form_close() . "\n"; ?>
+            <?php echo anchor('Student/index', 'Student'); ?>
+            <?php echo anchor('Docent/index', 'Docent'); ?>
+            <?php echo anchor('IspVerantwoordelijke/index', 'IspVerantwoordelijke'); ?>
+            <?php echo anchor('Opleidingsmanager/index', 'Opleidingsmanager'); ?>
         </div>
     </div>
 </div>
