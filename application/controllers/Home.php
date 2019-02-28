@@ -47,7 +47,7 @@
             $data['buttons'] = getNavbar('student');
 
             $partials = array(  'hoofding' => 'main_header',
-                                'inhoud' => 'Inloggen/login',
+                                'inhoud' => 'index',
                                 'footer' => 'main_footer');
             $this->template->load('main_master', $partials, $data);
         }
