@@ -55,4 +55,15 @@
         public function editPassword($r) {
             
         }
+
+        public function controleerInloggen() {
+            $login = $this->input->post('login');
+            $wachtwoord = $this->input->post('wachtwoord');
+
+            if ($this->authex->meldAan($login, $wachtwoord)) {
+                redirect(''); //Door naar juiste pagina
+            } else {
+                redirect(''); //Foutmelding
+            }
+        }
     }
