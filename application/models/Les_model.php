@@ -1,17 +1,16 @@
 <?php
     /**
      * @property Persoon_model $persoon_model
-	 * @property PersoonLes_model $persoonLes_model
      */
-    class Persoon_model extends CI_Model
+    class Les_model extends CI_Model
     {
 
 		// +---------------------------------------------------------+ \\
-		// | ISP Project team22 - Persoon_model.php					 | \\
+		// | ISP Project team22 - Les_model.php						 | \\
 		// +---------------------------------------------------------+ \\
 		// | 2 ITF - 2018-2019										 | \\
 		// +---------------------------------------------------------+ \\
-		// | Persoon model 											 | \\
+		// | Les model 												 | \\
 		// +---------------------------------------------------------+ \\
 		// | T.Ingelaere, S. Kempeneer, J. Michiels, M. Michiels	 | \\
 		// +---------------------------------------------------------+ \\
@@ -24,39 +23,32 @@
         function get($id)
         {
             $this->db->where('id', $id);
-            $query = $this->db->get('persoon');
+            $query = $this->db->get('les');
             return $query->row();
         }
 
-		function insert($persoon)
+		function insert($les)
 		{
-			$this->db->insert('persoon', $persoon);
+			$this->db->insert('les', $les);
 			return $this->db->insert_id();
 		}
 
-        function update($persoon)
+        function update($Les)
         {
-            $this->db->where('id', $persoon->id);
-            $this->db->update('persoon', $persoon);
+            $this->db->where('id', $Les->id);
+            $this->db->update('les', $Les);
         }
 
 		function delete($id)
 		{
 			$this->db->where('id', $id);
-			$this->db->delete('persoon');
+			$this->db->delete('les');
 		}
 
-		function getAllWhereIspIngediend()
-		{
-			$this->db->where('ispIngediend', 1);
-			$query = $this->db->get('persoon');
-			return $query->result();
-		}
-		function getStudiepunten($persoon)
-		{
-			$this->persoonLes_model->getAllPersoonLes($persoon);
 
-		}
+
+
+
 
 
     }
