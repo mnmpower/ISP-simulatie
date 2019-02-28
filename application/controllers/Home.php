@@ -57,8 +57,9 @@
 
             // Defines roles for this page (You can also use "geen" or leave roles empty!).
             $data['roles'] = getRoles('geen','geen','geen','geen');
-            // Gets buttons for navbarn');
-            $data['buttons'] = getNavbar('test');
+
+            // Gets buttons for navbar);
+            $data['buttons'] = getNavbar('ispverantwoordelijke');
 
             $partials = array(  'hoofding' => 'main_header',
                                 'inhoud' => 'main_inhoud',
