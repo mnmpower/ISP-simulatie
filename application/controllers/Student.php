@@ -54,18 +54,26 @@
 
         public function home_student()
         {
+            $inhoud = '';
             $data['title'] = "Student";
 
             // Defines roles for this page (You can also use "geen" or leave roles empty!).
             $data['roles'] = getRoles('geen','Ontwikkelaar','geen','geen');
 
             // Gets buttons for navbar);
-            $data['buttons'] = getNavbar('ispverantwoordelijke');
+            $data['buttons'] = getNavbar('student');
 
-
+            if(isset($_POST['model']))
+            {
+                $inhoud = 'Student/home_model';
+            }
+            else if(isset($_POST['combi']))
+            {
+                $inhoud = 'Student/home_combi';
+            }
 
             $partials = array(  'hoofding' => 'main_header',
-                'inhoud' => 'Student/home_model',
+                'inhoud' => $inhoud,
                 'footer' => 'main_footer');
             $this->template->load('main_master', $partials, $data);
         }
