@@ -9,18 +9,20 @@
 
 <div class="container">
     <div class="row">
+        <div class="col-12">
+            <h1>Login</h1>
+        </div>
         <div class="col-md-6">
-            <form>
-                <div class="form-group">
-                    <label for="login">Login nummer</label>
-                    <input type="text" class="form-control" id="login" placeholder="Studentennummer / Personeelsnummer">
-                </div>
-                <div class="form-group">
-                    <label for="wachtwoord">Password</label>
-                    <input type="password" class="form-control" id="wachtwoord" placeholder="Wachtwoord">
-                </div>
-                <button type="submit" class="btn btn-primary">Inloggen</button>
-            </form>
+            <?php echo form_open('', array("id" => "loginFormulier")) . "\n"; ?>
+            <div class="form-group">
+                <?php echo form_label('Login nummer', 'login') . "\n"; ?>
+                <?php echo form_input(array('name' => 'login', 'id' => 'login', 'class' => "form-control", 'placeholder' => "Studentennummer / Personeelsnummer")); ?>
+            </div>
+            <div class="form-group">
+                <?php echo form_label('Wachtwoord', 'wachtwoord') . "\n" ?>
+                <?php echo form_input(array('name' => 'wachtwoord', 'id' => 'wachtwoord', 'class' => "form-control", 'placeholder' => "Wachtwoord", 'type' => 'password')); ?>
+            </div>
+            <?php echo form_close() . "\n"; ?>
         </div>
     </div>
 </div>
