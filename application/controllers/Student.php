@@ -6,7 +6,7 @@
      * @property Template $template
 	 * @property Persoon_model $persoon_model
      */
-    class Home extends CI_Controller
+    class Student extends CI_Controller
     {
 
 		// +---------------------------------------------------------+ \\
