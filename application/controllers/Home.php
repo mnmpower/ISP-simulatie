@@ -40,30 +40,19 @@
         {
             $data['title'] = "WIP";
 
-            // Code tijdelijk in comment wegens testen
-            // $persoon =$this->persoon_model->get(1);
-            // $iedereen = $persoon->naam;
-
-			// $persoon =$this->persoon_model->get(2);
-			// $iedereen .= ", " .$persoon->naam;
-
-			// $persoon =$this->persoon_model->get(3);
-			// $iedereen .= ", " .$persoon->naam;
-
-			// $persoon =$this->persoon_model->get(4);
-			// $iedereen .= ", " .$persoon->naam;
-
-            $data['title'] = "WIP";
-
             // Defines roles for this page (You can also use "geen" or leave roles empty!).
             $data['roles'] = getRoles('geen','geen','geen','geen');
 
             // Gets buttons for navbar);
-            $data['buttons'] = getNavbar('ispverantwoordelijke');
+            $data['buttons'] = getNavbar('student');
 
             $partials = array(  'hoofding' => 'main_header',
                                 'inhoud' => 'main_inhoud',
                                 'footer' => 'main_footer');
             $this->template->load('main_master', $partials, $data);
+        }
+
+        public function editPassword($r) {
+            
         }
     }
