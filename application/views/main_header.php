@@ -10,7 +10,7 @@
         <ul class="nav navbar-nav">
             <?php foreach ($buttons as $button=>$link) {
                 echo "<li>";
-                echo "<a class=\"nav-link\" href=\'" . site_url() . $link . "\">" . $button . "</a>";
+                echo "<a class='nav-link' href=" . $link . ">" . $button . "</a>";
                 echo "</li>";
             }?>
             <a href="test" class="nav-link uitlogKnopMobile">Uitloggen</a>
