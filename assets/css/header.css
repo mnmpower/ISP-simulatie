@@ -12,8 +12,13 @@
 .uitlogKnop:hover {
     color: rgba(255, 255, 255, 0.7);
 }
-@media (max-width: 768px) {
+
+@media (min-width: 768px) {
     .uitlogKnop {
+        display: block;
+    }
+
+    .uitlogKnopMobile {
         display: none;
     }
 }

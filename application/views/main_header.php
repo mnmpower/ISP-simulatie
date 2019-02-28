@@ -13,6 +13,7 @@
                 echo "<a class=\"nav-link\" href=\'" . site_url() . $link . "\">" . $button . "</a>";
                 echo "</li>";
             }?>
+            <a href="test" class="nav-link uitlogKnopMobile">Uitloggen</a>
         </ul>
         <a href="test" class="nav-link uitlogKnop">Uitloggen</a>
     </div>
