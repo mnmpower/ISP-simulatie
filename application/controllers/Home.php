@@ -41,13 +41,13 @@
             $data['title'] = "WIP";
 
             // Defines roles for this page (You can also use "geen" or leave roles empty!).
-            $data['roles'] = getRoles('geen','geen','geen','geen');
+            $data['roles'] = getRoles('geen','geen','geen','Ontwikkelaar');
 
             // Gets buttons for navbar);
             $data['buttons'] = getNavbar('student');
 
             $partials = array(  'hoofding' => 'main_header',
-                                'inhoud' => 'main_inhoud',
+                                'inhoud' => 'index',
                                 'footer' => 'main_footer');
             $this->template->load('main_master', $partials, $data);
         }
