@@ -8,7 +8,7 @@
                             'id'    => 'mijnFormulier',
                             'role'  => 'form');
 
-    echo form_open('student/keuze', $attributen);
+    echo form_open('student/home_student', $attributen);
     echo "<h3>Gelieve een keuze te maken</h3>";
     $modelattributen = array('name' => 'model', "id" => "model");
     echo form_submit('model', 'Model-student', $modelattributen);
