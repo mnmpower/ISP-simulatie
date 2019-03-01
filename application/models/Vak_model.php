@@ -28,23 +28,8 @@
 			return $query->row();
 		}
 
-		function insert($vak)
-		{
-			$this->db->insert('vak', $vak);
-			return $this->db->insert_id();
-		}
 
-		function update($vak)
-		{
-			$this->db->where('id', $vak->id);
-			$this->db->update('les', $vak);
-		}
 
-		function delete($id)
-		{
-			$this->db->where('id', $id);
-			$this->db->delete('vak');
-		}
 
 
     }

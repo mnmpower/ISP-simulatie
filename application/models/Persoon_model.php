@@ -52,10 +52,28 @@
 			$query = $this->db->get('persoon');
 			return $query->result();
 		}
-		function getStudiepunten($persoon)
-		{
-			$this->persoonLes_model->getAllPersoonLes($persoon);
 
+
+
+		function getAllPersoonLesWithLesAndVak($persoon){
+
+        	//model laden+ alle PersoonLessen toevoegen
+			$this->load->model('persoonLes_model');
+
+			$persoonLessen = $this->persoonLes_model->getAllWithLesAndVak($persoon->id);
+
+			return $persoonLessen;
+			//OK return alle persoonlessen per persoon
+		}
+
+		function getStudiepunten($persoonWithAllPersoonLesAndLesAndVak)
+		{
+			$studiepunten =0;
+
+			foreach ($persoonWithAllPersoonLesAndLesAndVak->persoonLessen as $persoonLes){
+				$studiepunten +=  $persoonLes->lesWithVak->vak->studiepunt;
+			}
+			return $studiepunten;
 		}
 
 

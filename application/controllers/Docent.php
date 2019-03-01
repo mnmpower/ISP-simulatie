@@ -6,6 +6,7 @@
      * @property Template $template
 	 * @property Persoon_model $persoon_model
 	 * @property PersoonLes_model $persoonLes_model
+	 * @property Les_model $les_model
      */
     class Docent extends CI_Controller
     {
@@ -41,18 +42,22 @@
         {
 			$this->load->model('persoon_model');
 			$this->load->model('persoonLes_model');
+			$this->load->model('Les_model');
 
         	$data['title'] = "Overzicht van de ingediende ISP simulaties";
 
             // Defines roles for this page (You can also use "geen" or leave roles empty!).
             $data['roles'] = getRoles('Ontwikkelaar','geen','geen','geen');
 
-            // Gets buttons for navbar);
+            // Gets buttons for navbar;
             $data['buttons'] = getNavbar('docent');
 
 			$ingediendeIspStudenten = $this->persoon_model->getAllWhereIspIngediend();
+
 			foreach ($ingediendeIspStudenten as $persoon){
-				$this->persoonLes_model->getAllWherePersoonId($persoon->id);
+
+				$persoon->persoonLessen = $this->persoon_model->getAllPersoonLesWithLesAndVak($persoon);
+				$persoon->studiepunten = $this->persoon_model->getStudiepunten($persoon);
 			}
 
 			$data['ingediendeIspStudenten'] = $ingediendeIspStudenten;

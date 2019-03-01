@@ -17,7 +17,7 @@
 				foreach ($ingediendeIspStudenten as $student) {
 					echo "<tr><td>$student->nummer</td>";
 					echo "<td>$student->naam</td>";
-					echo "<td>aantal studiepunten</td>";
+					echo "<td>$student->studiepunten</td>";
 					echo "<td>$student->advies</td></tr>";
 				}
 			?>

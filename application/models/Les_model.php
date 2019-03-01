@@ -1,6 +1,7 @@
 <?php
     /**
-     * @property Persoon_model $persoon_model
+	 * @property Persoon_model $persoon_model
+	 * @property Vak_model $vak_model
      */
     class Les_model extends CI_Model
     {
@@ -27,22 +28,16 @@
             return $query->row();
         }
 
-		function insert($les)
-		{
-			$this->db->insert('les', $les);
-			return $this->db->insert_id();
-		}
 
-        function update($Les)
-        {
-            $this->db->where('id', $Les->id);
-            $this->db->update('les', $Les);
-        }
 
-		function delete($id)
+		function getWithVak($id)
 		{
-			$this->db->where('id', $id);
-			$this->db->delete('les');
+			$les = $this->get($id);
+
+			//model laden + vak toevoegen
+			$this->load->model('vak_model');
+			$les->vak = $this->vak_model->get($les->vakId);
+			return $les;
 		}
 
 

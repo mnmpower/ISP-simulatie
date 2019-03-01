@@ -23,38 +23,41 @@
 
         function get($id)
         {
-            $this->db->where('id', $id);
+            $this->db->where('persoonLesId', $id);
             $query = $this->db->get('persoonLes');
             return $query->row();
         }
 
-		function insert($persoonLes)
-		{
-			$this->db->insert('persoonLes', $persoonLes);
-			return $this->db->insert_id();
-		}
 
-        function update($persoonLes)
-        {
-            $this->db->where('id', $persoonLes->id);
-            $this->db->update('persoonLes', $persoonLes);
-        }
 
-		function delete($id)
-		{
-			$this->db->where('id', $id);
-			$this->db->delete('persoonLes');
-		}
-
-//		function getLes($persoonLes){
-//			$this->db->where('lesId',$persoonLes->lesID);
-//			$query =$this->db->get('les');
-//			return $query->result();
-//		}
-		function getAllPersoonLes($persoon){
-			$this->db->where('persoonIdStudent',$persoon->id);
+		function getAllWhere($persoonIdStudent){
+			$this->db->where('persoonIdStudent',$persoonIdStudent);
 			$query =$this->db->get('persoonLes');
-			return $query->result();
+			return  $query->result();
+			//OK returnt alle persoonLESSEN van een persoonID
+		}
+
+		function getWithLesAndVak($persoonLesId){
+        	$persoonLes = $this->get($persoonLesId);
+        	//model laden + lesWithVak toevoegen
+			$this->load->model('les_model');
+        	$persoonLes->lesWithVak = $this->les_model->getWithVak($persoonLes->lesId);
+
+        	return $persoonLes;
+		}
+
+		function getAllWithLesAndVak($persoonIdStudent){
+        	$persoonLessen = $this->getAllWhere($persoonIdStudent);
+
+			$this->load->model('les_model');
+
+
+        	foreach ($persoonLessen as $persoonLes){
+				$persoonLes->lesWithVak =  $this->les_model->getWithVak($persoonLes->lesId);
+			}
+			return $persoonLessen;
+        	//OK Return alle persoonlessen met les en vak bij van een gegeven persoonID
+
 		}
 
 
