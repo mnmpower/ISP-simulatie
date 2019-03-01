@@ -38,17 +38,32 @@
 
         public function index()
         {
-            $data['title'] = "Overzicht van de ingediende ISP simulaties";
+			$this->load->model('persoon_model');
+			$this->load->model('persoonLes_model');
+			$this->load->model('Les_model');
 
-            // Defines roles for this page (You can also use "geen" or leave roles empty!).
-            $data['roles'] = getRoles('Ontwikkelaar','geen','geen','geen');
+			$data['title'] = "Overzicht van de ingediende ISP simulaties";
 
-            // Gets buttons for navbar);
-            $data['buttons'] = getNavbar('opleidingsmanager');
+			// Defines roles for this page (You can also use "geen" or leave roles empty!).
+			$data['roles'] = getRoles('Ontwikkelaar','geen','geen','geen');
 
-            $partials = array(  'hoofding' => 'main_header',
-                                'inhoud' => 'Opleidingsmanager/index',
-                                'footer' => 'main_footer');
-            $this->template->load('main_master', $partials, $data);
+			// Gets buttons for navbar;
+			$data['buttons'] = getNavbar('opleidingsmanager');
+
+			$ingediendeIspStudenten = $this->persoon_model->getAllWhereIspIngediend();
+
+			foreach ($ingediendeIspStudenten as $persoon){
+
+				$persoon->persoonLessen = $this->persoon_model->getAllPersoonLesWithLesAndVak($persoon);
+				$persoon->studiepunten = $this->persoon_model->getStudiepunten($persoon);
+			}
+
+			$data['ingediendeIspStudenten'] = $ingediendeIspStudenten;
+
+
+			$partials = array(  'hoofding' => 'main_header',
+				'inhoud' => 'Opleidingsmanager/index',
+				'footer' => 'main_footer');
+			$this->template->load('main_master', $partials, $data);
         }
     }

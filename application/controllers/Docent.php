@@ -44,13 +44,13 @@
 			$this->load->model('persoonLes_model');
 			$this->load->model('Les_model');
 
-        	$data['title'] = "Overzicht van de ingediende ISP simulaties";
+			$data['title'] = "Overzicht van de ingediende ISP simulaties";
 
-            // Defines roles for this page (You can also use "geen" or leave roles empty!).
-            $data['roles'] = getRoles('Ontwikkelaar','geen','geen','geen');
+			// Defines roles for this page (You can also use "geen" or leave roles empty!).
+			$data['roles'] = getRoles('Ontwikkelaar','geen','geen','geen');
 
-            // Gets buttons for navbar;
-            $data['buttons'] = getNavbar('docent');
+			// Gets buttons for navbar;
+			$data['buttons'] = getNavbar('docent');
 
 			$ingediendeIspStudenten = $this->persoon_model->getAllWhereIspIngediend();
 
@@ -63,9 +63,9 @@
 			$data['ingediendeIspStudenten'] = $ingediendeIspStudenten;
 
 
-            $partials = array(  'hoofding' => 'main_header',
-                                'inhoud' => 'Docent/index',
-                                'footer' => 'main_footer');
-            $this->template->load('main_master', $partials, $data);
+			$partials = array(  'hoofding' => 'main_header',
+				'inhoud' => 'Docent/index',
+				'footer' => 'main_footer');
+			$this->template->load('main_master', $partials, $data);
         }
     }
