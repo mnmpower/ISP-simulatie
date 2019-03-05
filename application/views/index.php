@@ -15,11 +15,11 @@
         <div class="col-md-6">
             <?php
                 $attributes = array('name' => 'mijnFormulier');
-                echo form_open('controleerInloggen', $attributes);
+                echo form_open('home/controleerInloggen', $attributes);
             ?>
             <div class="form-group">
-                <?php echo form_label('Login nummer', 'login') . "\n"; ?>
-                <?php echo form_input(array('name' => 'login', 'id' => 'login', 'class' => "form-control", 'placeholder' => "Studentennummer / Personeelsnummer")); ?>
+                <?php echo form_label('Login nummer', 'nummer') . "\n"; ?>
+                <?php echo form_input(array('name' => 'nummer', 'id' => 'nummer', 'class' => "form-control", 'placeholder' => "Studentennummer / Personeelsnummer")); ?>
             </div>
             <div class="form-group">
                 <?php echo form_label('Wachtwoord', 'wachtwoord') . "\n" ?>

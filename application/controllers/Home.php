@@ -5,6 +5,7 @@
     /**
      * @property Template $template
 	 * @property Persoon_model $persoon_model
+     * @property Authex $authex
      */
     class Home extends CI_Controller
     {
@@ -39,6 +40,7 @@
         public function index()
         {
             $data['title'] = "WIP";
+            $data['persoon'] = $this->authex->getGebruikerInfo();
 
             // Defines roles for this page (You can also use "geen" or leave roles empty!).
             $data['roles'] = getRoles('geen','geen','geen','Ontwikkelaar');
@@ -57,13 +59,33 @@
         }
 
         public function controleerInloggen() {
-            $login = $this->input->post('login');
+            $nummer = $this->input->post('nummer');
             $wachtwoord = $this->input->post('wachtwoord');
 
-            if ($this->authex->meldAan($login, $wachtwoord)) {
-                redirect(''); //Door naar juiste pagina
+            if ($this->authex->meldAan($nummer, $wachtwoord)) {
+                redirect('home/succes'); //Door naar juiste pagina
             } else {
-                redirect(''); //Foutmelding
+                redirect('home/toonFoutInloggen'); //Foutmelding
             }
+        }
+
+        public function toonFout($foutmelding) {
+            $data['title'] = "Fout";
+            $data['foutmelding'] = $foutmelding;
+
+            // Defines roles for this page (You can also use "geen" or leave roles empty!).
+            $data['roles'] = getRoles('geen','geen','geen','Ontwikkelaar');
+
+            // Gets buttons for navbar);
+            $data['buttons'] = getNavbar('student');
+
+            $partials = array(  'hoofding' => 'main_header',
+                'inhoud' => 'fout',
+                'footer' => 'main_footer');
+            $this->template->load('main_master', $partials, $data);
+        }
+
+        function toonFoutInloggen() {
+            $this->toonFout("Gelieve te controleren of uw gebruikersnaam en wachtwoord kloppen.");
         }
     }

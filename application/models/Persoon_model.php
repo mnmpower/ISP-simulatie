@@ -76,5 +76,19 @@
 			return $studiepunten;
 		}
 
+		function getGebruiker($nummer, $wachtwoord) {
+            $this->db->where('nummer', $nummer);
+            $query = $this->db->get('persoon');
 
+            if ($query->num_rows() == 1) {
+                $persoon = $query->row();
+                if(password_verify($wachtwoord, $persoon->wachtwoord)) { // Hier zit de fout
+                    return $persoon;
+                } else {
+                    return null;
+                }
+            } else {
+                return null;
+            }
+        }
     }
