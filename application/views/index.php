@@ -29,7 +29,7 @@
                 <?php echo form_submit('knop', 'Inloggen'); ?>
             </div>
             <?php echo form_close(); ?>
-            <?php echo anchor('', 'Wachtwoord vergeten'); ?><br><br>
+            <?php echo anchor('home/showWachtwoordWijzigen', 'Wachtwoord vergeten'); ?><br><br>
             <?php echo anchor('Student/index', 'Student'); ?><br>
             <?php echo anchor('Docent/index', 'Docent'); ?><br>
             <?php echo anchor('IspVerantwoordelijke/index', 'IspVerantwoordelijke'); ?><br>

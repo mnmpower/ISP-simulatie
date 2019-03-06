@@ -1,13 +1,17 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6">
-            <form>
-                <div class="form-group">
-                    <label for="wachtwoordWijzigen">Login nummer</label>
-                    <input type="text" class="form-control" id="wachtwoordWijzigen" placeholder="R-nummer">
-                </div>
-                <button type="submit" class="btn btn-primary">Wijzigen</button>
-            </form>
+            <?php
+            $attributes = array('name' => 'editPasswordForm');
+            echo form_open('home/editPassword', $attributes);
+            ?>
+            <div class="form-group">
+                <?php echo form_label('Login nummer', 'nummer') . "\n"; ?>
+                <?php echo form_input(array('name' => 'nummer', 'id' => 'nummer', 'class' => "form-control", 'placeholder' => "Studentennummer / Personeelsnummer")); ?>
+            </div>
+            <div class="form-group">
+                <?php echo form_submit('knop', 'Wijzigen'); ?>
+            </div>
         </div>
     </div>
 </div>

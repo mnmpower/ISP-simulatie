@@ -91,4 +91,10 @@
                 return null;
             }
         }
+
+        function setWachtwoordWhereNummer($nummer, $secureGeneratedPassword) {
+            $data = array('wachtwoord' => $secureGeneratedPassword);
+            $this->db->where('nummer', $nummer);
+            $this->db->update('persoon', $data);
+        }
     }

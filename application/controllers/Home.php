@@ -5,7 +5,9 @@
     /**
      * @property Template $template
 	 * @property Persoon_model $persoon_model
+     * @property Mail_model $mail_model
      * @property Authex $authex
+     *
      */
     class Home extends CI_Controller
     {
@@ -54,8 +56,25 @@
             $this->template->load('main_master', $partials, $data);
         }
 
-        public function editPassword($r) {
-            
+        public function showWachtwoordWijzigen() {
+            $data['title'] = "Wachtwoord wijzigen";
+
+            // Defines roles for this page (You can also use "geen" or leave roles empty!).
+            $data['roles'] = getRoles('geen','geen','Ontwikkelaar','geen');
+
+            // Gets buttons for navbar);
+            $data['buttons'] = getNavbar('student');
+
+            $partials = array(  'hoofding' => 'main_header',
+                                'inhoud' => 'wachtwoordWijzigen',
+                                'footer' => 'main_footer');
+            $this->template->load('main_master', $partials, $data);
+        }
+
+        public function editPassword() {
+            $nummer = $this->input->post('nummer');
+            $this->authex->secureEditPassword($nummer);
+            redirect('home/index');
         }
 
         public function controleerInloggen() {

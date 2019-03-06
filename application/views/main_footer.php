@@ -27,7 +27,7 @@
             <div class="col-sm">Kempeneer Sacha</div>
             <div class="col-sm"></div>
             <div class="col-sm"><?php echo $roles['sacha']; ?></div>
-            <div class="col-sm"><img class="logoFooter" src="assets/images/logos/omnidatafooter.png"></div>
+            <div class="col-sm"><?php echo toonAfbeelding('assets/images/logos/omnidatafooter.png', 'title="TM Logo" class="logoFooter"')?></div>
         </div>
         <!-- Row 5 -->
         <div class="row">
@@ -74,9 +74,9 @@
     </div>
         <div class="container containerTabletLogos">
             <div class="row">
-                <div class="col-sm"><img class="logoFooter" src="assets/images/logos/tm_standaardlogo_negatief_zw_0.png"></div>
+                <div class="col-sm"><?php echo toonAfbeelding('assets/images/logos/tm_standaardlogo_negatief_zw_0.png', 'title="TM Logo" class="logoFooter"')?></div>
                 <div class="col-sm"><div class="font-weight-bold">Coach:</div><div>Christel Maes</div></div>
-                <div class="col-sm align-self-center"><img class="logoFooter" src="assets/images/logos/omnidatafooter.png"></div>
+                <div class="col-sm align-self-center"><?php echo toonAfbeelding('assets/images/logos/omnidatafooter.png', 'title="TM Logo" class="logoFooter"')?></div>
             </div>
         </div>
     </div>

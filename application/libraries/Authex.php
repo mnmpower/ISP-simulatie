@@ -9,6 +9,8 @@ class Authex
     {
         $CI =& get_instance();
         $CI->load->model('persoon_model');
+        $CI->load->model('mail_model');
+        $CI->load->library('email');
     }
 
     function isAangemeld()
@@ -53,5 +55,30 @@ class Authex
         $CI =& get_instance();
 
         $CI->session->unset_userdata('persoon_id');
+    }
+
+    function secureEditPassword($nummer) {
+        $CI =& get_instance();
+        $generatedPassword = $this->generateRandomString(5);
+        $secureGeneratedPassword = password_hash($generatedPassword, PASSWORD_DEFAULT);
+        $CI->persoon_model->setWachtwoordWhereNummer($nummer, $secureGeneratedPassword);
+
+        $mail = $CI->mail_model->get(1);
+
+        $CI->email->from('noreply@omnidata.be', 'OmniData');
+        $CI->email->to($nummer . '@student.thomasmore.be');
+        $CI->email->subject($mail->onderwerp);
+        $CI->email->message(str_replace('(wachtwoord)', $generatedPassword, $mail->tekst));
+        $CI->email->send();
+    }
+
+    function generateRandomString($length = 10) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
     }
 }
