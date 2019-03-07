@@ -64,9 +64,14 @@ class Authex
         $CI->persoon_model->setWachtwoordWhereNummer($nummer, $secureGeneratedPassword);
 
         $mail = $CI->mail_model->get(1);
-
+        if ('u' == substr($nummer, 1)) {
+            $mailadres = $nummer . '@thomasmore.be';
+        }
+        else {
+            $mailadres = $nummer . '@student.thomasmore.be';
+        }
         $CI->email->from('noreply@omnidata.be', 'OmniData');
-        $CI->email->to($nummer . '@student.thomasmore.be');
+        $CI->email->to($mailadres);
         $CI->email->subject($mail->onderwerp);
         $CI->email->message(str_replace('(wachtwoord)', $generatedPassword, $mail->tekst));
         $CI->email->send();
