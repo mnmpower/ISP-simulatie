@@ -3,13 +3,13 @@
 function getNavbar($role) {
     switch ($role) {
         case 'student':
-            $buttons = array(   'Home' => '/index.php');
+            $buttons = array(   'Home' => 'team22/index.php');
             break;
 
         case 'docent':
             $buttons = array(   'Afspraken' =>site_url() . '/docent/showAfspraken',
                                 'Exporteren' => 'Link2',
-                                'Klassen' => 'Link3');
+                                'Klassen' => 'Docent/toonKlaslijsten');
             break;
 
         case 'ispverantwoordelijke':

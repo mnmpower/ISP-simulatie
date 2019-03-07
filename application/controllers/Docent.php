@@ -73,6 +73,7 @@
 			$this->template->load('main_master', $partials, $data);
         }
 
+
         public function showAfspraken() {
             $this->load->model('persoon_model');
             $this->load->model('persoonLes_model');
@@ -91,6 +92,21 @@
 
             $partials = array(  'hoofding' => 'main_header',
                 'inhoud' => 'Docent/overzichtAfspraken',
+                'footer' => 'main_footer');
+            $this->template->load('main_master', $partials, $data);
+        }
+
+        public function toonKlaslijsten(){
+            $data['title'] = "Klaslijsten raadplegen";
+
+            // Defines roles for this page (You can also use "geen" or leave roles empty!).
+            $data['roles'] = getRoles('geen','Ontwikkelaar','geen','geen');
+
+            // Gets buttons for navbar);
+            $data['buttons'] = getNavbar('docent');
+
+            $partials = array(  'hoofding' => 'main_header',
+                'inhoud' => 'Docent/klaslijst',
                 'footer' => 'main_footer');
             $this->template->load('main_master', $partials, $data);
         }

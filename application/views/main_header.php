@@ -1,3 +1,7 @@
+<?php
+    $CI =& get_instance();
+?>
+
 <!--NAV-->
 <nav class="navbar navbar-dark bg-dark navbar-expand-md">
     <a class="navbar-brand" href="<?php echo site_url() ?>"><?php echo toonAfbeelding('assets/images/logos/tm_standaardlogo_negatief.png', 'title="TM Logo" class="logo"')?></a>
@@ -13,9 +17,15 @@
                 echo "<a class='nav-link' href=" . $link . ">" . $button . "</a>";
                 echo "</li>";
             }?>
-            <a href="test" class="nav-link uitlogKnopMobile">Uitloggen</a>
+            <?php if($CI->authex->isAangemeld() != false) {
+                $attributes = array('class'=>'nav-link uitlogKnopMobile');
+                echo anchor('home/uitloggen', 'Uitloggen', $attributes);
+            } ?>
         </ul>
-        <a href="test" class="nav-link uitlogKnop">Uitloggen</a>
+        <?php if($CI->authex->isAangemeld() != false) {
+            $attributes = array('class'=>'nav-link uitlogKnop');
+            echo anchor('home/uitloggen', 'Uitloggen', $attributes);
+        } ?>
     </div>
 
 </nav>

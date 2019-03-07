@@ -42,17 +42,40 @@
 
         public function index()
         {
-            $data['title'] = "WIP";
-            $data['persoon'] = $this->authex->getGebruikerInfo();
+            $persoon = $this->authex->getGebruikerInfo();
+
+            $data['title'] = "Login";
+            $data['persoon'] = $persoon;
 
             // Defines roles for this page (You can also use "geen" or leave roles empty!).
-            $data['roles'] = getRoles('geen','geen','geen','Ontwikkelaar');
+            $data['roles'] = getRoles('geen','Tester','geen','Ontwikkelaar');
 
             // Gets buttons for navbar);
             $data['buttons'] = getNavbar('student');
 
+
             // Gets plugins if required
             $data['plugins'] = getPlugin('geen');
+
+            if($this->authex->isAangemeld()) {
+                switch ($persoon->typeId) {
+                    case 1:
+                        redirect('student/index');
+                        break;
+                    case 2:
+                        redirect('docent/index');
+                        break;
+                    case 3:
+                        redirect('ispVerantwoordelijke/index');
+                        break;
+                    case 4:
+                        redirect('opleidingsmanager/index');
+                        break;
+                    default:
+                        redirect('home/toonFoutInloggen'); //Foutmelding
+                        break;
+                }
+            }
 
             $partials = array(  'hoofding' => 'main_header',
                                 'inhoud' => 'index',
@@ -88,11 +111,33 @@
             $nummer = $this->input->post('nummer');
             $wachtwoord = $this->input->post('wachtwoord');
 
-            if ($this->authex->meldAan($nummer, $wachtwoord)) {
-                redirect('home/succes'); //Door naar juiste pagina
+            $persoon = $this->authex->meldAan($nummer, $wachtwoord);
+            if ($persoon != false) {
+                switch ($persoon->typeId) {
+                    case 1:
+                        redirect('student/index');
+                        break;
+                    case 2:
+                        redirect('docent/index');
+                        break;
+                    case 3:
+                        redirect('ispVerantwoordelijke/index');
+                        break;
+                    case 4:
+                        redirect('opleidingsmanager/index');
+                        break;
+                    default:
+                        redirect('home/toonFoutInloggen'); //Foutmelding
+                        break;
+                }
             } else {
                 redirect('home/toonFoutInloggen'); //Foutmelding
             }
+        }
+
+        public function uitloggen() {
+            $this->authex->meldAf();
+            redirect('home/index');
         }
 
         public function toonFout($foutmelding) {

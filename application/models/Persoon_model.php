@@ -82,7 +82,7 @@
 
             if ($query->num_rows() == 1) {
                 $persoon = $query->row();
-                if(password_verify($wachtwoord, $persoon->wachtwoord)) { // Hier zit de fout
+                if(password_verify($wachtwoord, $persoon->wachtwoord)) {
                     return $persoon;
                 } else {
                     return null;
