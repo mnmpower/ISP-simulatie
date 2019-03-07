@@ -18,13 +18,14 @@
                 echo "<a class='nav-link' href=" . $link . ">" . $button . "</a>";
                 echo "</li>";
             }?>
-            <a href="index.php/home/uitloggen" class="nav-link uitlogKnopMobile">Uitloggen</a>
+            <?php if($id != null) {
+                $attributes = array('class'=>'nav-link uitlogKnopMobile');
+                echo anchor('home/uitloggen', 'Uitloggen', $attributes);
+            } ?>
         </ul>
         <?php if($id != null) {
             $attributes = array('class'=>'nav-link uitlogKnop');
             echo anchor('home/uitloggen', 'Uitloggen', $attributes);
-        } else {
-
         } ?>
     </div>
 
