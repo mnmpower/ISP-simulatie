@@ -41,11 +41,11 @@
 
         public function index()
         {
-            $data['title'] = "WIP";
+            $data['title'] = "Login";
             $data['persoon'] = $this->authex->getGebruikerInfo();
 
             // Defines roles for this page (You can also use "geen" or leave roles empty!).
-            $data['roles'] = getRoles('geen','geen','geen','Ontwikkelaar');
+            $data['roles'] = getRoles('geen','Tester','geen','Ontwikkelaar');
 
             // Gets buttons for navbar);
             $data['buttons'] = getNavbar('student');
