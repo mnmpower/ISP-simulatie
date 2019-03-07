@@ -75,6 +75,7 @@ class Authex
         $CI->email->subject($mail->onderwerp);
         $CI->email->message(str_replace('(wachtwoord)', $generatedPassword, $mail->tekst));
         $CI->email->send();
+
     }
 
     function generateRandomString($length = 10) {

@@ -7,7 +7,7 @@ function getNavbar($role) {
             break;
 
         case 'docent':
-            $buttons = array(   'Afspraken' => 'Link1',
+            $buttons = array(   'Afspraken' =>site_url() . '/docent/showAfspraken',
                                 'Exporteren' => 'Link2',
                                 'Klassen' => 'Link3');
             break;

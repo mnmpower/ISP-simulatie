@@ -30,6 +30,7 @@
 			$this->load->helper('notation');
 			$this->load->helper('notation_helper');
             $this->load->helper('navbar_helper');
+            $this->load->helper('plugin_helper');
 
 
 			$this->load->library('session');
@@ -52,6 +53,9 @@
 			// Gets buttons for navbar;
 			$data['buttons'] = getNavbar('docent');
 
+            // Gets plugins if required
+            $data['plugins'] = getPlugin('geen');
+
 			$ingediendeIspStudenten = $this->persoon_model->getAllWhereIspIngediend();
 
 			foreach ($ingediendeIspStudenten as $persoon){
@@ -67,5 +71,27 @@
 				'inhoud' => 'Docent/index',
 				'footer' => 'main_footer');
 			$this->template->load('main_master', $partials, $data);
+        }
+
+        public function showAfspraken() {
+            $this->load->model('persoon_model');
+            $this->load->model('persoonLes_model');
+            $this->load->model('Les_model');
+
+            $data['title'] = "Overzicht van de ingediende ISP simulaties";
+
+            // Defines roles for this page (You can also use "geen" or leave roles empty!).
+            $data['roles'] = getRoles('geen','geen','Ontwikkelaar','geen');
+
+            // Gets buttons for navbar;
+            $data['buttons'] = getNavbar('docent');
+
+            // Gets plugins if required
+            $data['plugins'] = getPlugin('fullCalendar');
+
+            $partials = array(  'hoofding' => 'main_header',
+                'inhoud' => 'Docent/overzichtAfspraken',
+                'footer' => 'main_footer');
+            $this->template->load('main_master', $partials, $data);
         }
     }
