@@ -9,7 +9,7 @@ function getNavbar($role) {
         case 'docent':
             $buttons = array(   'Afspraken' => 'Link1',
                                 'Exporteren' => 'Link2',
-                                'Klassen' => 'Docent/toonKlaslijsten');
+                                'Klassen' => 'toonKlaslijsten');
             break;
 
         case 'ispverantwoordelijke':

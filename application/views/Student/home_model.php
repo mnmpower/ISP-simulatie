@@ -5,13 +5,13 @@ $attributen = array(    'name'  => 'mijnFormulier',
     'role'  => 'form');
 
     echo form_open('student/keuzemodel', $attributen);
-    $klasattributen = array('name' => 'klasvoorkeur', "id" => "klasvoorkeur");
+    $klasattributen = array('name' => 'klasvoorkeur', "id" => "klasvoorkeur", 'class' => 'form-control');
     echo form_submit('klasvoorkeur', 'Klasvoorkeur geven', $klasattributen);
-    $vakattributen = array('name' => 'vakken', "id" => "vakken");
+    $vakattributen = array('name' => 'vakken', "id" => "vakken", 'class' => 'form-control');
     echo form_submit('vakken', 'Vakken per fase bekijken', $vakattributen);
-    $afspraakattributen = array('name' => 'afspraak', "id" => "afspraak");
+    $afspraakattributen = array('name' => 'afspraak', "id" => "afspraak", 'class' => 'form-control');
     echo form_submit('afspraak', 'Afspraak maken', $afspraakattributen);
-    $uurroosterattributen = array('name' => 'uurrooster', "id" => "uurrooster");
+    $uurroosterattributen = array('name' => 'uurrooster', "id" => "uurrooster", 'class' => 'form-control');
     echo form_submit('uurrooster', 'Uurrooster weergeven', $uurroosterattributen);
     echo form_close();
 ?>

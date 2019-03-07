@@ -7,6 +7,7 @@
 	 * @property Persoon_model $persoon_model
 	 * @property PersoonLes_model $persoonLes_model
 	 * @property Les_model $les_model
+     * @property Klas_model $klas_model
      */
     class Docent extends CI_Controller
     {
@@ -40,7 +41,6 @@
 
         public function index()
         {
-			$this->load->model('persoon_model');
 			$this->load->model('persoonLes_model');
 			$this->load->model('Les_model');
 
@@ -70,7 +70,24 @@
         }
 
         public function toonKlaslijsten(){
+            $this->load->model('klas_model');
+
             $data['title'] = "Klaslijsten raadplegen";
+
+            $klassen = $this->klas_model->getAllKlassen();
+            $data['klassen'] = $klassen;
+
+            if ($this->input->post('klas') != ''){
+                $klasId = $this->input->post('klas');
+                $personen = $this->persoon_model->getAllWhereKlas($klasId);
+                $data['personen'] = $personen;
+                $klas = $this->klas_model->get($klasId);
+                $data['klas'] = $klas;
+            }
+            else{
+                $data['klas'] = '';
+                $data['personen'] = '';
+            }
 
             // Defines roles for this page (You can also use "geen" or leave roles empty!).
             $data['roles'] = getRoles('geen','Ontwikkelaar','geen','geen');
@@ -79,7 +96,7 @@
             $data['buttons'] = getNavbar('docent');
 
             $partials = array(  'hoofding' => 'main_header',
-                'inhoud' => 'Docent/klaslijst',
+                'inhoud' => 'Docent/klaslijsten',
                 'footer' => 'main_footer');
             $this->template->load('main_master', $partials, $data);
         }

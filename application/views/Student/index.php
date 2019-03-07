@@ -10,8 +10,8 @@
 
     echo form_open('student/home_student', $attributen);
     echo "<h3>Gelieve een keuze te maken</h3>";
-    $modelattributen = array('name' => 'model', "id" => "model");
+    $modelattributen = array('name' => 'model', "id" => "model", 'class' => 'form-control');
     echo form_submit('model', 'Model-student', $modelattributen);
-    $combiattributen = array('name' => 'combi', "id" => "combi");
+    $combiattributen = array('name' => 'combi', "id" => "combi", 'class' => 'form-control');
     echo form_submit('combi', 'Combi-student', $combiattributen);
     echo form_close();
