@@ -105,6 +105,11 @@
             }
         }
 
+        public function uitloggen() {
+            $this->authex->meldAf();
+            redirect('home/index');
+        }
+
         public function toonFout($foutmelding) {
             $data['title'] = "Fout";
             $data['foutmelding'] = $foutmelding;
