@@ -41,14 +41,36 @@
 
         public function index()
         {
+            $persoon = $this->authex->getGebruikerInfo();
+
             $data['title'] = "Login";
-            $data['persoon'] = $this->authex->getGebruikerInfo();
+            $data['persoon'] = $persoon;
 
             // Defines roles for this page (You can also use "geen" or leave roles empty!).
             $data['roles'] = getRoles('geen','Tester','geen','Ontwikkelaar');
 
             // Gets buttons for navbar);
             $data['buttons'] = getNavbar('student');
+
+            if($this->authex->isAangemeld()) {
+                switch ($persoon->typeId) {
+                    case 1:
+                        redirect('student/index');
+                        break;
+                    case 2:
+                        redirect('docent/index');
+                        break;
+                    case 3:
+                        redirect('ispVerantwoordelijke/index');
+                        break;
+                    case 4:
+                        redirect('opleidingsmanager/index');
+                        break;
+                    default:
+                        redirect('home/toonFoutInloggen'); //Foutmelding
+                        break;
+                }
+            }
 
             $partials = array(  'hoofding' => 'main_header',
                                 'inhoud' => 'index',
