@@ -29,6 +29,12 @@
             var site_url = '<?php echo site_url(); ?>';
             var base_url = '<?php echo base_url(); ?>';
         </script>
+
+        <!-- Plugins -->
+        <?php if ($plugins != null) {
+        foreach ($plugins as $line) {
+            echo $line;
+        }} ?>
     </head>
 
     <body>
