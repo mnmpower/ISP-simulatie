@@ -1,6 +1,5 @@
 <?php
     $CI =& get_instance();
-    $id = $CI->session->userdata('persoon_id');
 ?>
 
 <!--NAV-->
@@ -18,12 +17,12 @@
                 echo "<a class='nav-link' href=" . $link . ">" . $button . "</a>";
                 echo "</li>";
             }?>
-            <?php if($id != null) {
+            <?php if($CI->authex->isAangemeld() != false) {
                 $attributes = array('class'=>'nav-link uitlogKnopMobile');
                 echo anchor('home/uitloggen', 'Uitloggen', $attributes);
             } ?>
         </ul>
-        <?php if($id != null) {
+        <?php if($CI->authex->isAangemeld() != false) {
             $attributes = array('class'=>'nav-link uitlogKnop');
             echo anchor('home/uitloggen', 'Uitloggen', $attributes);
         } ?>
