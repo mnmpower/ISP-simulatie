@@ -1,3 +1,8 @@
+<?php
+    $CI =& get_instance();
+    $id = $CI->session->userdata('persoon_id');
+?>
+
 <!--NAV-->
 <nav class="navbar navbar-dark bg-dark navbar-expand-md">
     <a class="navbar-brand" href="<?php echo site_url() ?>"><?php echo toonAfbeelding('assets/images/logos/tm_standaardlogo_negatief.png', 'title="TM Logo" class="logo"')?></a>
@@ -13,9 +18,14 @@
                 echo "<a class='nav-link' href=" . $link . ">" . $button . "</a>";
                 echo "</li>";
             }?>
-            <a href="test" class="nav-link uitlogKnopMobile">Uitloggen</a>
+            <a href="index.php/home/uitloggen" class="nav-link uitlogKnopMobile">Uitloggen</a>
         </ul>
-        <a href="test" class="nav-link uitlogKnop">Uitloggen</a>
+        <?php if($id != null) {
+            $attributes = array('class'=>'nav-link uitlogKnop');
+            echo anchor('home/uitloggen', 'Uitloggen', $attributes);
+        } else {
+
+        } ?>
     </div>
 
 </nav>
