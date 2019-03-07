@@ -46,7 +46,7 @@ class Authex
             return false;
         } else {
             $CI->session->set_userdata('persoon_id', $persoon->id);
-            return true;
+            return $persoon;
         }
     }
 

@@ -13,9 +13,9 @@
                 echo "<a class='nav-link' href=" . $link . ">" . $button . "</a>";
                 echo "</li>";
             }?>
-            <a href="test" class="nav-link uitlogKnopMobile">Uitloggen</a>
+            <a href="index.php/home/uitloggen" class="nav-link uitlogKnopMobile">Uitloggen</a>
         </ul>
-        <a href="test" class="nav-link uitlogKnop">Uitloggen</a>
+        <a href="index.php/home/uitloggen" class="nav-link uitlogKnop">Uitloggen</a>
     </div>
 
 </nav>

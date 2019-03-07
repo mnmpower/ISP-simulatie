@@ -81,8 +81,25 @@
             $nummer = $this->input->post('nummer');
             $wachtwoord = $this->input->post('wachtwoord');
 
-            if ($this->authex->meldAan($nummer, $wachtwoord)) {
-                redirect('home/succes'); //Door naar juiste pagina
+            $persoon = $this->authex->meldAan($nummer, $wachtwoord);
+            if ($persoon != false) {
+                switch ($persoon->typeId) {
+                    case 1:
+                        redirect('student/index');
+                        break;
+                    case 2:
+                        redirect('docent/index');
+                        break;
+                    case 3:
+                        redirect('ispVerantwoordelijke/index');
+                        break;
+                    case 4:
+                        redirect('opleidingsmanager/index');
+                        break;
+                    default:
+                        redirect('home/toonFoutInloggen'); //Foutmelding
+                        break;
+                }
             } else {
                 redirect('home/toonFoutInloggen'); //Foutmelding
             }
