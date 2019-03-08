@@ -1,17 +1,16 @@
 <?php
     /**
      * @property Persoon_model $persoon_model
-	 * @property PersoonLes_model $persoonLes_model
      */
-    class Vak_model extends CI_Model
+    class Keuzerichting_model extends CI_Model
     {
 
 		// +---------------------------------------------------------+ \\
-		// | ISP Project team22 - Vak_model.php						 | \\
+		// | ISP Project team22 - Keuzerichting_model.php			 | \\
 		// +---------------------------------------------------------+ \\
 		// | 2 ITF - 2018-2019										 | \\
 		// +---------------------------------------------------------+ \\
-		// | Vak model 												 | \\
+		// | Keuzerichting model    								 | \\
 		// +---------------------------------------------------------+ \\
 		// | T.Ingelaere, S. Kempeneer, J. Michiels, M. Michiels	 | \\
 		// +---------------------------------------------------------+ \\
@@ -24,7 +23,27 @@
 		function get($id)
 		{
 			$this->db->where('id', $id);
-			$query = $this->db->get('vak');
+			$query = $this->db->get('keuzerichting');
 			return $query->row();
 		}
+
+		function getAll()
+        {
+            $query = $this->db->get('keuzerichting');
+            return $query->result();
+        }
+
+        function getAllWhereKeuzerichting($keuzerichtingId)
+        {
+            $this->db->where('keuzerichtingId', $keuzerichtingId);
+            $query = $this->db->get('vak');
+            return $query->result();
+        }
+
+
+
+
+
+
+
     }

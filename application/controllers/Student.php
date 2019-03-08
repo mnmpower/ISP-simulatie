@@ -77,4 +77,32 @@
                 'footer' => 'main_footer');
             $this->template->load('main_master', $partials, $data);
         }
+
+        public function toonJaarvakken()
+        {
+            $data['title'] = "Jaarvakken";
+
+            // Defines roles for this page (You can also use "geen" or leave roles empty!).
+            $data['roles'] = getRoles('geen','geen','geen','Ontwikkelaar');
+
+            // Gets buttons for navbar);
+            $data['buttons'] = getNavbar('student');
+
+            $this->load->model('keuzerichting_model');
+            $data['keuzerichtingen'] = $this->keuzerichting_model->getAll();
+
+            $partials = array(  'hoofding' => 'main_header',
+                'inhoud' => 'Student/jaarvakken_raadplegen',
+                'footer' => 'main_footer');
+            $this->template->load('main_master', $partials, $data);
+        }
+
+        public function haalAjaxOp_Vakken() {
+            $keuzerichtingId = $this->input->get('keuzerichtingId');
+
+            $this->load->model('keuzerichtingVak_model');
+            $data['vakken'] = $this->keuzerichtingVak_model->getAllWithVakWhereKeuzerichting($keuzerichtingId);
+
+            $this->load->view('student/ajax_jaarvakken', $data);
+        }
     }

@@ -3,7 +3,7 @@
 function getNavbar($role) {
     switch ($role) {
         case 'student':
-            $buttons = array(   'Home' => 'team22/index.php');
+            $buttons = array(   'Home' => 'index.php');
             break;
 
         case 'docent':
