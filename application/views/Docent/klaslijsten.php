@@ -1,5 +1,30 @@
 <script>
 
+    function haalKlassenOp(klasId) {
+        $.ajax({
+            type: "GET",
+            url: site_url + "/docent/haalAjaxOp_Klassen/",
+            data: {klasId: klasId},
+            success: function(output) {
+                $('#resultaat').html(output);
+            },
+            error: function (xhr, status, error) {
+                alert("-- ERROR IN AJAX --\n\n" + xhr.responseText);
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        $("#klaskeuze").change(function () {
+            klasId = $('#klaskeuze').val();
+            if(klasId == '') {
+                $('#resultaat').html("");
+            } else {
+                haalKlassenOp(klasId);
+            }
+        });
+    });
+
 </script>
 <?php
 
@@ -18,20 +43,10 @@ foreach ($klassen as $klasOptie) {
 <?php
 $attributes = array('name' => 'mijnFormulier');
 echo form_open('Docent/toonKlaslijsten', $attributes);
-$formattributes = array('class' => 'form-control');
+$formattributes = array('id' => 'klaskeuze', 'class' => 'form-control');
 echo form_dropdown('klas', $klasOpties, '0', $formattributes);
-echo form_submit('submit', 'Submit', $formattributes);
 echo form_close();
 ?>
-<?php
-if ($klas != ''){
-    echo "<p>Aantal vrije plaatsen: " . count($personen) . " van de " . $klas->maximumAantalModel . "</p>";
-    echo "<p>Studenten die reeds in de klasgroep zitten:</p>";
-    echo "<ul>";
-    foreach ($personen as $persoon){
-        echo "<li>" . $persoon->naam . "</li>";
-    }
-    echo "</ul>";
-}
-?>
+
+<div id="resultaat"></div>
 

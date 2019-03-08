@@ -28,6 +28,7 @@
 			$this->load->helper('notation');
 			$this->load->helper('notation_helper');
             $this->load->helper('navbar_helper');
+            $this->load->helper('plugin_helper');
 
 
 			$this->load->library('session');
@@ -46,6 +47,9 @@
             // Gets buttons for navbar);
             $data['buttons'] = getNavbar('student');
 
+            // Gets plugins if required
+            $data['plugins'] = getPlugin('geen');
+
             $partials = array(  'hoofding' => 'main_header',
                                 'inhoud' => 'Student/index',
                                 'footer' => 'main_footer');
@@ -62,6 +66,9 @@
 
             // Gets buttons for navbar);
             $data['buttons'] = getNavbar('student');
+
+            // Gets plugins if required
+            $data['plugins'] = getPlugin('geen');
 
             if(isset($_POST['model']))
             {
