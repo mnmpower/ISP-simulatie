@@ -27,6 +27,11 @@
 			return $query->row();
 		}
 
+		function getAllKlassen(){
+            $query = $this->db->get('klas');
+            return $query->result();
+        }
+
 
 
 

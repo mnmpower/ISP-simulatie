@@ -97,4 +97,11 @@
             $this->db->where('nummer', $nummer);
             $this->db->update('persoon', $data);
         }
+
+        function getAllWhereKlas($klasId){
+
+            $this->db->where('klasId', $klasId);
+            $query = $this->db->get('persoon');
+            return $query->result();
+        }
     }

@@ -5,11 +5,11 @@ $attributen = array(    'name'  => 'mijnFormulier',
     'role'  => 'form');
 
 echo form_open('student/keuzecombi', $attributen);
-$ispattributen = array('name' => 'isp', "id" => "isp");
+$ispattributen = array('name' => 'isp', "id" => "isp", 'class' => 'form-control');
 echo form_submit('isp', 'ISP-simulatie maken', $ispattributen);
-$vakattributen = array('name' => 'vakken', "id" => "vakken");
+$vakattributen = array('name' => 'vakken', "id" => "vakken", 'class' => 'form-control');
 echo form_submit('vakken', 'Vakken per fase bekijken', $vakattributen);
-$afspraakattributen = array('name' => 'afspraak', "id" => "afspraak");
+$afspraakattributen = array('name' => 'afspraak', "id" => "afspraak", 'class' => 'form-control');
 echo form_submit('afspraak', 'Afspraak voor hulp maken', $afspraakattributen);
 echo form_close();
 ?>
