@@ -4,7 +4,7 @@ $attributen = array(    'name'  => 'mijnFormulier',
     'id'    => 'mijnFormulier',
     'role'  => 'form');
 
-    echo form_open('student/keuzemodel', $attributen);
+    echo form_open('student/keuzemenu', $attributen);
     $klasattributen = array('name' => 'klasvoorkeur', "id" => "klasvoorkeur", 'class' => 'form-control');
     echo form_submit('klasvoorkeur', 'Klasvoorkeur geven', $klasattributen);
     $vakattributen = array('name' => 'vakken', "id" => "vakken", 'class' => 'form-control');

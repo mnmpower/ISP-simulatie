@@ -4,7 +4,7 @@ $attributen = array(    'name'  => 'mijnFormulier',
     'id'    => 'mijnFormulier',
     'role'  => 'form');
 
-echo form_open('student/keuzecombi', $attributen);
+echo form_open('student/keuzemenu', $attributen);
 $ispattributen = array('name' => 'isp', "id" => "isp", 'class' => 'form-control');
 echo form_submit('isp', 'ISP-simulatie maken', $ispattributen);
 $vakattributen = array('name' => 'vakken', "id" => "vakken", 'class' => 'form-control');

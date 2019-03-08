@@ -85,6 +85,51 @@
             $this->template->load('main_master', $partials, $data);
         }
 
+        public function keuzemenu()
+        {
+            if(isset($_POST['klasvoorkeur']))
+            {
+                redirect('Student/klasvoorkeur');
+            }
+            else if(isset($_POST['vakken']))
+            {
+                redirect('Student/toonJaarvakken');
+            }
+            else if(isset($_POST['afspraak']))
+            {
+            }
+            else if(isset($_POST['uurrooster']))
+            {
+            }
+            else if(isset($_POST['isp']))
+            {
+            }
+        }
+
+        public function klasvoorkeur()
+        {
+            $this->load->model('klas_model');
+
+            $data['title'] = "Klasvoorkeur doorgeven";
+
+            $klassen = $this->klas_model->getAllKlassen();
+            $data['klassen'] = $klassen;
+
+            // Defines roles for this page (You can also use "geen" or leave roles empty!).
+            $data['roles'] = getRoles('geen','Ontwikkelaar','geen','geen');
+
+            // Gets buttons for navbar);
+            $data['buttons'] = getNavbar('student');
+
+            // Gets plugins if required
+            $data['plugins'] = getPlugin('fullCalendar');
+
+            $partials = array(  'hoofding' => 'main_header',
+                'inhoud' => 'Student/klasvoorkeur',
+                'footer' => 'main_footer');
+            $this->template->load('main_master', $partials, $data);
+        }
+
         public function toonJaarvakken()
         {
             $data['title'] = "Jaarvakken";
@@ -94,6 +139,9 @@
 
             // Gets buttons for navbar);
             $data['buttons'] = getNavbar('student');
+
+            // Gets plugins if required
+            $data['plugins'] = getPlugin('geen');
 
             $this->load->model('keuzerichting_model');
             $data['keuzerichtingen'] = $this->keuzerichting_model->getAll();
