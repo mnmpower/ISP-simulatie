@@ -104,4 +104,10 @@
             $query = $this->db->get('persoon');
             return $query->result();
         }
+
+        function setKlasIdWhereNummer($nummer, $klasId) {
+            $data = array('klasId' => $klasId);
+            $this->db->where('nummer', $nummer);
+            $this->db->update('persoon', $data);
+        }
     }

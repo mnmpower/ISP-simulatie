@@ -42,10 +42,11 @@ foreach ($klassen as $klasOptie) {
 </h1>
 <?php
 $attributes = array('name' => 'mijnFormulier');
-echo form_open('Docent/toonKlaslijsten', $attributes);
+echo form_open('Student/voorkeurBevestigen', $attributes);
 $formattributes = array('id' => 'klaskeuze', 'class' => 'form-control');
 echo form_dropdown('klas', $klasOpties, '0', $formattributes);
+echo "<div id=\"resultaat\"></div>";
+$submitattributes = array('class' => 'form-control');
+echo form_submit('klasvoorkeur', 'Klasvoorkeur bevestigen', $submitattributes);
 echo form_close();
 ?>
-
-<div id="resultaat"></div>

@@ -130,6 +130,29 @@
             $this->template->load('main_master', $partials, $data);
         }
 
+        public function voorkeurBevestigen(){
+
+            $data['title'] = "Student";
+
+            // Defines roles for this page (You can also use "geen" or leave roles empty!).
+            $data['roles'] = getRoles('geen','Ontwikkelaar','geen','geen');
+
+            // Gets buttons for navbar);
+            $data['buttons'] = getNavbar('student');
+
+            // Gets plugins if required
+            $data['plugins'] = getPlugin('geen');
+
+            $klasId = $this->input->get('klasId');
+            $this->load->model('klas_model');
+            $this->persoon_model->setKlasIdWhereNummer($nummer, $klasId);
+
+            $partials = array(  'hoofding' => 'main_header',
+                'inhoud' => 'Student/home_model',
+                'footer' => 'main_footer');
+            $this->template->load('main_master', $partials, $data);
+        }
+
         public function toonJaarvakken()
         {
             $data['title'] = "Jaarvakken";
