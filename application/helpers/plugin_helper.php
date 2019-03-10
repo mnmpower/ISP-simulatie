@@ -8,7 +8,8 @@ function getPlugin($plugin) {
             "<link href='" . base_url() . "assets/css/scheduler.css' rel='stylesheet' />",
             "<script src='" . base_url() . "assets/js/moment.js'></script>",
             "<script src='" . base_url() . "assets/js/fullcalendar.js'></script>",
-            "<script src='" . base_url() . "assets/js/scheduler.js'></script>");
+            "<script src='" . base_url() . "assets/js/scheduler.js'></script>",
+            "<script src='" . base_url() . "assets/js/nl-be.js'></script>");
             break;
 
         case 'geen':

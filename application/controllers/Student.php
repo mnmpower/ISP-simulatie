@@ -196,7 +196,7 @@
             $data['roles'] = getRoles('geen','geen','Ontwikkelaar','geen');
 
             // Gets buttons for navbar;
-            $data['buttons'] = getNavbar('docent');
+            $data['buttons'] = getNavbar('student');
 
             // Gets plugins if required
             $data['plugins'] = getPlugin('fullCalendar');
