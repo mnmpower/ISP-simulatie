@@ -17,6 +17,7 @@
         <!-- Custom CSS -->
         <?php echo pasStylesheetAan("footer.css"); ?>
         <?php echo pasStylesheetAan("header.css"); ?>
+        <?php echo pasStylesheetAan("main.css"); ?>
         <?php echo haalJavascriptOp("jquery-3.3.1.js"); ?>
         <?php echo haalJavascriptOp("bootstrap.bundle.js"); ?>
 
