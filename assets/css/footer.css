@@ -13,6 +13,11 @@ html {
     height: 140px;
     background-color: #f5f5f5;
 }
+
+body {
+    margin-bottom: 140px;
+}
+
 .mobileFooter {
     display: none;
 }
@@ -46,6 +51,10 @@ html {
         height: 220px;
     }
 
+    body {
+        margin-bottom: 220px;
+    }
+
     .logoFooter {
         max-height: 50px;
     }
@@ -66,6 +75,10 @@ html {
 
     .footer {
         height: 220px;
+    }
+
+    body {
+        margin-bottom: 220px;
     }
 
     .uitlogKnop {

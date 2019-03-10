@@ -97,6 +97,7 @@
             }
             else if(isset($_POST['afspraak']))
             {
+                redirect('Student/showAfspraakmaken');
             }
             else if(isset($_POST['uurrooster']))
             {
@@ -182,5 +183,27 @@
             $data['vakken'] = $this->keuzerichtingVak_model->getAllWithVakWhereKeuzerichting($keuzerichtingId);
 
             $this->load->view('student/ajax_jaarvakken', $data);
+        }
+
+        public function showAfspraakmaken() {
+            $this->load->model('persoon_model');
+            $this->load->model('persoonLes_model');
+            $this->load->model('Les_model');
+
+            $data['title'] = "Afspraak maken";
+
+            // Defines roles for this page (You can also use "geen" or leave roles empty!).
+            $data['roles'] = getRoles('geen','geen','Ontwikkelaar','geen');
+
+            // Gets buttons for navbar;
+            $data['buttons'] = getNavbar('docent');
+
+            // Gets plugins if required
+            $data['plugins'] = getPlugin('fullCalendar');
+
+            $partials = array(  'hoofding' => 'main_header',
+                'inhoud' => 'Student/afspraakMaken',
+                'footer' => 'main_footer');
+            $this->template->load('main_master', $partials, $data);
         }
     }
