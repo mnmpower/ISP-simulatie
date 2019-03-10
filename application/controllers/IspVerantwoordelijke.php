@@ -41,6 +41,7 @@
 			$this->load->model('persoon_model');
 			$this->load->model('persoonLes_model');
 			$this->load->model('Les_model');
+			$this->load->helper('plugin_helper');
 
 			$data['title'] = "Overzicht van de ingediende ISP simulaties";
 
@@ -49,6 +50,9 @@
 
 			// Gets buttons for navbar;
 			$data['buttons'] = getNavbar('ispverantwoordelijke');
+
+			// Gets plugins if required
+			$data['plugins'] = getPlugin('geen');
 
 			$ingediendeIspStudenten = $this->persoon_model->getAllWhereIspIngediend();
 
