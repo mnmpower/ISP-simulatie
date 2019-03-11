@@ -208,9 +208,20 @@
             // Gets plugins if required
             $data['plugins'] = getPlugin('fullCalendar');
 
+            // Data
+            $data['docenten'] = $this->persoon_model->getDocentWhereTypeid(2,3);
+
             $partials = array(  'hoofding' => 'main_header',
                 'inhoud' => 'Student/afspraakMaken',
                 'footer' => 'main_footer');
             $this->template->load('main_master', $partials, $data);
+        }
+
+        public function haalAjaxop_Afspraken() {
+            $persoonId = $this->input->get('persoonId');
+
+            $this->load->model('afspraak_model');
+            $data['afspraken'] = $this->afspraak_model->getAfsprakenWherePersoonIdDocent($persoonId);
+            echo json_encode($data['afspraken']);
         }
     }

@@ -130,4 +130,17 @@
             return $query->result();
         }
 
+        function setKlasIdWhereNummer($nummer, $klasId) {
+            $data = array('klasId' => $klasId);
+            $this->db->where('nummer', $nummer);
+            $this->db->update('persoon', $data);
+        }
+
+        function getDocentWhereTypeid($typeId, $typeId2) {
+            $this->db->where('typeId', $typeId);
+            $this->db->or_where('typeId', $typeId2);
+            $query = $this->db->get('persoon');
+            return $query->result();
+        }
+
     }
