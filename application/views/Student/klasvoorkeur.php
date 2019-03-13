@@ -3,7 +3,7 @@
     function haalKlassenOp(klasId) {
         $.ajax({
             type: "GET",
-            url: site_url + "/docent/haalAjaxOp_Klassen/",
+            url: site_url + "/ispverantwoordelijke/haalAjaxOp_Klassen/",
             data: {klasId: klasId},
             success: function(output) {
                 $('#resultaat').html(output);

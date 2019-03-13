@@ -95,40 +95,4 @@
                 'footer' => 'main_footer');
             $this->template->load('main_master', $partials, $data);
         }
-
-        public function toonKlaslijsten(){
-            $this->load->model('klas_model');
-
-            $data['title'] = "Klaslijsten raadplegen";
-
-            $klassen = $this->klas_model->getAllKlassen();
-            $data['klassen'] = $klassen;
-
-            // Defines roles for this page (You can also use "geen" or leave roles empty!).
-            $data['roles'] = getRoles('geen','Ontwikkelaar','geen','geen');
-
-            // Gets buttons for navbar);
-            $data['buttons'] = getNavbar('docent');
-
-            // Gets plugins if required
-            $data['plugins'] = getPlugin('geen');
-
-            $partials = array(  'hoofding' => 'main_header',
-                'inhoud' => 'Docent/klaslijsten',
-                'footer' => 'main_footer');
-            $this->template->load('main_master', $partials, $data);
-        }
-
-        public function haalAjaxOp_Klassen() {
-            $klasId = $this->input->get('klasId');
-
-            $this->load->model('klas_model');
-            $personen = $this->persoon_model->getAllWhereKlas($klasId);
-            $data['personen'] = $personen;
-            $klas = $this->klas_model->get($klasId);
-            $data['klas'] = $klas;
-
-
-            $this->load->view('Docent/ajax_klaslijsten', $data);
-        }
     }

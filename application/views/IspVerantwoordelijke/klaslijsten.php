@@ -3,7 +3,7 @@
     function haalKlassenOp(klasId) {
         $.ajax({
             type: "GET",
-            url: site_url + "/docent/haalAjaxOp_Klassen/",
+            url: site_url + "/ispverantwoordelijke/haalAjaxOp_Klassen/",
             data: {klasId: klasId},
             success: function(output) {
                 $('#resultaat').html(output);
@@ -42,7 +42,7 @@ foreach ($klassen as $klasOptie) {
 </h1>
 <?php
 $attributes = array('name' => 'mijnFormulier');
-echo form_open('Docent/toonKlaslijsten', $attributes);
+echo form_open('ISPVerantwoordelijke/toonKlaslijsten', $attributes);
 $formattributes = array('id' => 'klaskeuze', 'class' => 'form-control');
 echo form_dropdown('klas', $klasOpties, '0', $formattributes);
 echo form_close();

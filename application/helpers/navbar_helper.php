@@ -7,14 +7,13 @@ function getNavbar($role) {
             break;
 
         case 'docent':
-            $buttons = array(   'Afspraken' =>site_url() . '/docent/showAfspraken',
-                                'Exporteren' => 'Link2',
-                                'Klassen' => 'toonKlaslijsten');
+            $buttons = array(   'Afspraken' =>site_url() . '/docent/showAfspraken');
             break;
 
         case 'ispverantwoordelijke':
             $buttons = array(   'Afspraken' => 'Link1',
-                                'Exporteren' => 'Link2');
+                                'Exporteren' => 'Link2',
+                                'Klassen' => 'toonKlaslijsten');
             break;
 
         case 'opleidingsmanager':
