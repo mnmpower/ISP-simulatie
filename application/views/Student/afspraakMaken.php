@@ -2,8 +2,8 @@
     <div id="calendarContainer">
         <form id="docentIdForm">
             <div class="form-group">
-                <label for="docentId">Selecteer een docent</label>
                 <select class="form-control" id="docentId">
+                    <option selected="selected">Kies een docent..</option>
                     <?php foreach ($docenten as $docent) {echo "<option value='" . $docent->id . "'>" . $docent->naam . "</option>";}?>
                 </select>
             </div>
@@ -25,32 +25,38 @@
                 </div>
                 <div class="modal-body">
                     <form>
-                        <div class="form-group">
-                            <label for="exampleFormControlSelect1">Example select</label>
-                            <select class="form-control" id="exampleFormControlSelect1">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                            </select>
-                        </div>
-                        <div class="form-row">
-                            <div class="col">
-                                <input type="text" class="form-control" placeholder="First name">
-                            </div>
-                            <div class="col">
-                                <input type="text" class="form-control" placeholder="Last name">
+                        <div class="form-group row">
+                            <label for="calendarModalDocent" class="col-sm-2 col-form-label">Docent:</label>
+                            <div class="col-sm-10">
+                                <input type="text" readonly class="form-control-plaintext" id="calendarModalDocent" value="TEST">
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label for="calendarModalPlaats" class="col-sm-2 col-form-label">Locatie:</label>
+                            <div class="col-sm-10">
+                                <input type="text" readonly class="form-control-plaintext" id="calendarModalPlaats" value="TEST">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="calendarModalDate" class="col-sm-2 col-form-label">Datum:</label>
+                            <div class="col-sm-10">
+                                <input type="text" readonly class="form-control-plaintext" id="calendarModalDate" value="TEST">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="calendarModalTime" class="col-sm-2 col-form-label">Tijd:</label>
+                            <div class="col-sm-10">
+                                <input type="text" readonly class="form-control-plaintext" id="calendarModalTime" value="TEST">
+                            </div>
+                        </div>
                         <div class="form-group">
-                            <label for="exampleFormControlTextarea1">Example textarea</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            <label for="exampleFormControlTextarea1">Extra opmerkingen:</label>
+                            <textarea class="form-control" id="calendarModalDescription" rows="3"></textarea>
                         </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuleren</button>
+                    <button type="button" class="btn btn-primary" id="calendarModalConfirm">Bevestigen</button>
                 </div>
             </div>
         </div>

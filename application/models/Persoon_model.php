@@ -143,4 +143,9 @@
             return $query->result();
         }
 
+        function getStudentnaam($id) {
+            $this->db->where('id', $id);
+            $query = $this->db->select('naam')->get('persoon');
+            return $query->row();
+        }
     }

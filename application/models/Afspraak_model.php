@@ -38,6 +38,14 @@ class Afspraak_model extends CI_Model
     function getAfsprakenWherePersoonIdDocent($id){
         $this->db->where('persoonIdDocent', $id);
         $query = $this->db->get('afspraak');
-        return $query->result();
+        $afspraken = $query->result();
+        $this->load->model('persoon_model');
+
+        foreach ($afspraken as $afspraak) {
+            $afspraak->persoon =
+                $this->persoon_model->getStudentnaam($afspraak->persoonIdStudent);
+        }
+
+        return $afspraken;
     }
 }

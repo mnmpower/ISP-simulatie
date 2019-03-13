@@ -222,6 +222,13 @@
 
             $this->load->model('afspraak_model');
             $data['afspraken'] = $this->afspraak_model->getAfsprakenWherePersoonIdDocent($persoonId);
+
             echo json_encode($data['afspraken']);
+        }
+
+        public function afspraakToevoegen() {
+            $description = $this->input->get('description');
+            $id = $this->
+            $this->load->model('afspraak_model');
         }
     }
