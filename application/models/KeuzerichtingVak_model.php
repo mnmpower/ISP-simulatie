@@ -1,5 +1,8 @@
 <?php
     /**
+     * @class KeuzerichtingVak_model
+     * @brief Model-klasse voor de associatie tussen keuzerichtingen en vakken
+     * Model-klasse die alle methodes bevat om te intrageren met de database-tabel team22_keuzerichtingVak
      * @property Persoon_model $persoon_model
      */
     class KeuzerichtingVak_model extends CI_Model
@@ -14,12 +17,19 @@
 		// +---------------------------------------------------------+ \\
 		// | T.Ingelaere, S. Kempeneer, J. Michiels, M. Michiels	 | \\
 		// +---------------------------------------------------------+ \\
-
+        /**
+         * Constructor
+         */
         function __construct()
         {
             parent::__construct();
         }
 
+        /**
+         * Retourneert het record met id=$id uit de tabel team22_keuzerichtingVak
+         * @param $id de id van het record  dat opgevraagd wordt
+         * @return Het opgevraagde record
+         */
 		function get($id)
 		{
 			$this->db->where('id', $id);

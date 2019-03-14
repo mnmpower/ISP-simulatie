@@ -3,6 +3,10 @@
     defined('BASEPATH') OR exit('No direct script access allowed');
 
     /**
+     * @class IspVerantwoordelijke
+     * @brief Controllerklasse voor de ispverantwoordelijke
+     *
+     * Controller-klasse met alle methodes die gebruikt worden in de pagina's voor de ispverantwoordelijke
      * @property Template $template
 	 * @property Persoon_model $persoon_model
      */

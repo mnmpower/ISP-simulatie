@@ -1,5 +1,8 @@
 <?php
     /**
+     * @class PersoonLes_model
+     * @brief Model-klasse voor de associatie tussen personen en lessen
+     * Model-klasse die alle methodes bevat om te intrageren met de database-tabel team22_persoonLes
      * @property Persoon_model $persoon_model
 	 * @property Les_model $les_model
      */
@@ -15,12 +18,19 @@
 		// +---------------------------------------------------------+ \\
 		// | T.Ingelaere, S. Kempeneer, J. Michiels, M. Michiels	 | \\
 		// +---------------------------------------------------------+ \\
-
+        /**
+         * Constructor
+         */
         function __construct()
         {
             parent::__construct();
         }
 
+        /**
+         * Retourneert het record met id=$id uit de tabel team22_persoonLes
+         * @param $id de id van het record  dat opgevraagd wordt
+         * @return Het opgevraagde record
+         */
         function get($id)
         {
             $this->db->where('persoonLesId', $id);

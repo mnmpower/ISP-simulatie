@@ -3,6 +3,10 @@
     defined('BASEPATH') OR exit('No direct script access allowed');
 
     /**
+     * @class Student
+     * @brief Controllerklasse voor de student
+     *
+     * Controller-klasse met alle methodes die gebruikt worden in de pagina's voor de student
      * @property Template $template
 	 * @property Persoon_model $persoon_model
      */

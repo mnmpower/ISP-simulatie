@@ -1,5 +1,12 @@
+<?php
+/**
+ * @file klasvoorkeur.php
+ * View waarin de uurrooster en samenstelling van de klassen wordt weergegeven
+ * krijgt een $klasobject binnen
+ * gebruikt ajax-call om de uurrooster en samenstelling van de klassen op te halen
+ */
+?>
 <script>
-
     function haalKlassenOp(klasId) {
         $.ajax({
             type: "GET",

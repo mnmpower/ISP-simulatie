@@ -1,3 +1,9 @@
+<?php
+/**
+ * @file home_model.php
+ * View waarin de homepagina van een modelstudent wordt weergegeven
+ */
+?>
 <h1>Menu model</h1>
 <?php
 $attributen = array(    'name'  => 'mijnFormulier',

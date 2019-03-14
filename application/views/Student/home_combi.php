@@ -1,3 +1,9 @@
+<?php
+    /**
+    * @file home_combi.php
+    * View waarin de homepagina van een combistudent wordt weergegeven
+    */
+?>
 <h1>Menu Combi</h1>
 <?php
 $attributen = array(    'name'  => 'mijnFormulier',

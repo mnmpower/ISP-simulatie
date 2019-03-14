@@ -1,3 +1,11 @@
+<?php
+/**
+ * @file klaslijsten.php
+ * View waarin de samenstelling van de klassen wordt weergegeven
+ * krijgt een $klasobject binnen
+ * gebruikt ajax-call om de samenstelling van de klassen op te halen
+ */
+?>
 <script>
 
     function haalKlassenOp(klasId) {
