@@ -10,7 +10,7 @@ $attributen = array(    'name'  => 'mijnFormulier',
     'id'    => 'mijnFormulier',
     'role'  => 'form');
 
-echo form_open('student/keuzeBeheer', $attributen);
+echo form_open('ispverantwoordelijke/keuzeBeheer', $attributen);
 $vakattributen = array('name' => 'vakken', "id" => "vakken", 'class' => 'form-control');
 echo form_submit('vakken', 'Vakkenbeheer', $vakattributen);
 $gebruikerattributen = array('name' => 'gebruikers', "id" => "gebruikers", 'class' => 'form-control');

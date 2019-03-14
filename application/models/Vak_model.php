@@ -37,4 +37,5 @@
 			$query = $this->db->get('vak');
 			return $query->row();
 		}
+
     }

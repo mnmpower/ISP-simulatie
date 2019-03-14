@@ -37,23 +37,13 @@
 			return $query->row();
 		}
 
+        /**
+         * Retourneert alle records uit de tabel team22_keuzerichting
+         * @return Alle records
+         */
 		function getAll()
         {
             $query = $this->db->get('keuzerichting');
             return $query->result();
         }
-
-        function getAllWhereKeuzerichting($keuzerichtingId)
-        {
-            $this->db->where('keuzerichtingId', $keuzerichtingId);
-            $query = $this->db->get('vak');
-            return $query->result();
-        }
-
-
-
-
-
-
-
     }
