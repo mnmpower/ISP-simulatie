@@ -19,7 +19,7 @@ function getNavbar($role) {
         case 'opleidingsmanager':
             $buttons = array(   'Afspraken' => 'Link1',
                                 'Exporteren' => 'Link2',
-                                'Beheer' => 'Link3');
+                                'Beheer' => 'beheer');
             break;
 
         default:
