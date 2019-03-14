@@ -1,5 +1,5 @@
 <?php
-    $keuzerichtingenNieuw[0] = '-- Maak een keuze --';
+    $keuzerichtingenNieuw[0] = 'Kies een keuzerichting..';
     foreach ($keuzerichtingen as $keuzerichting) {
         $keuzerichtingenNieuw[$keuzerichting->id] = $keuzerichting->naam;
     }
@@ -39,11 +39,10 @@
     <?php
         $attributes = array('name' => 'mijnFormulier');
         echo form_open('url', $attributes);
-        echo form_label('Afstudeerrichting', 'richting') . "\n";
         $dropdownAttributes = array('id' => 'richting', 'class' => "form-control");
         echo form_dropdown('richting', $keuzerichtingenNieuw, '0', $dropdownAttributes);
         echo form_close();
-    ?>
+    ?><br>
     <div id="resultaat" class="container">
 
     </div>

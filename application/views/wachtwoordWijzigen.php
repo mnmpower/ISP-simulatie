@@ -9,7 +9,7 @@
             echo form_open('home/editPassword', $attributes);
             ?>
             <div class="form-group">
-                <?php echo form_label('Login nummer', 'nummer') . "\n"; ?>
+                <?php echo form_label('Loginnummer', 'nummer') . "\n"; ?>
                 <?php echo form_input(array('name' => 'nummer', 'id' => 'nummer', 'class' => "form-control", 'placeholder' => "Studentennummer / Personeelsnummer")); ?>
             </div>
             <div class="form-group">

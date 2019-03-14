@@ -36,24 +36,24 @@
 <?php
 
 $klasOpties = array();
-$klasOpties[0] = '-- Select --';
+$klasOpties[0] = 'Kies een klas..';
 
 foreach ($klassen as $klasOptie) {
     $klasOpties[$klasOptie->id] = $klasOptie->naam;
 }
 ?>
-<h1>
+<div class="container">
+    <h1>
+        <?php echo $title ?>
+    </h1>
     <?php
-    echo $title
+    $attributes = array('name' => 'mijnFormulier');
+    echo form_open('Student/voorkeurBevestigen', $attributes);
+    $formattributes = array('id' => 'klaskeuze', 'class' => 'form-control');
+    echo form_dropdown('klas', $klasOpties, '0', $formattributes);
+    echo "<div id=\"resultaat\"></div>";
+    $submitattributes = array('class' => 'form-control');
+    echo form_submit('klasvoorkeur', 'Klasvoorkeur bevestigen', $submitattributes);
+    echo form_close();
     ?>
-</h1>
-<?php
-$attributes = array('name' => 'mijnFormulier');
-echo form_open('Student/voorkeurBevestigen', $attributes);
-$formattributes = array('id' => 'klaskeuze', 'class' => 'form-control');
-echo form_dropdown('klas', $klasOpties, '0', $formattributes);
-echo "<div id=\"resultaat\"></div>";
-$submitattributes = array('class' => 'form-control');
-echo form_submit('klasvoorkeur', 'Klasvoorkeur bevestigen', $submitattributes);
-echo form_close();
-?>
+</div>

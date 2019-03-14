@@ -6,7 +6,7 @@
             <div class="col-sm">Team 22:</div>
             <div class="col-sm"></div>
             <div class="col-sm"></div>
-            <div class="col-sm">Coach:</div>
+            <div class="col-sm">Opdrachtgever:</div>
         </div>
         <!-- Row 2 -->
         <div class="row">
@@ -75,7 +75,7 @@
         <div class="container containerTabletLogos">
             <div class="row">
                 <div class="col-sm"><?php echo toonAfbeelding('assets/images/logos/tm_standaardlogo_negatief_zw_0.png', 'title="TM Logo" class="logoFooter"')?></div>
-                <div class="col-sm"><div class="font-weight-bold">Coach:</div><div>Christel Maes</div></div>
+                <div class="col-sm"><div class="font-weight-bold">Opdrachtgever:</div><div>Christel Maes</div></div>
                 <div class="col-sm align-self-center"><?php echo toonAfbeelding('assets/images/logos/omnidatafooter.png', 'title="TM Logo" class="logoFooter"')?></div>
             </div>
         </div>
@@ -89,7 +89,7 @@
         <div>Kempeneer Sacha</div>
         <div>Michiels Jinte</div>
         <br>
-        <div class="font-weight-bold">Coach:</div>
+        <div class="font-weight-bold">Opdrachtgever:</div>
         <div>Christel Maes</div>
     </div>
 </footer>
