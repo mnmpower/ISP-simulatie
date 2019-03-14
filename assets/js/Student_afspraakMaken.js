@@ -4,27 +4,7 @@ $('#calendar').fullCalendar({
     weekends: false,
     nowIndicator: true,
     allDaySlot: false,
-<<<<<<< HEAD
-    minTime: "06:00:00",
-<<<<<<< HEAD
-    eventSources: [{ events: [
-        {
-            title  : 'event1',
-            start  : '2019-03-11T08:39:43',
-            end    : '2019-03-11T09:39:43'
-        },
-        {
-            title  : 'event2',
-            start  : '2019-03-13T09:39:43',
-            end    : '2019-03-13T10:39:43'
-        }]}],
-    dayClick: function(date, jsEvent, view) {
-
-        //alert('Clickedon: ' + date.format());
-=======
-=======
     minTime: "08:00:00",
->>>>>>> Finished Student_AfsprakenMaken, Updated JS & SQL
     eventClick: function (calEvent, jsEvent, view) {
         if (calEvent.bezet == 1) {
             var docent = $('#docentId option:selected').text();
@@ -37,11 +17,7 @@ $('#calendar').fullCalendar({
             $('#CalendarModal').modal();
             $('#calendarModalConfirm').click(function () {
                 var description = $('#calendarModalDescription').val();
-<<<<<<< HEAD
->>>>>>> Afspraken Maken Update, JS update
-=======
                 var id = calEvent.eventid;
->>>>>>> Finished Student_AfsprakenMaken, Updated JS & SQL
 
                 $.ajax({
                     type: "GET",
