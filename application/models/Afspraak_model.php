@@ -26,7 +26,7 @@ class Afspraak_model extends CI_Model
     function update($afspraak)
     {
         $this->db->where('id', $afspraak->id);
-        $this->db->update('mail', $afspraak);
+        $this->db->update('afspraak', $afspraak);
     }
 
     function delete($id)
@@ -47,5 +47,16 @@ class Afspraak_model extends CI_Model
         }
 
         return $afspraken;
+    }
+
+    function updateAfspraak($description, $studentId, $id) {
+        $data = array(
+            'beschikbaar' => 0,
+            'persoonIdStudent' => $studentId,
+            'extraOpmerking' => $description
+        );
+
+        $this->db->where('id', $id);
+        $this->db->update('afspraak', $data);
     }
 }

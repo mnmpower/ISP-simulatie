@@ -8,7 +8,8 @@
      *
      * Controller-klasse met alle methodes die gebruikt worden in de pagina's voor de student
      * @property Template $template
-	 * @property Persoon_model $persoon_model
+     * @property Persoon_model $persoon_model
+     * @property Afspraak_model $afspraak_model
      * @property Authex $authex
      */
     class Student extends CI_Controller
@@ -227,8 +228,13 @@
         }
 
         public function afspraakToevoegen() {
+            $this->load->library('session');
             $description = $this->input->get('description');
-            $id = $this->
+
+            $id = $this->input->get('id');
+            $student = $this->authex->getGebruikerInfo();
+
             $this->load->model('afspraak_model');
+            $this->afspraak_model->updateAfspraak($description, $student->id, $id);
         }
     }

@@ -53,10 +53,11 @@
                             <label for="exampleFormControlTextarea1">Extra opmerkingen:</label>
                             <textarea class="form-control" id="calendarModalDescription" rows="3"></textarea>
                         </div>
+                    </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuleren</button>
-                    <button type="button" class="btn btn-primary" id="calendarModalConfirm">Bevestigen</button>
+                    <button type="submit" class="btn btn-primary" id="calendarModalConfirm">Bevestigen</button>
                 </div>
             </div>
         </div>
