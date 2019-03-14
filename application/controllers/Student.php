@@ -9,6 +9,7 @@
      * Controller-klasse met alle methodes die gebruikt worden in de pagina's voor de student
      * @property Template $template
 	 * @property Persoon_model $persoon_model
+     * @property Authex $authex
      */
     class Student extends CI_Controller
     {
@@ -148,9 +149,11 @@
             // Gets plugins if required
             $data['plugins'] = getPlugin('geen');
 
+            $persoon = $this->authex->getGebruikerInfo();
+
             $klasId = $this->input->get('klasId');
             $this->load->model('klas_model');
-            $this->persoon_model->setKlasIdWhereNummer($nummer, $klasId);
+            $this->persoon_model->setKlasIdWhereNummer($persoon->id, $klasId);
 
             $partials = array(  'hoofding' => 'main_header',
                 'inhoud' => 'Student/home_model',
