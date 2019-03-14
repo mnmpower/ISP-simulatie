@@ -151,9 +151,9 @@
 
             $persoon = $this->authex->getGebruikerInfo();
 
-            $klasId = $this->input->get('klasId');
+            $persoon->kladId = $this->input->get('klasId');
             $this->load->model('klas_model');
-            $this->persoon_model->setKlasIdWhereId($persoon->id, $klasId);
+            $this->persoon_model->update($persoon);
 
             $partials = array(  'hoofding' => 'main_header',
                 'inhoud' => 'Student/home_model',

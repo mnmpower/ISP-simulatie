@@ -37,25 +37,40 @@
             $query = $this->db->get('persoon');
             return $query->row();
         }
+//      /**
+//       * Voegt het record $persoon toe aan de tabel team22_persoon
+//       * @param $persoon het record dat toegevoegd wordt
+//       */
+//		function insert($persoon)
+//		{
+//			$this->db->insert('persoon', $persoon);
+//			return $this->db->insert_id();
+//		}
 
-		function insert($persoon)
-		{
-			$this->db->insert('persoon', $persoon);
-			return $this->db->insert_id();
-		}
-
+        /**
+         * Update het record $persoon uit de tabel team22_persoon
+         * @param $persoon het record dat geüpdatet wordt
+         */
         function update($persoon)
         {
             $this->db->where('id', $persoon->id);
             $this->db->update('persoon', $persoon);
         }
 
+        /**
+         * Verwijdert het record met id=$id uit de tabel team22_persoon
+         * @param $id de id van het record dat verwijderd wordt
+         */
 		function delete($id)
 		{
 			$this->db->where('id', $id);
 			$this->db->delete('persoon');
 		}
 
+        /**
+         * Retourneert alle record met id=$id uit de tabel team22_persoon
+         * @return Het opgevraagde record
+         */
 		function getAllWhereIspIngediend()
 		{
 			$this->db->where('ispIngediend', 1);
@@ -115,9 +130,4 @@
             return $query->result();
         }
 
-        function setKlasIdWhereId($id, $klasId) {
-            $data = array('klasId' => $klasId);
-            $this->db->where('id', $id);
-            $this->db->update('persoon', $data);
-        }
     }
