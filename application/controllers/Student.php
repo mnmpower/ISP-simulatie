@@ -8,7 +8,8 @@
      *
      * Controller-klasse met alle methodes die gebruikt worden in de pagina's voor de student
      * @property Template $template
-	 * @property Persoon_model $persoon_model
+     * @property Persoon_model $persoon_model
+     * @property Afspraak_model $afspraak_model
      * @property Authex $authex
      */
     class Student extends CI_Controller
@@ -151,9 +152,9 @@
 
             $persoon = $this->authex->getGebruikerInfo();
 
-            $klasId = $this->input->get('klasId');
+            $persoon->kladId = $this->input->get('klasId');
             $this->load->model('klas_model');
-            $this->persoon_model->setKlasIdWhereNummer($persoon->id, $klasId);
+            $this->persoon_model->update($persoon);
 
             $partials = array(  'hoofding' => 'main_header',
                 'inhoud' => 'Student/home_model',
@@ -208,9 +209,32 @@
             // Gets plugins if required
             $data['plugins'] = getPlugin('fullCalendar');
 
+            // Data
+            $data['docenten'] = $this->persoon_model->getDocentWhereTypeid(2,3);
+
             $partials = array(  'hoofding' => 'main_header',
                 'inhoud' => 'Student/afspraakMaken',
                 'footer' => 'main_footer');
             $this->template->load('main_master', $partials, $data);
+        }
+
+        public function haalAjaxop_Afspraken() {
+            $persoonId = $this->input->get('persoonId');
+
+            $this->load->model('afspraak_model');
+            $data['afspraken'] = $this->afspraak_model->getAfsprakenWherePersoonIdDocent($persoonId);
+
+            echo json_encode($data['afspraken']);
+        }
+
+        public function afspraakToevoegen() {
+            $this->load->library('session');
+            $description = $this->input->get('description');
+
+            $id = $this->input->get('id');
+            $student = $this->authex->getGebruikerInfo();
+
+            $this->load->model('afspraak_model');
+            $this->afspraak_model->updateAfspraak($description, $student->id, $id);
         }
     }

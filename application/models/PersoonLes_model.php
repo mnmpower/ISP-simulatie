@@ -51,7 +51,7 @@
         	$persoonLes = $this->get($persoonLesId);
         	//model laden + lesWithVak toevoegen
 			$this->load->model('les_model');
-        	$persoonLes->lesWithVak = $this->les_model->getWithVak($persoonLes->lesId);
+        	$persoonLes->lesWithVak = $this->les_model->getLesWithVak($persoonLes->lesId);
 
         	return $persoonLes;
 		}
@@ -63,7 +63,7 @@
 
 
         	foreach ($persoonLessen as $persoonLes){
-				$persoonLes->lesWithVak =  $this->les_model->getWithVak($persoonLes->lesId);
+				$persoonLes->lesWithVak =  $this->les_model->getLesWithVak($persoonLes->lesId);
 			}
 			return $persoonLessen;
         	//OK Return alle persoonlessen met les en vak bij van een gegeven persoonID
