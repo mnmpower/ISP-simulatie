@@ -3,21 +3,24 @@
 function getNavbar($role) {
     switch ($role) {
         case 'student':
-            $buttons = array(   'Home' => 'index.php');
+            $buttons = array(   'Home' =>site_url() . '/home/index');
             break;
 
         case 'docent':
-            $buttons = array(   'Afspraken' =>site_url() . '/docent/showAfspraken');
+            $buttons = array(   'Home' =>site_url() . '/home/index',
+                                'Afspraken' =>site_url() . '/docent/showAfspraken');
             break;
 
         case 'ispverantwoordelijke':
-            $buttons = array(   'Afspraken' => 'Link1',
+            $buttons = array(   'Home' =>site_url() . '/home/index',
+                                'Afspraken' => 'Link1',
                                 'Exporteren' => 'Link2',
                                 'Klassen' => 'toonKlaslijsten');
             break;
 
         case 'opleidingsmanager':
-            $buttons = array(   'Afspraken' => 'Link1',
+            $buttons = array(   'Home' =>site_url() . '/home/index',
+                                'Afspraken' => 'Link1',
                                 'Exporteren' => 'Link2',
                                 'Beheer' => 'Link3');
             break;
