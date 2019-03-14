@@ -108,8 +108,8 @@
 
         public function editPassword() {
             $nummer = $this->input->post('nummer');
-            $this->authex->secureEditPassword($nummer);
-            redirect('home/index');
+            $password = $this->authex->secureEditPassword($nummer);
+            return $password;
         }
 
         public function controleerInloggen() {
