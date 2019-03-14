@@ -89,6 +89,11 @@
 			//OK return alle persoonlessen per persoon
 		}
 
+        /**
+         * Retourneert het totaal aantal studiepunten van het record $persoonWithAllPersoonLesAndLesAndVak
+         * @param $persoonWithAllPersoonLesAndLesAndVak het record  waarvan de studiepunten opgevraagd worden
+         * @return Het totaal aantal studiepunten
+         */
 		function getStudiepunten($persoonWithAllPersoonLesAndLesAndVak)
 		{
 			$studiepunten =0;
@@ -99,6 +104,12 @@
 			return $studiepunten;
 		}
 
+        /**
+         * Retourneert het record met nummer=$nummer uit de tabel team22_persoon als wachtwoord=$wachtwoord
+         * @param $nummer de nummer van het record  dat opgevraagd wordt
+         * @param $wachtwoord het wachtwoord dat ingegeven is
+         * @return Het opgevraagde record of null indien wachtwoord!=$wachtwoord
+         */
 		function getGebruiker($nummer, $wachtwoord) {
             $this->db->where('nummer', $nummer);
             $query = $this->db->get('persoon');
@@ -115,18 +126,30 @@
             }
         }
 
+        /**
+         * Update het record met nummer=$nummer uit de tabel team22_persoon
+         * @param $nummer de nummer van het record dat gewijzigd wordt
+         * @param $secureGeneratedPassword het nieuwe wachtwoord
+         */
         function setWachtwoordWhereNummer($nummer, $secureGeneratedPassword) {
             $data = array('wachtwoord' => $secureGeneratedPassword);
             $this->db->where('nummer', $nummer);
             $this->db->update('persoon', $data);
         }
 
+
+        /**
+         * Retourneert alle records met klasId=$klasId uit de tabel team22_persoon
+         * @param $klasId de klasId van het record  dat opgevraagd wordt
+         * @return Array met alle opgevraagde records
+         */
         function getAllWhereKlas($klasId){
 
             $this->db->where('klasId', $klasId);
             $query = $this->db->get('persoon');
             return $query->result();
         }
+
 
         function setKlasIdWhereNummer($nummer, $klasId) {
             $data = array('klasId' => $klasId);

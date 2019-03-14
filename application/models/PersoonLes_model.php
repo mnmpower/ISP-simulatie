@@ -38,15 +38,23 @@
             return $query->row();
         }
 
+        /**
+         * Retourneert alle records met persoonIdStudent=$persoonIdStudent uit de tabel team22_persoonLes
+         * @param $persoonIdStudent de id van de persoon waarvan de records opgevraagd worden
+         * @return Array met alle opgevraagde records
+         */
+        function getAllWherePersoonId($persoonIdStudent){
+            $this->db->where('persoonIdStudent',$persoonIdStudent);
+            $query =$this->db->get('persoonLes');
+            return  $query->result();
+            //OK returnt alle persoonLESSEN van een persoonID
+        }
 
-
-		function getAllWhere($persoonIdStudent){
-			$this->db->where('persoonIdStudent',$persoonIdStudent);
-			$query =$this->db->get('persoonLes');
-			return  $query->result();
-			//OK returnt alle persoonLESSEN van een persoonID
-		}
-
+        /**
+         * Retourneert het record met persoonLesId=$persoonLesId uit de tabel team22_persoonLes en bijhorende records uit de tabel team22_vak en tabel team22_les
+         * @param $persoonLesId de id van het record  dat opgevraagd wordt
+         * @return Het opgevraagde record en bijhorende records
+         */
 		function getWithLesAndVak($persoonLesId){
         	$persoonLes = $this->get($persoonLesId);
         	//model laden + lesWithVak toevoegen
@@ -56,8 +64,13 @@
         	return $persoonLes;
 		}
 
+        /**
+         * Retourneert alle records met persoonIdStudent=$persoonIdStudent uit de tabel team22_persoonLes en bijhorende records uit de tabel team22_vak en tabel team22_les
+         * @param $persoonIdStudent de persoonIdStudent van de records  die opgevraagd worden
+         * @return Array met alle opgevraagde records en bijhorende records
+         */
 		function getAllWithLesAndVak($persoonIdStudent){
-        	$persoonLessen = $this->getAllWhere($persoonIdStudent);
+        	$persoonLessen = $this->getAllWherePerssonId($persoonIdStudent);
 
 			$this->load->model('les_model');
 
