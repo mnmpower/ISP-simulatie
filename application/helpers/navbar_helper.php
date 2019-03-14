@@ -14,7 +14,7 @@ function getNavbar($role) {
         case 'ispverantwoordelijke':
             $buttons = array(   'Home' =>site_url() . '/home/index',
                                 'Afspraken' => 'Link1',
-                                'Exporteren' => 'Link2',
+                                'Exporteren' =>site_url() . '/IspVerantwoordelijke/documentExporteren',
                                 'Klassen' => 'toonKlaslijsten',
                                 'Beheer' => 'beheer');
             break;

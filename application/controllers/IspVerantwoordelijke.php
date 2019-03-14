@@ -157,4 +157,59 @@
         public function vakkenBeheer()
         {
         }
+
+        public function documentExporteren() {
+            $this->load->library('excel');
+
+            // Configuratie van het bestand
+            $this->excel->setActiveSheetIndex(0);
+            $this->excel->getActiveSheet()->setTitle('ISP Export');
+            $bestandsnaam = 'isp-export-' . date('d-m-Y') . '.xlsx';
+
+            // Opvullen van het bestand: HEADER
+            $this->excel->getActiveSheet()->setCellValue('A1', 'ISP Export');
+            $this->excel->getActiveSheet()->setCellValue('A2', date('d-m-Y'));
+            $this->excel->getActiveSheet()->getStyle('A1')->getFont()->setSize(16);
+            $this->excel->getActiveSheet()->getStyle('A1')->getFont()->setBold(true);
+            $this->excel->getActiveSheet()->setCellValue('A4', 'Studentennummer');
+            $this->excel->getActiveSheet()->setCellValue('B4', 'Naam');
+            $this->excel->getActiveSheet()->setCellValue('C4', 'Aantal studiepunten');
+            $this->excel->getActiveSheet()->setCellValue('D4', 'Advies');
+            $this->excel->getActiveSheet()->getColumnDimension('A')->setWidth(30);
+            $this->excel->getActiveSheet()->getColumnDimension('B')->setWidth(40);
+            $this->excel->getActiveSheet()->getColumnDimension('C')->setWidth(30);
+            $this->excel->getActiveSheet()->getColumnDimension('D')->setWidth(50);
+            $this->excel->getActiveSheet()->getStyle('A4')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('D3D3D3');
+            $this->excel->getActiveSheet()->getStyle('B4')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('D3D3D3');
+            $this->excel->getActiveSheet()->getStyle('C4')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('D3D3D3');
+            $this->excel->getActiveSheet()->getStyle('D4')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('D3D3D3');
+
+            // Opvullen van het bestand: INHOUD
+            $startCell = 5;
+            $ingediendeIspStudenten = $this->persoon_model->getAllWhereIspIngediend();
+
+            foreach ($ingediendeIspStudenten as $persoon) {
+                $persoon->persoonLessen = $this->persoon_model->getAllPersoonLesWithLesAndVak($persoon);
+                $persoon->studiepunten = $this->persoon_model->getStudiepunten($persoon);
+
+                $this->excel->getActiveSheet()->setCellValue('A' . $startCell, $persoon->nummer);
+                $this->excel->getActiveSheet()->setCellValue('B' . $startCell, $persoon->naam);
+                $this->excel->getActiveSheet()->setCellValue('C' . $startCell, $persoon->studiepunten);
+                $this->excel->getActiveSheet()->setCellValue('D' . $startCell, $persoon->advies);
+                $startCell++;
+            }
+
+            // Browser bestand laten herkennen
+            header('Content-Type: application/vnd.ms-excel');
+            header('Content-Disposition: attachment;filename="'. $bestandsnaam .'"');
+
+            // Cachen van bestand voorkomen
+            header('Cache-Control: max-age=0');
+
+            // Excel2007 zorgt voor juiste bestandsindeling bij .xlsx extentie
+            $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel2007');
+
+            // Bestand direct downloaden zonder het op te slaan op de server
+            $objWriter->save('php://output');
+        }
     }

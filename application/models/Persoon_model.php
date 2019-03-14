@@ -78,8 +78,6 @@
 			return $query->result();
 		}
 
-
-
 		function getAllPersoonLesWithLesAndVak($persoon){
 
         	//model laden+ alle PersoonLessen toevoegen
