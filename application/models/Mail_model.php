@@ -29,6 +29,11 @@ class Mail_model extends CI_Model
         return $query->row();
     }
 
+    /**
+     * Retourneert het record met id=$id uit de tabel team22_mail
+     * @param $id de id van het record  dat opgevraagd wordt
+     * @return Het opgevraagde record
+     */
     function insert($mail)
     {
         $this->db->insert('mail', $mail);

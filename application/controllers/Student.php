@@ -153,7 +153,7 @@
 
             $klasId = $this->input->get('klasId');
             $this->load->model('klas_model');
-            $this->persoon_model->setKlasIdWhereNummer($persoon->id, $klasId);
+            $this->persoon_model->setKlasIdWhereId($persoon->id, $klasId);
 
             $partials = array(  'hoofding' => 'main_header',
                 'inhoud' => 'Student/home_model',

@@ -38,9 +38,12 @@
             return $query->row();
         }
 
-
-
-		function getWithVak($id)
+        /**
+         * Retourneert het record met id=$id uit de tabel team22_les en bijhorend record uit de tabel team22_vak
+         * @param $id de id van het record  dat opgevraagd wordt
+         * @return Het opgevraagde en bijhorende record
+         */
+		function getLesWithVak($id)
 		{
 			$les = $this->get($id);
 
@@ -49,11 +52,4 @@
 			$les->vak = $this->vak_model->get($les->vakId);
 			return $les;
 		}
-
-
-
-
-
-
-
     }

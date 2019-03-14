@@ -37,6 +37,10 @@
 			return $query->row();
 		}
 
+        /**
+         * Retourneert alle records uit de tabel team22_keuzerichtingVak
+         * @return Alle records
+         */
 		function getAllKlassen(){
             $query = $this->db->get('klas');
             return $query->result();
