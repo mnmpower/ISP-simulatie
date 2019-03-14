@@ -1,5 +1,8 @@
 <div class="container">
     <div class="row">
+        <div class="col-12">
+            <h1>Wachtwoord vergeten</h1>
+        </div>
         <div class="col-md-6">
             <?php
             $attributes = array('name' => 'editPasswordForm');
