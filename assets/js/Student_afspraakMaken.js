@@ -102,3 +102,10 @@ function filterByBezet(obj) {
         return false;
     }
 }
+
+    $(window).resize(function () {
+        if (600 < $(window).width()) {
+            $('#calendar').fullCalendar('changeView', 'agendaWeek');}
+        else {
+            $('#calendar').fullCalendar('changeView', 'agendaDay');}
+    });
