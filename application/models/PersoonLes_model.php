@@ -70,7 +70,7 @@
          * @return Array met alle opgevraagde records en bijhorende records
          */
 		function getAllWithLesAndVak($persoonIdStudent){
-        	$persoonLessen = $this->getAllWherePerssonId($persoonIdStudent);
+        	$persoonLessen = $this->getAllWherePersoonId($persoonIdStudent);
 
 			$this->load->model('les_model');
 
