@@ -156,10 +156,7 @@
             $this->load->model('klas_model');
             $this->persoon_model->update($persoon);
 
-            $partials = array(  'hoofding' => 'main_header',
-                'inhoud' => 'Student/home_model',
-                'footer' => 'main_footer');
-            $this->template->load('main_master', $partials, $data);
+            redirect('student/index');
         }
 
         public function toonJaarvakken()
