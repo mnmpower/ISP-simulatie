@@ -32,6 +32,7 @@
 			$this->load->helper('notation');
 			$this->load->helper('notation_helper');
             $this->load->helper('navbar_helper');
+            $this->load->helper('plugin_helper');
 
 
 			$this->load->library('session');

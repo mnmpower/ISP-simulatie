@@ -11,7 +11,7 @@
         'id'    => 'mijnFormulier',
         'role'  => 'form');
 
-    echo form_open('ispverantwoordelijke/keuzeBeheer', $attributen);
+    echo form_open('opleidingsmanager/keuzeBeheer', $attributen);
     $vakattributen = array('name' => 'vakken', "id" => "vakken", 'class' => 'form-control');
     echo form_submit('vakken', 'Vakkenbeheer', $vakattributen);
     $gebruikerattributen = array('name' => 'gebruikers', "id" => "gebruikers", 'class' => 'form-control');

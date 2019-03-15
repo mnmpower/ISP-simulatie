@@ -112,52 +112,6 @@
             $this->load->view('IspVerantwoordelijke/ajax_klaslijsten', $data);
         }
 
-        public function beheer()
-        {
-            $data['title'] = "Opleidingsmanager";
-
-            // Defines roles for this page (You can also use "geen" or leave roles empty!).
-            $data['roles'] = getRoles('geen','Ontwikkelaar','geen','geen');
-
-            // Gets buttons for navbar);
-            $data['buttons'] = getNavbar('ispverantwoordelijke');
-
-            // Gets plugins if required
-            $data['plugins'] = getPlugin('geen');
-
-            $partials = array(  'hoofding' => 'main_header',
-                'inhoud' => 'ispverantwoordelijke/beheermenu',
-                'footer' => 'main_footer');
-            $this->template->load('main_master', $partials, $data);
-        }
-
-        public function keuzeBeheer()
-        {
-            if(isset($_POST['vakken']))
-            {
-                redirect('IspVerantwoordelijke/vakkenBeheer');
-            }
-            else if(isset($_POST['gebruikers']))
-            {
-            }
-            else if(isset($_POST['klassen']))
-            {
-            }
-            else if(isset($_POST['lessen']))
-            {
-            }
-            else if(isset($_POST['mails']))
-            {
-            }
-            else if(isset($_POST['keuzerichtingen']))
-            {
-            }
-        }
-
-        public function vakkenBeheer()
-        {
-        }
-
         public function documentExporteren() {
             $this->load->library('excel');
 

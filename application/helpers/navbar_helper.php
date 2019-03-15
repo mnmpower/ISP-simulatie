@@ -15,14 +15,12 @@ function getNavbar($role) {
             $buttons = array(   'Home' =>site_url() . '/home/index',
                                 'Afspraken' => 'Link1',
                                 'Exporteren' =>site_url() . '/IspVerantwoordelijke/documentExporteren',
-                                'Klassen' => 'toonKlaslijsten',
-                                'Beheer' => 'beheer');
+                                'Klassen' => 'toonKlaslijsten');
             break;
 
         case 'opleidingsmanager':
             $buttons = array(   'Home' =>site_url() . '/home/index',
-                                'Afspraken' => 'Link1',
-                                'Exporteren' => 'Link2');
+                                'Beheer' => 'beheer');
             break;
 
         default:
