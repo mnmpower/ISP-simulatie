@@ -152,7 +152,7 @@
 
             $persoon = $this->authex->getGebruikerInfo();
 
-            $persoon->kladId = $this->input->get('klasId');
+            $persoon->klasId = $this->input->post('klas');
             $this->load->model('klas_model');
             $this->persoon_model->update($persoon);
 
