@@ -190,7 +190,7 @@
             $data['klassen'] = $klassen;
 
             // Defines roles for this page (You can also use "geen" or leave roles empty!).
-            $data['roles'] = getRoles('geen','Ontwikkelaar','geen','geen');
+            $data['roles'] = getRoles('Tester','Ontwikkelaar','geen','geen');
 
             // Gets buttons for navbar);
             $data['buttons'] = getNavbar('student');
@@ -209,7 +209,7 @@
             $data['title'] = "Student";
 
             // Defines roles for this page (You can also use "geen" or leave roles empty!).
-            $data['roles'] = getRoles('geen','Ontwikkelaar','geen','geen');
+            $data['roles'] = getRoles('Tester','Ontwikkelaar','geen','geen');
 
             // Gets buttons for navbar);
             $data['buttons'] = getNavbar('student');

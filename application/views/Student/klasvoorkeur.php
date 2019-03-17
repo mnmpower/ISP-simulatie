@@ -22,12 +22,15 @@
     }
 
     $(document).ready(function () {
+		$('#ButtonSubmitKlas').attr("disabled", "disabled");
         $("#klaskeuze").change(function () {
             klasId = $('#klaskeuze').val();
-            if(klasId == '') {
+            if(klasId == '0') {
                 $('#resultaat').html("");
-            } else {
+				$('#ButtonSubmitKlas').attr("disabled", "disabled");
+			} else {
                 haalKlassenOp(klasId);
+				$('#ButtonSubmitKlas').removeAttr("disabled");
             }
         });
     });
@@ -52,7 +55,7 @@ foreach ($klassen as $klasOptie) {
     $formattributes = array('id' => 'klaskeuze', 'class' => 'form-control');
     echo form_dropdown('klas', $klasOpties, '0', $formattributes);
     echo "<div id=\"resultaat\"></div>";
-    $submitattributes = array('class' => 'form-control');
+    $submitattributes = array('class' => 'form-control', 'id' => 'ButtonSubmitKlas' );
     echo form_submit('klasvoorkeur', 'Klasvoorkeur bevestigen', $submitattributes);
     echo form_close();
     ?>
