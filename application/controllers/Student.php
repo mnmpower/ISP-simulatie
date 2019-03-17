@@ -67,8 +67,11 @@
 
         public function home_student()
         {
+			$this->load->library('session');
             $inhoud = '';
             $data['title'] = "Student";
+
+            $typeStudent = $this->session->userdata("type");
 
             // Defines roles for this page (You can also use "geen" or leave roles empty!).
             $data['roles'] = getRoles('geen','Ontwikkelaar','geen','geen');
@@ -79,12 +82,14 @@
             // Gets plugins if required
             $data['plugins'] = getPlugin('geen');
 
-            if(isset($_POST['model']))
+            if(isset($_POST['model']) || $typeStudent == 'model')
             {
+				$this->session->unset_userdata('type');
                 $inhoud = 'Student/home_model';
             }
-            else if(isset($_POST['combi']))
+            else if(isset($_POST['combi']) || $typeStudent == 'combi')
             {
+				$this->session->unset_userdata('type');
                 $inhoud = 'Student/home_combi';
             }
 
@@ -223,7 +228,9 @@
             $this->load->model('klas_model');
             $this->persoon_model->update($persoon);
 
-            redirect('student/index');
+			$this->session->set_userdata('type','model');
+
+            redirect('student/home_student');
         }
 
         public function toonJaarvakken()
