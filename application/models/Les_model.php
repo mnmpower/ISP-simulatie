@@ -52,4 +52,16 @@
 			$les->vak = $this->vak_model->get($les->vakId);
 			return $les;
 		}
+
+		/**
+		 * Retourneert het record met id=$id uit de tabel team22_les en bijhorend record uit de tabel team22_vak
+		 * @param $klasId is het id van de klas waar we alle lessen van willen opvragen
+		 * @return alle less van een opgegeven klas
+		 */
+		function getAllLesWhere($klasId)
+		{
+			$this->db->where('klasId',$klasId);
+			$query = $this->db->get('les');
+			return $query->result();
+		}
     }

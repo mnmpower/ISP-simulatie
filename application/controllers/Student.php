@@ -8,8 +8,11 @@
      *
      * Controller-klasse met alle methodes die gebruikt worden in de pagina's voor de student
      * @property Template $template
+     * @property Klas_model $klas_model
      * @property Persoon_model $persoon_model
      * @property Afspraak_model $afspraak_model
+     * @property Les_model $les_model
+     * @property Vak_model $vak_model
      * @property Authex $authex
      */
     class Student extends CI_Controller
@@ -107,11 +110,75 @@
             }
             else if(isset($_POST['uurrooster']))
             {
+				redirect('Student/uurroosterWeergevenSemester1');
             }
             else if(isset($_POST['isp']))
             {
             }
         }
+
+        public function uurroosterWeergevenSemester1(){
+        	$this->load->model("klas_model");
+			$data['title'] = "Uurrooster weergeven";
+			// Defines roles for this page (You can also use "geen" or leave roles empty!).
+			$data['roles'] = getRoles('ontwikkelaar','geen','geen','geen');
+
+			// Gets buttons for navbar);
+			$data['buttons'] = getNavbar('student');
+
+			// Gets plugins if required
+			$data['plugins'] = getPlugin('fullCalendar');
+
+			$persoon = $this->authex->getGebruikerInfo();
+			$klas = $this->klas_model->get($persoon->klasId);
+
+			$data['klas'] = $klas;
+
+        	$partials = array(  'hoofding' => 'main_header',
+				'inhoud' => 'Student/uurroosterWeergevenSemester1',
+				'footer' => 'main_footer');
+			$this->template->load('main_master', $partials, $data);
+		}
+
+		public function uurroosterWeergevenSemester2(){
+			$this->load->model("klas_model");
+			$data['title'] = "Uurrooster weergeven";
+			// Defines roles for this page (You can also use "geen" or leave roles empty!).
+			$data['roles'] = getRoles('ontwikkelaar','geen','geen','geen');
+
+			// Gets buttons for navbar);
+			$data['buttons'] = getNavbar('student');
+
+			// Gets plugins if required
+			$data['plugins'] = getPlugin('fullCalendar');
+
+			$persoon = $this->authex->getGebruikerInfo();
+			$klas = $this->klas_model->get($persoon->klasId);
+
+			$data['klas'] = $klas;
+
+			$partials = array(  'hoofding' => 'main_header',
+				'inhoud' => 'Student/uurroosterWeergevenSemester2',
+				'footer' => 'main_footer');
+			$this->template->load('main_master', $partials, $data);
+		}
+
+		public function haalJsonOp_lessenPerKlas($klasId){
+//			$klasId= $this->input->get('klasid');
+        	$this->load->model('les_model');
+        	$this->load->model('vak_model');
+
+//			$data['lessen']= $this->les_model->getAllLesWhere($kladId);
+			$lessen = $this->les_model->getAllLesWhere($klasId);
+
+			foreach ($lessen as $les){
+				$vak = $this->vak_model->get($les->vakId);
+				$les->vaknaam = $vak->naam;
+				$les->semester = $vak ->semester;
+			}
+
+			$this->output->set_content_type("application/json");
+			echo json_encode($lessen);}
 
         public function klasvoorkeur()
         {
