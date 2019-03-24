@@ -58,15 +58,7 @@
         $("#semesterkeuze").change(function () {
             klasId = $('#klaskeuze').val();
             semesterId = $('#semesterkeuze').val();
-            if(klasId == '0') {
-                $('#resultaat').html("");
-                $('#uurrooster').html("");
-                $('#ButtonSubmitKlas').attr("disabled", "disabled");
-            } else {
-                haalKlassenOp(klasId);
-                haalUurroosterOp(klasId, semesterId);
-                $('#ButtonSubmitKlas').removeAttr("disabled");
-            }
+            haalUurroosterOp(klasId, semesterId);
         });
     });
 
