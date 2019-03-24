@@ -7,11 +7,11 @@
  */
 ?>
 <script>
-    function haalKlassenOp(klasId) {
+    function haalKlassenOp(klasId, semester) {
         $.ajax({
             type: "GET",
             url: site_url + "/ispverantwoordelijke/haalAjaxOp_Klassen/",
-            data: {klasId: klasId},
+            data: {klasId: klasId, semester: semester},
             success: function(output) {
                 $('#resultaat').html(output);
             },
@@ -21,11 +21,11 @@
         });
     }
 
-    function haalUurroosterOp(semester) {
+    function haalUurroosterOp(klasId, semesterId) {
         $.ajax({
             type: "GET",
             url: site_url + "/student/haalAjaxOp_Uurrooster/",
-            data: {semester: semester},
+            data: {klasId: klasId, semesterId: semesterId},
             success: function(output) {
                 $('#uurrooster').html(output);
             },
@@ -37,31 +37,34 @@
 
     $(document).ready(function () {
 		$('#ButtonSubmitKlas').attr("disabled", "disabled");
+        $('#semesterkeuze').hide();
 
         $("#klaskeuze").change(function () {
             klasId = $('#klaskeuze').val();
-            semester =  $('#semesterkeuze option:selected').text();
+            semesterId = $('#semesterkeuze').val();
             if(klasId == '0') {
+                $('#semesterkeuze').hide();
                 $('#resultaat').html("");
                 $('#uurrooster').html("");
 				$('#ButtonSubmitKlas').attr("disabled", "disabled");
 			} else {
+                $('#semesterkeuze').show();
                 haalKlassenOp(klasId);
-                haalUurroosterOp(semester);
+                haalUurroosterOp(klasId, semesterId);
 				$('#ButtonSubmitKlas').removeAttr("disabled");
             }
         });
 
         $("#semesterkeuze").change(function () {
             klasId = $('#klaskeuze').val();
-            semester =  $('#semesterkeuze option:selected').text();
+            semesterId = $('#semesterkeuze').val();
             if(klasId == '0') {
                 $('#resultaat').html("");
                 $('#uurrooster').html("");
                 $('#ButtonSubmitKlas').attr("disabled", "disabled");
             } else {
                 haalKlassenOp(klasId);
-                haalUurroosterOp(semester);
+                haalUurroosterOp(klasId, semesterId);
                 $('#ButtonSubmitKlas').removeAttr("disabled");
             }
         });
@@ -88,9 +91,9 @@ $semesterOpties = array('Semester 1', 'Semester 2');
     echo form_open('Student/voorkeurBevestigen', $attributes);
     $klasattributes = array('id' => 'klaskeuze', 'class' => 'form-control');
     echo form_dropdown('klas', $klasOpties, '0', $klasattributes);
+    echo "<div id=\"resultaat\"></div>";
     $semesterattributes = array('id' => 'semesterkeuze', 'class' => 'form-control');
     echo form_dropdown('semester', $semesterOpties, '0', $semesterattributes);
-    echo "<div id=\"resultaat\"></div>";
     echo "<div id=\"uurrooster\"></div>";
     $submitattributes = array('class' => 'form-control', 'id' => 'ButtonSubmitKlas' );
     echo form_submit('klasvoorkeur', 'Klasvoorkeur bevestigen', $submitattributes);

@@ -244,16 +244,20 @@
         }
 
         public function haalAjaxOp_Uurrooster() {
-            $data['semester'] = $this->input->get('semester');
+            $klasId = $this->input->get('klasId');
+            $semesterId = $this->input->get('semesterId');
 
             $this->load->model('klas_model');
-            $persoon = $this->authex->getGebruikerInfo();
-            $klas = $this->klas_model->get($persoon->klasId);
+            $klas = $this->klas_model->get($klasId);
 
             $data['klas'] = $klas;
 
-
-            $this->load->view('Student/ajax_uurrooster', $data);
+            if($semesterId == 0){
+                $this->load->view('Student/ajax_uurroosterSemester1', $data);
+            }
+            else{
+                $this->load->view('Student/ajax_uurroosterSemester2', $data);
+            }
         }
 
         public function toonJaarvakken()
