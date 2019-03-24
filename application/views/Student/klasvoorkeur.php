@@ -21,16 +21,48 @@
         });
     }
 
+    function haalUurroosterOp(semester) {
+        $.ajax({
+            type: "GET",
+            url: site_url + "/student/haalAjaxOp_Uurrooster/",
+            data: {semester: semester},
+            success: function(output) {
+                $('#uurrooster').html(output);
+            },
+            error: function (xhr, status, error) {
+                alert("-- ERROR IN AJAX --\n\n" + xhr.responseText);
+            }
+        });
+    }
+
     $(document).ready(function () {
 		$('#ButtonSubmitKlas').attr("disabled", "disabled");
+
         $("#klaskeuze").change(function () {
             klasId = $('#klaskeuze').val();
+            semester =  $('#semesterkeuze option:selected').text();
             if(klasId == '0') {
                 $('#resultaat').html("");
+                $('#uurrooster').html("");
 				$('#ButtonSubmitKlas').attr("disabled", "disabled");
 			} else {
                 haalKlassenOp(klasId);
+                haalUurroosterOp(semester);
 				$('#ButtonSubmitKlas').removeAttr("disabled");
+            }
+        });
+
+        $("#semesterkeuze").change(function () {
+            klasId = $('#klaskeuze').val();
+            semester =  $('#semesterkeuze option:selected').text();
+            if(klasId == '0') {
+                $('#resultaat').html("");
+                $('#uurrooster').html("");
+                $('#ButtonSubmitKlas').attr("disabled", "disabled");
+            } else {
+                haalKlassenOp(klasId);
+                haalUurroosterOp(semester);
+                $('#ButtonSubmitKlas').removeAttr("disabled");
             }
         });
     });
@@ -44,6 +76,8 @@ $klasOpties[0] = 'Kies een klas..';
 foreach ($klassen as $klasOptie) {
     $klasOpties[$klasOptie->id] = $klasOptie->naam;
 }
+
+$semesterOpties = array('Semester 1', 'Semester 2');
 ?>
 <div class="container">
     <h1>
@@ -52,9 +86,12 @@ foreach ($klassen as $klasOptie) {
     <?php
     $attributes = array('name' => 'mijnFormulier');
     echo form_open('Student/voorkeurBevestigen', $attributes);
-    $formattributes = array('id' => 'klaskeuze', 'class' => 'form-control');
-    echo form_dropdown('klas', $klasOpties, '0', $formattributes);
+    $klasattributes = array('id' => 'klaskeuze', 'class' => 'form-control');
+    echo form_dropdown('klas', $klasOpties, '0', $klasattributes);
+    $semesterattributes = array('id' => 'semesterkeuze', 'class' => 'form-control');
+    echo form_dropdown('semester', $semesterOpties, '0', $semesterattributes);
     echo "<div id=\"resultaat\"></div>";
+    echo "<div id=\"uurrooster\"></div>";
     $submitattributes = array('class' => 'form-control', 'id' => 'ButtonSubmitKlas' );
     echo form_submit('klasvoorkeur', 'Klasvoorkeur bevestigen', $submitattributes);
     echo form_close();

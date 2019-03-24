@@ -243,6 +243,19 @@
             redirect('student/home_student');
         }
 
+        public function haalAjaxOp_Uurrooster() {
+            $data['semester'] = $this->input->get('semester');
+
+            $this->load->model('klas_model');
+            $persoon = $this->authex->getGebruikerInfo();
+            $klas = $this->klas_model->get($persoon->klasId);
+
+            $data['klas'] = $klas;
+
+
+            $this->load->view('Student/ajax_uurrooster', $data);
+        }
+
         public function toonJaarvakken()
         {
             $data['title'] = "Jaarvakken";
