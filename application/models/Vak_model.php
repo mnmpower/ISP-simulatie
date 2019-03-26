@@ -38,4 +38,14 @@
 			return $query->row();
 		}
 
+        /**
+         * Retourneert alle records uit de tabel team22_vak
+         * @return Alle records
+         */
+        function getAll()
+        {
+            $query = $this->db->get('vak');
+            return $query->result();
+        }
+
     }

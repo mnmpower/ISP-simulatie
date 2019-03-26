@@ -83,7 +83,21 @@
 
 		}
 
+        /**
+         * Retourneert alle records met persoonIdStudent=$persoonIdStudent uit de tabel team22_persoonLes en bijhorende records uit de tabel team22_vak, de tabel team22_les en de tabel team22_klas
+         * @param $persoonIdStudent de persoonIdStudent van de records  die opgevraagd worden
+         * @return Array met alle opgevraagde records en bijhorende records
+         */
+        function getAllWithLesAndVakAndKlas($persoonIdStudent){
+            $persoonLessen = $this->getAllWherePersoonId($persoonIdStudent);
 
+            $this->load->model('les_model');
+            $this->load->model('klas_model');
 
-
+            foreach ($persoonLessen as $persoonLes){
+                $persoonLes->lesWithVak = $this->les_model->getLesWithVak($persoonLes->lesId);
+                $persoonLes->lesWithVak->klas = $this->klas_model->get($persoonLes->lesWithVak->klasId);
+            }
+            return $persoonLessen;
+        }
     }

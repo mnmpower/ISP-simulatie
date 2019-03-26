@@ -39,6 +39,8 @@
 			$this->load->library('pagination');
 
 			$this->load->model('persoon_model');
+			$this->load->model('persoonLes_model');
+			$this->load->model('vak_model');
         }
 
         public function index()
@@ -115,9 +117,14 @@
         public function documentExporteren() {
             $this->load->library('excel');
 
+            // Variabelen
+            $vakken = $this->vak_model->getAll();
+            $ingediendeIspStudenten = $this->persoon_model->getAllWhereIspIngediend();
+
             // Configuratie van het bestand
             $this->excel->setActiveSheetIndex(0);
             $this->excel->getActiveSheet()->setTitle('ISP Export');
+            $this->excel->getActiveSheet()->freezePane('C5');
             $bestandsnaam = 'isp-export-' . date('d-m-Y') . '.xlsx';
 
             // Opvullen van het bestand: HEADER
@@ -137,19 +144,34 @@
             $this->excel->getActiveSheet()->getStyle('B4')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('D3D3D3');
             $this->excel->getActiveSheet()->getStyle('C4')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('D3D3D3');
             $this->excel->getActiveSheet()->getStyle('D4')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('D3D3D3');
+            foreach ($vakken as $vak) {
+                $startColumn = PHPExcel_Cell::stringFromColumnIndex(3 + $vak->id);
+                $this->excel->getActiveSheet()->setCellValue($startColumn . '4', $vak->naam);
+                $this->excel->getActiveSheet()->getStyle($startColumn . '4')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('D3D3D3');
+                $this->excel->getActiveSheet()->getColumnDimension($startColumn)->setWidth(20);
+            }
 
             // Opvullen van het bestand: INHOUD
             $startCell = 5;
-            $ingediendeIspStudenten = $this->persoon_model->getAllWhereIspIngediend();
 
             foreach ($ingediendeIspStudenten as $persoon) {
-                $persoon->persoonLessen = $this->persoon_model->getAllPersoonLesWithLesAndVak($persoon);
+                $persoon->persoonLessen = $this->persoonLes_model->getAllWithLesAndVakAndKlas($persoon->id);
                 $persoon->studiepunten = $this->persoon_model->getStudiepunten($persoon);
 
                 $this->excel->getActiveSheet()->setCellValue('A' . $startCell, $persoon->nummer);
                 $this->excel->getActiveSheet()->setCellValue('B' . $startCell, $persoon->naam);
                 $this->excel->getActiveSheet()->setCellValue('C' . $startCell, $persoon->studiepunten);
                 $this->excel->getActiveSheet()->setCellValue('D' . $startCell, $persoon->advies);
+                foreach ($persoon->persoonLessen as $persoonLes) {
+                    $startColumn = PHPExcel_Cell::stringFromColumnIndex(3 + $persoonLes->lesWithVak->vak->id);
+                    $cellWaarde = $this->excel->getActiveSheet()->getCell($startColumn . $startCell)->getValue();
+                    if($cellWaarde == null || $cellWaarde == '') {
+                        $this->excel->getActiveSheet()->setCellValue($startColumn . $startCell, $persoonLes->lesWithVak->klas->naam);
+                    } else {
+                        $this->excel->getActiveSheet()->setCellValue($startColumn . $startCell, $cellWaarde . ' & ' . $persoonLes->lesWithVak->klas->naam);
+                    }
+                }
+
                 $startCell++;
             }
 
