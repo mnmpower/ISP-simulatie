@@ -107,9 +107,9 @@
         }
 
         public function editPassword() {
-            $nummer = $this->input->post('nummer');
+            $nummer = $this->input->get('nummer');
             $password = $this->authex->secureEditPassword($nummer);
-            return $password;
+            echo $password;
         }
 
         public function controleerInloggen() {
