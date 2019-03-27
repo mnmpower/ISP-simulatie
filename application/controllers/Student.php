@@ -65,14 +65,26 @@
             $this->template->load('main_master', $partials, $data);
         }
 
+        public function setType(){
+			$this->load->library('session');
+
+			if(isset($_POST['model']) == "Model-student"){
+				$this->session->set_userdata('type','model');
+			}
+			else if(isset($_POST['combi']) == "Combi-student"){
+				$this->session->set_userdata('type','combi');
+			}
+
+			redirect('student/home_student');
+		}
+
         public function home_student()
         {
 			$this->load->library('session');
             $inhoud = '';
             $data['title'] = "Student";
 //
-//            $typeStudent = $this->session->userdata("type");
-//			$this->session->unset_userdata('type');
+            $typeStudent = $this->session->userdata("type");
 
             // Defines roles for this page (You can also use "geen" or leave roles empty!).
             $data['roles'] = getRoles('geen','Ontwikkelaar','geen','geen');
@@ -83,24 +95,11 @@
             // Gets plugins if required
             $data['plugins'] = getPlugin('geen');
 
-            if(isset($_POST['model']))
-            {
-//                $inhoud = 'Student/home_model';
-				$this->session->set_userdata('type','model');
-            }
-            else if(isset($_POST['combi']))
-			{
 
-				$this->session->set_userdata('type','combi');
-
-//				$this->session->unset_userdata('type');
-//                $inhoud = 'Student/home_combi';
-            }
-
-            if ($this->session->userdata('type') == "model"){
+            if ($typeStudent == "model"){
             	$inhoud ='Student/home_model';
 
-			}else if($this->session->userdata('type') == "combi")
+			}else if($typeStudent == "combi")
             {
 				$inhoud ='Student/home_combi';			}
 
@@ -239,6 +238,7 @@
             $this->load->model('klas_model');
             $this->persoon_model->update($persoon);
 
+			$this->session->set_userdata('type','model');
 
             redirect('student/home_student');
         }
