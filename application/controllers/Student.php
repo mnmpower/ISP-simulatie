@@ -150,7 +150,6 @@
             }
         }
 
-
         /**
          * Haalt het klas-record met id=$persoon->klasId ( en het persoonrecord via Authex)op via Klas_model
          * en toont het resulterende object in de view uurroosterWeergeven.php
