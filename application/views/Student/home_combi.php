@@ -17,7 +17,7 @@
     $vakattributen = array('name' => 'vakken', "id" => "vakken", 'class' => 'form-control');
     echo form_submit('vakken', 'Vakken per fase bekijken', $vakattributen);
     $afspraakattributen = array('name' => 'afspraak', "id" => "afspraak", 'class' => 'form-control');
-    echo form_submit('afspraak', 'Afspraak voor hulp maken', $afspraakattributen);
+    echo form_submit('afspraak', 'Afspraak maken', $afspraakattributen);
     echo form_close();
     ?>
 </div>

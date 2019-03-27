@@ -28,6 +28,9 @@
 		// | T.Ingelaere, S. Kempeneer, J. Michiels, M. Michiels	 | \\
 		// +---------------------------------------------------------+ \\
 
+        /**
+         * Constructor
+         */
         public function __construct()
         {
             parent::__construct();
@@ -299,7 +302,7 @@
             $data['title'] = "Afspraak maken";
 
             // Defines roles for this page (You can also use "geen" or leave roles empty!).
-            $data['roles'] = getRoles('geen','geen','Ontwikkelaar','geen');
+            $data['roles'] = getRoles('geen','geen','Ontwikkelaar','Tester');
 
             // Gets buttons for navbar;
             $data['buttons'] = getNavbar('student');

@@ -26,6 +26,9 @@
 		// | T.Ingelaere, S. Kempeneer, J. Michiels, M. Michiels	 | \\
 		// +---------------------------------------------------------+ \\
 
+        /**
+         * Constructor
+         */
         public function __construct()
         {
             parent::__construct();
@@ -45,6 +48,14 @@
 			$this->load->model('les_model');
         }
 
+        /**
+         * Haalt de persoon-records met ispIngediend=1 (en berekent het aantal opgenomen studiepunten) op via Persoon_model
+         * en toont het resulterende object in de view index.php
+         * @see Persoon_model::getAllWhereIspIngediend()
+         * @see Persoon_model::getAllPersoonLesWithLesAndVak()
+         * @see Persoon_model::getStudiepunten()
+         * @see index.php
+         */
         public function index()
         {
 			$this->load->model('persoonLes_model');
