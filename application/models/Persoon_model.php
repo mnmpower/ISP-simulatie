@@ -98,9 +98,13 @@
 		function getStudiepunten($persoonWithAllPersoonLesAndLesAndVak)
 		{
 			$studiepunten =0;
+			$gebruikteVakken = array();
 
 			foreach ($persoonWithAllPersoonLesAndLesAndVak->persoonLessen as $persoonLes){
-				$studiepunten +=  $persoonLes->lesWithVak->vak->studiepunt;
+				if(!in_array($persoonLes->lesWithVak->vak->naam, $gebruikteVakken)) {
+                    $studiepunten +=  $persoonLes->lesWithVak->vak->studiepunt;
+                    array_push($gebruikteVakken, $persoonLes->lesWithVak->vak->naam);
+                }
 			}
 			return $studiepunten;
 		}
