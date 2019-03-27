@@ -9,7 +9,7 @@
                                 'id'    => 'mijnFormulier',
                                 'role'  => 'form');
 
-        echo form_open('student/home_student', $attributen);
+        echo form_open('Student/setType', $attributen);
         echo "<h3>Gelieve een keuze te maken</h3>";
         $modelattributen = array('name' => 'model', "id" => "model", 'class' => 'form-control');
         echo form_submit('model', 'Model-student', $modelattributen);
