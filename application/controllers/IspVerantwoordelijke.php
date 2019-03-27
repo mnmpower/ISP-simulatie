@@ -41,6 +41,7 @@
 			$this->load->model('persoon_model');
 			$this->load->model('persoonLes_model');
 			$this->load->model('vak_model');
+			$this->load->model('les_model');
         }
 
         public function index()
@@ -155,17 +156,25 @@
             $startCell = 5;
 
             foreach ($ingediendeIspStudenten as $persoon) {
-                $persoon->persoonLessen = $this->persoonLes_model->getAllWithLesAndVakAndKlas($persoon->id);
+                if($persoon->klasId == null) {
+                    // Persoon zit niet in een klas -> persoonLessen ophalen
+                    $persoon->persoonLessen = $this->persoonLes_model->getAllWithLesAndVakAndKlas($persoon->id);
+                } else {
+                    // Persoon zit wel in een klas -> lessen van de klas ophalen
+                    $persoon->persoonLessen = $this->les_model->getAllWithVakAndKlasWhereKlas($persoon->klasId);
+                }
+
                 $persoon->studiepunten = $this->persoon_model->getStudiepunten($persoon);
 
                 $this->excel->getActiveSheet()->setCellValue('A' . $startCell, $persoon->nummer);
                 $this->excel->getActiveSheet()->setCellValue('B' . $startCell, $persoon->naam);
                 $this->excel->getActiveSheet()->setCellValue('C' . $startCell, $persoon->studiepunten);
                 $this->excel->getActiveSheet()->setCellValue('D' . $startCell, $persoon->advies);
+
                 foreach ($persoon->persoonLessen as $persoonLes) {
                     $startColumn = PHPExcel_Cell::stringFromColumnIndex(3 + $persoonLes->lesWithVak->vak->id);
                     $cellWaarde = $this->excel->getActiveSheet()->getCell($startColumn . $startCell)->getValue();
-                    if($cellWaarde == null || $cellWaarde == '') {
+                    if($cellWaarde == null || $cellWaarde == '' || $cellWaarde == $persoonLes->lesWithVak->klas->naam) {
                         $this->excel->getActiveSheet()->setCellValue($startColumn . $startCell, $persoonLes->lesWithVak->klas->naam);
                     } else {
                         $this->excel->getActiveSheet()->setCellValue($startColumn . $startCell, $cellWaarde . ' & ' . $persoonLes->lesWithVak->klas->naam);

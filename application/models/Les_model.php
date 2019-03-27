@@ -64,4 +64,24 @@
 			$query = $this->db->get('les');
 			return $query->result();
 		}
+
+        /**
+         * Retourneert alle records met klasId=$klasId uit de tabel team22_les en bijhorende records uit de tabel team22_vak en team22_klas
+         * @param $klasId de klasId van de records  die opgevraagd worden
+         * @return Array met alle opgevraagde records en bijhorende records
+         */
+        function getAllWithVakAndKlasWhereKlas($klasId){
+            $this->db->where('klasId',$klasId);
+            $query = $this->db->get('les');
+            $persoonLessen = $query->result();
+
+            $this->load->model('vak_model');
+            $this->load->model('klas_model');
+
+            foreach ($persoonLessen as $persoonLes){
+                $persoonLes->lesWithVak = $this->getLesWithVak($persoonLes->id);
+                $persoonLes->lesWithVak->klas = $this->klas_model->get($persoonLes->lesWithVak->klasId);
+            }
+            return $persoonLessen;
+        }
     }
