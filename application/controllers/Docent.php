@@ -42,6 +42,7 @@
 			$this->load->library('pagination');
 
 			$this->load->model('persoon_model');
+			$this->load->model('les_model');
         }
 
         public function index()
@@ -64,7 +65,14 @@
 
 			foreach ($ingediendeIspStudenten as $persoon){
 
-				$persoon->persoonLessen = $this->persoon_model->getAllPersoonLesWithLesAndVak($persoon);
+                if($persoon->klasId == null) {
+                    // Persoon zit niet in een klas -> persoonLessen ophalen
+                    $persoon->persoonLessen = $this->persoonLes_model->getAllWithLesAndVakAndKlas($persoon->id);
+                } else {
+                    // Persoon zit wel in een klas -> lessen van de klas ophalen
+                    $persoon->persoonLessen = $this->les_model->getAllWithVakAndKlasWhereKlas($persoon->klasId);
+                }
+
 				$persoon->studiepunten = $this->persoon_model->getStudiepunten($persoon);
 			}
 
