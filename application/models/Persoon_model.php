@@ -79,6 +79,14 @@
 			return $query->result();
 		}
 
+		/**
+		 * @brief Om de studiepunten te berekenen moeten we 4 keer een model in een model steken.
+		 * Deze functie plaats een Les met het bijhorende Vak als extra attribuut in een PersoonLes. Dit wordt herhaald voor alle Persoonlessen van een opgegeven persoon.
+		 * @param Een $persoon waarvan je alles lessen wilt opvragen.
+		 * @pre Je moet een functie hebben om alle lessen van een persoon op te vragen waar in elke les ook al het vak mee in zit.
+		 * @post Dit wordt gebruikt om de studiepunten te berekenen.
+		 * @return Dit returnt een Array met PersoonLessen
+		 */
 		function getAllPersoonLesWithLesAndVak($persoon){
 
         	//model laden+ alle PersoonLessen toevoegen
