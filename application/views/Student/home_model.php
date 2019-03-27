@@ -16,8 +16,6 @@
     echo form_submit('klasvoorkeur', 'Klasvoorkeur geven', $klasattributen);
     $vakattributen = array('name' => 'vakken', "id" => "vakken", 'class' => 'form-control');
     echo form_submit('vakken', 'Vakken per fase bekijken', $vakattributen);
-    $afspraakattributen = array('name' => 'afspraak', "id" => "afspraak", 'class' => 'form-control');
-    echo form_submit('afspraak', 'Afspraak maken', $afspraakattributen);
     $uurroosterattributen = array('name' => 'uurrooster', "id" => "uurrooster", 'class' => 'form-control');
     echo form_submit('uurrooster', 'Uurrooster weergeven', $uurroosterattributen);
     echo form_close();
