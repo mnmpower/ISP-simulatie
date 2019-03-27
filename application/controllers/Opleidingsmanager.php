@@ -119,26 +119,67 @@
         {
             if(isset($_POST['vakken']))
             {
-                redirect('Opleidingsmanager/vakkenBeheer');
+                redirect('Opleidingsmanager/vakBeheer');
             }
             else if(isset($_POST['gebruikers']))
             {
+				redirect('Opleidingsmanager/gebruikerBeheer');
             }
             else if(isset($_POST['klassen']))
             {
+				redirect('Opleidingsmanager/klasBeheer');
             }
             else if(isset($_POST['lessen']))
             {
+				redirect('Opleidingsmanager/lesBeheer');
             }
             else if(isset($_POST['mails']))
             {
+				redirect('Opleidingsmanager/mailBeheer');
             }
             else if(isset($_POST['keuzerichtingen']))
             {
+				redirect('Opleidingsmanager/keuzerichtingBeheer');
             }
         }
 
-        public function vakkenBeheer()
+        public function vakBeheer()
         {
         }
+
+		public function gebruikerBeheer()
+		{
+            $data['title'] = "Gebruikers beheren";
+
+            // Defines roles for this page (You can also use "geen" or leave roles empty!).
+            $data['roles'] = getRoles('geen','geen','geen','Ontwikkelaar');
+
+            // Gets buttons for navbar);
+            $data['buttons'] = getNavbar('opleidingsmanager');
+
+            // Gets plugins if required
+            $data['plugins'] = getPlugin('geen');
+
+            $partials = array(  'hoofding' => 'main_header',
+                'inhoud' => 'opleidingsmanager/beheergebruikers',
+                'footer' => 'main_footer');
+            $this->template->load('main_master', $partials, $data);
+		}
+
+		public function klasBeheer()
+		{
+		}
+
+		public function lesBeheer()
+		{
+		}
+
+		public function mailBeheer()
+		{
+		}
+
+		public function keuzerichtingBeheer()
+		{
+		}
+
     }

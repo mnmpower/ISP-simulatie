@@ -159,6 +159,7 @@
          * @see Persoon_model::getStudiepunten()
          */
         public function documentExporteren() {
+            $data['roles'] = getRoles('geen','geen','geen','Ontwikkelaar');
             $this->load->library('excel');
 
             // Variabelen

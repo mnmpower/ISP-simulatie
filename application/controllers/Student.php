@@ -143,25 +143,27 @@
             }
             else if(isset($_POST['uurrooster']))
             {
-				redirect('Student/uurroosterWeergevenSemester1');
+				redirect('Student/uurroosterWeergeven');
             }
             else if(isset($_POST['isp']))
             {
             }
         }
 
+
         /**
          * Haalt het klas-record met id=$persoon->klasId ( en het persoonrecord via Authex)op via Klas_model
-         * en toont het resulterende object in de view uurroosterWeergevenSemester1.php
+         * en toont het resulterende object in de view uurroosterWeergeven.php
          * @see Authex::getGebruikerInfo()
          * @see Klas_model::get($id)
-         * @see uurroosterWeergevenSemester1.php
+         * @see uurroosterWeergeven.php
          */
-        public function uurroosterWeergevenSemester1(){
+
+        public function uurroosterWeergeven(){
         	$this->load->model("klas_model");
 			$data['title'] = "Uurrooster weergeven";
 			// Defines roles for this page (You can also use "geen" or leave roles empty!).
-			$data['roles'] = getRoles('Ontwikkelaar','geen','geen','geen');
+			$data['roles'] = getRoles('Ontwikkelaar','geen','geen','Tester');
 
 			// Gets buttons for navbar);
 			$data['buttons'] = getNavbar('student');
@@ -175,38 +177,7 @@
 			$data['klas'] = $klas;
 
         	$partials = array(  'hoofding' => 'main_header',
-				'inhoud' => 'Student/uurroosterWeergevenSemester1',
-				'footer' => 'main_footer');
-			$this->template->load('main_master', $partials, $data);
-		}
-
-        /**
-         * Haalt het persoon-record  op via Authex
-         * Haalt het klas-record met id=$persoon->klasId op via Klas_model
-         * en toont het resulterende object in de view uurroosterWeergevenSemester2.php
-         * @see Authex::getGebruikerInfo()
-         * @see Klas_model::get($id)
-         * @see uurroosterWeergevenSemester1.php
-         */
-		public function uurroosterWeergevenSemester2(){
-			$this->load->model("klas_model");
-			$data['title'] = "Uurrooster weergeven";
-			// Defines roles for this page (You can also use "geen" or leave roles empty!).
-			$data['roles'] = getRoles('ontwikkelaar','geen','geen','geen');
-
-			// Gets buttons for navbar);
-			$data['buttons'] = getNavbar('student');
-
-			// Gets plugins if required
-			$data['plugins'] = getPlugin('fullCalendar');
-
-			$persoon = $this->authex->getGebruikerInfo();
-			$klas = $this->klas_model->get($persoon->klasId);
-
-			$data['klas'] = $klas;
-
-			$partials = array(  'hoofding' => 'main_header',
-				'inhoud' => 'Student/uurroosterWeergevenSemester2',
+				'inhoud' => 'Student/uurroosterWeergeven',
 				'footer' => 'main_footer');
 			$this->template->load('main_master', $partials, $data);
 		}
@@ -372,7 +343,7 @@
             $data['title'] = "Afspraak maken";
 
             // Defines roles for this page (You can also use "geen" or leave roles empty!).
-            $data['roles'] = getRoles('geen','geen','Ontwikkelaar','geen');
+            $data['roles'] = getRoles('geen','geen','Ontwikkelaar','Tester');
 
             // Gets buttons for navbar;
             $data['buttons'] = getNavbar('student');
