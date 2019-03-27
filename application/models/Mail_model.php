@@ -40,12 +40,20 @@ class Mail_model extends CI_Model
         return $this->db->insert_id();
     }
 
+    /**
+     * Update het record $mail uit de tabel team22_mail
+     * @param $mail het record dat geüpdatet wordt
+     */
     function update($mail)
     {
         $this->db->where('id', $mail->id);
         $this->db->update('mail', $mail);
     }
 
+    /**
+     * Verwijdert het record met id=$id uit de tabel team22_mail
+     * @param $id de id van het record dat verwijderd wordt
+     */
     function delete($id)
     {
         $this->db->where('id', $id);

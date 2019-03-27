@@ -37,15 +37,16 @@
             $query = $this->db->get('persoon');
             return $query->row();
         }
-//      /**
-//       * Voegt het record $persoon toe aan de tabel team22_persoon
-//       * @param $persoon het record dat toegevoegd wordt
-//       */
-//		function insert($persoon)
-//		{
-//			$this->db->insert('persoon', $persoon);
-//			return $this->db->insert_id();
-//		}
+      /**
+       * Voegt het record $persoon toe aan de tabel team22_persoon
+       * @param $persoon het record dat toegevoegd wordt
+       * @return int id
+       */
+		function insert($persoon)
+		{
+			$this->db->insert('persoon', $persoon);
+			return $this->db->insert_id();
+		}
 
         /**
          * Update het record $persoon uit de tabel team22_persoon
@@ -68,8 +69,8 @@
 		}
 
         /**
-         * Retourneert alle record met id=$id uit de tabel team22_persoon
-         * @return Het opgevraagde record
+         * Retourneert alle records met id=$id uit de tabel team22_persoon
+         * @return Array met alle opgevraagde records
          */
 		function getAllWhereIspIngediend()
 		{
@@ -150,13 +151,23 @@
             return $query->result();
         }
 
-
+        /**
+         * Update het record met nummer=$nummer uit de tabel team22_persoon
+         * @param $nummer de nummer van het record dat gewijzigd wordt
+         * @param $klasId de nieuwe klasId
+         */
         function setKlasIdWhereNummer($nummer, $klasId) {
             $data = array('klasId' => $klasId);
             $this->db->where('nummer', $nummer);
             $this->db->update('persoon', $data);
         }
 
+        /**
+         * Retourneert het record met typeId=$typeId of typeId=$typeId2 uit de tabel team22_persoon
+         * @param $typeId het typeId van het record  dat opgevraagd wordt
+         * @param $typeId2 het typeId van het record  dat opgevraagd wordt
+         * @return Array met alle opgevraagde records
+         */
         function getDocentWhereTypeid($typeId, $typeId2) {
             $this->db->where('typeId', $typeId);
             $this->db->or_where('typeId', $typeId2);
@@ -164,6 +175,11 @@
             return $query->result();
         }
 
+        /**
+         * Retourneert het record met id=$id uit de tabel team22_persoon
+         * @param $id de id van het record  dat opgevraagd wordt
+         * @return Het opgevraagde record
+         */
         function getStudentnaam($id) {
             $this->db->where('id', $id);
             $query = $this->db->select('naam')->get('persoon');
