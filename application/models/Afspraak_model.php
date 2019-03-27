@@ -1,10 +1,16 @@
 <?php
 /**
+ * @class Afspraak_model
+ * @brief Model-klasse voor de afspraken
+ * Model-klasse die alle methodes bevat om te intrageren met de database-tabel team22_afspraak
  * @property Afspraak_model $afspraak_model
  */
 
 class Afspraak_model extends CI_Model
 {
+    /**
+     * Constructor
+     */
     function __construct()
     {
         parent::__construct();

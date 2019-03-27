@@ -28,6 +28,9 @@
 		// | T.Ingelaere, S. Kempeneer, J. Michiels, M. Michiels	 | \\
 		// +---------------------------------------------------------+ \\
 
+        /**
+         * Constructor
+         */
         public function __construct()
         {
             parent::__construct();

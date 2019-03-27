@@ -1,3 +1,9 @@
+<?php
+/**
+ * @file index.php
+ * View waarin de de student kan aanduiden of hij een model- of combi-student is
+ */
+?>
 <div class="container">
     <h1>
         Wat voor traject volg je?
