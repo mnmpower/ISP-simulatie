@@ -110,26 +110,52 @@
         {
             if(isset($_POST['vakken']))
             {
-                redirect('Opleidingsmanager/vakkenBeheer');
+                redirect('Opleidingsmanager/vakBeheer');
             }
             else if(isset($_POST['gebruikers']))
             {
+				redirect('Opleidingsmanager/gebruikerBeheer');
             }
             else if(isset($_POST['klassen']))
             {
+				redirect('Opleidingsmanager/klasBeheer');
             }
             else if(isset($_POST['lessen']))
             {
+				redirect('Opleidingsmanager/lesBeheer');
             }
             else if(isset($_POST['mails']))
             {
+				redirect('Opleidingsmanager/mailBeheer');
             }
             else if(isset($_POST['keuzerichtingen']))
             {
+				redirect('Opleidingsmanager/keuzerichtingBeheer');
             }
         }
 
-        public function vakkenBeheer()
+        public function vakBeheer()
         {
         }
+
+		public function gebruikerBeheer()
+		{
+		}
+
+		public function klasBeheer()
+		{
+		}
+
+		public function lesBeheer()
+		{
+		}
+
+		public function mailBeheer()
+		{
+		}
+
+		public function keuzerichtingBeheer()
+		{
+		}
+
     }
