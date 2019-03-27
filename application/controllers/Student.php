@@ -128,14 +128,14 @@
             }
             else if(isset($_POST['uurrooster']))
             {
-				redirect('Student/uurroosterWeergevenSemester1');
+				redirect('Student/uurroosterWeergeven');
             }
             else if(isset($_POST['isp']))
             {
             }
         }
 
-        public function uurroosterWeergevenSemester1(){
+        public function uurroosterWeergeven(){
         	$this->load->model("klas_model");
 			$data['title'] = "Uurrooster weergeven";
 			// Defines roles for this page (You can also use "geen" or leave roles empty!).
@@ -153,30 +153,7 @@
 			$data['klas'] = $klas;
 
         	$partials = array(  'hoofding' => 'main_header',
-				'inhoud' => 'Student/uurroosterWeergevenSemester1',
-				'footer' => 'main_footer');
-			$this->template->load('main_master', $partials, $data);
-		}
-
-		public function uurroosterWeergevenSemester2(){
-			$this->load->model("klas_model");
-			$data['title'] = "Uurrooster weergeven";
-			// Defines roles for this page (You can also use "geen" or leave roles empty!).
-			$data['roles'] = getRoles('ontwikkelaar','geen','geen','geen');
-
-			// Gets buttons for navbar);
-			$data['buttons'] = getNavbar('student');
-
-			// Gets plugins if required
-			$data['plugins'] = getPlugin('fullCalendar');
-
-			$persoon = $this->authex->getGebruikerInfo();
-			$klas = $this->klas_model->get($persoon->klasId);
-
-			$data['klas'] = $klas;
-
-			$partials = array(  'hoofding' => 'main_header',
-				'inhoud' => 'Student/uurroosterWeergevenSemester2',
+				'inhoud' => 'Student/uurroosterWeergeven',
 				'footer' => 'main_footer');
 			$this->template->load('main_master', $partials, $data);
 		}
