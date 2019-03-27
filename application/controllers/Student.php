@@ -139,7 +139,7 @@
         	$this->load->model("klas_model");
 			$data['title'] = "Uurrooster weergeven";
 			// Defines roles for this page (You can also use "geen" or leave roles empty!).
-			$data['roles'] = getRoles('ontwikkelaar','geen','geen','geen');
+			$data['roles'] = getRoles('Ontwikkelaar','geen','geen','Tester');
 
 			// Gets buttons for navbar);
 			$data['buttons'] = getNavbar('student');
