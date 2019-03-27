@@ -49,6 +49,10 @@
 			$this->load->model('persoon_model');
         }
 
+        /**
+         * Toont de view index.php
+         * @see index.php
+         */
         public function index()
         {
             $data['title'] = "Student";
@@ -68,6 +72,9 @@
             $this->template->load('main_master', $partials, $data);
         }
 
+        /**
+         * Stopt het gekozen type student in een sessie
+         */
         public function setType(){
 			$this->load->library('session');
 
@@ -81,6 +88,11 @@
 			redirect('student/home_student');
 		}
 
+        /**
+         * Toont de view horende bij het gekozen type student. Indien model-student: home_model en indien combi-student: home_combi
+         * @see home_model.php
+         * @see home_combi.php
+         */
         public function home_student()
         {
 			$this->load->library('session');
@@ -112,6 +124,9 @@
             $this->template->load('main_master', $partials, $data);
         }
 
+        /**
+         * Vraagt de juist methode op afhankelijk van de keuze in het menu
+         */
         public function keuzemenu()
         {
             if(isset($_POST['klasvoorkeur']))
@@ -135,11 +150,18 @@
             }
         }
 
+        /**
+         * Haalt het klas-record met id=$persoon->klasId ( en het persoonrecord via Authex)op via Klas_model
+         * en toont het resulterende object in de view uurroosterWeergevenSemester1.php
+         * @see Authex::getGebruikerInfo()
+         * @see Klas_model::get($id)
+         * @see uurroosterWeergevenSemester1.php
+         */
         public function uurroosterWeergevenSemester1(){
         	$this->load->model("klas_model");
 			$data['title'] = "Uurrooster weergeven";
 			// Defines roles for this page (You can also use "geen" or leave roles empty!).
-			$data['roles'] = getRoles('ontwikkelaar','geen','geen','geen');
+			$data['roles'] = getRoles('Ontwikkelaar','geen','geen','geen');
 
 			// Gets buttons for navbar);
 			$data['buttons'] = getNavbar('student');
@@ -158,6 +180,14 @@
 			$this->template->load('main_master', $partials, $data);
 		}
 
+        /**
+         * Haalt het persoon-record  op via Authex
+         * Haalt het klas-record met id=$persoon->klasId op via Klas_model
+         * en toont het resulterende object in de view uurroosterWeergevenSemester2.php
+         * @see Authex::getGebruikerInfo()
+         * @see Klas_model::get($id)
+         * @see uurroosterWeergevenSemester1.php
+         */
 		public function uurroosterWeergevenSemester2(){
 			$this->load->model("klas_model");
 			$data['title'] = "Uurrooster weergeven";
@@ -196,8 +226,15 @@
 			}
 
 			$this->output->set_content_type("application/json");
-			echo json_encode($lessen);}
+			echo json_encode($lessen);
+		}
 
+        /**
+         * Haalt alle klas-records op via Klas_model
+         * en toont het resulterende object in de view klasvoorkeur.php
+         * @see Klas_model::getAllKlassen()
+         * @see klasvoorkeur.php
+         */
         public function klasvoorkeur()
         {
             $this->load->model('klas_model');
@@ -222,6 +259,12 @@
             $this->template->load('main_master', $partials, $data);
         }
 
+        /**
+         * Haalt het persoon-record op via Authex
+         * Update $persoon->klasId=$klasid via Persoon_model
+         * @see Authex::getGebruikerInfo()
+         * @see Persoon_model::update($persoon)
+         */
         public function voorkeurBevestigen(){
 
             $data['title'] = "Student";
@@ -237,8 +280,8 @@
 
             $persoon = $this->authex->getGebruikerInfo();
 
-            $persoon->klasId = $this->input->post('klas');
-            $this->load->model('klas_model');
+            $klasId = $this->input->post('klas');
+            $persoon->klasId = $klasId;
             $this->persoon_model->update($persoon);
 
 			$this->session->set_userdata('type','model');
@@ -246,6 +289,15 @@
             redirect('student/home_student');
         }
 
+        /**
+         * Haalt het klas-record met id=$klasId op via Klas_model
+         * en toont het resulterende object in de view ajax_uurroosterSemester1.php indien $semesterId=0 of in de view ajax_uurroosterSemester2.php indien $semesterId=1
+         * Deze view wordt via een ajax-call in klasvoorkeur.php geplaatst
+         * @see Klas_model::get($id)
+         * @see ajax_uurroosterSemester1.php
+         * @see ajax_uurroosterSemester2.php
+         * @see klasvoorkeur.php
+         */
         public function haalAjaxOp_Uurrooster() {
             $klasId = $this->input->get('klasId');
             $semesterId = $this->input->get('semesterId');
@@ -263,6 +315,12 @@
             }
         }
 
+        /**
+         * Haalt alle keuzerichting-records op via Keuzerichting_model
+         * en toont het resulterende object in de view jaarvakken_raadplegen.php
+         * @see Keuzerichting_model::getAll()
+         * @see jaarvakken_raadplegen.php
+         */
         public function toonJaarvakken()
         {
             $data['title'] = "Jaarvakken";
@@ -285,6 +343,14 @@
             $this->template->load('main_master', $partials, $data);
         }
 
+        /**
+         * Haalt de keuzerichtingVak-records met keuzerichtingId=$keuzerichtingId op via KeuzerichtingVak_model
+         * en toont het resulterende object in de view ajax_jaarvakken
+         * Deze view wordt via een ajax-call in jaarvakken_raadplegen.php geplaatst
+         * @see KeuzerichtingVak_model::getAllWithVakWhereKeuzerichting()
+         * @see ajax_jaarvakken.php
+         * @see jaarvakken_raadplegen.php
+         */
         public function haalAjaxOp_Vakken() {
             $keuzerichtingId = $this->input->get('keuzerichtingId');
 
@@ -294,10 +360,14 @@
             $this->load->view('student/ajax_jaarvakken', $data);
         }
 
+        /**
+         * Haalt de persoon-records met typeId=2 of typeId=3 op via Persoon_model
+         * en toont het resulterende object in de view afspraakMaken.php
+         * @see Persoon_model::getDocentWhereTypeid($typeId, $typeId2)
+         * @see afspraakMaken.php
+         */
         public function showAfspraakmaken() {
             $this->load->model('persoon_model');
-            $this->load->model('persoonLes_model');
-            $this->load->model('Les_model');
 
             $data['title'] = "Afspraak maken";
 

@@ -45,6 +45,15 @@
 			$this->load->model('les_model');
         }
 
+        /**
+         * Haalt de persoon-records met ispIngediend=1 (en berekent het aantal opgenomen studiepunten) op via Persoon_model
+         * en toont het resulterende object in de view index.php
+         * @see Persoon_model::getAllWhereIspIngediend()
+         * @see PersoonLes_model::getAllWithLesAndVakAndKlas()
+         * @see Les_model::getAllWithVakAndKlasWhereKlas()
+         * @see Persoon_model::getStudiepunten()
+         * @see index.php
+         */
         public function index()
         {
 			$this->load->model('persoon_model');
@@ -55,7 +64,7 @@
 			$data['title'] = "Overzicht van de ingediende ISP simulaties";
 
 			// Defines roles for this page (You can also use "geen" or leave roles empty!).
-			$data['roles'] = getRoles('Ontwikkelaar','geen','geen','geen');
+			$data['roles'] = getRoles('Ontwikkelaar','Tester','geen','geen');
 
 			// Gets buttons for navbar;
 			$data['buttons'] = getNavbar('opleidingsmanager');

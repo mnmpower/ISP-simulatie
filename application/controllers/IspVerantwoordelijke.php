@@ -47,6 +47,15 @@
 			$this->load->model('les_model');
         }
 
+        /**
+         * Haalt de persoon-records met ispIngediend=1 (en berekent het aantal opgenomen studiepunten) op via Persoon_model
+         * en toont het resulterende object in de view index.php
+         * @see Persoon_model::getAllWhereIspIngediend()
+         * @see PersoonLes_model::getAllWithLesAndVakAndKlas()
+         * @see Les_model::getAllWithVakAndKlasWhereKlas()
+         * @see Persoon_model::getStudiepunten()
+         * @see index.php
+         */
         public function index()
         {
 			$this->load->model('persoon_model');
@@ -57,7 +66,7 @@
 			$data['title'] = "Overzicht van de ingediende ISP simulaties";
 
 			// Defines roles for this page (You can also use "geen" or leave roles empty!).
-			$data['roles'] = getRoles('Ontwikkelaar','geen','geen','geen');
+			$data['roles'] = getRoles('Ontwikkelaar','Tester','geen','geen');
 
 			// Gets buttons for navbar;
 			$data['buttons'] = getNavbar('ispverantwoordelijke');
@@ -89,6 +98,12 @@
 			$this->template->load('main_master', $partials, $data);
         }
 
+        /**
+         * Haalt alle klas-records op via Klas_model
+         * en toont het resulterende object in de view klaslijsten.php
+         * @see Klas_model::getAllKlassen()
+         * @see klaslijsten.php
+         */
         public function toonKlaslijsten(){
             $this->load->model('klas_model');
 
@@ -112,6 +127,14 @@
             $this->template->load('main_master', $partials, $data);
         }
 
+        /**
+         * Haalt de persoon-records met klasId=$klasId op via Persoon_model
+         * en toont het resulterende object in de view ajax_klaslijsten
+         * Deze view wordt via een ajax-call in klaslijsten.php geplaatst
+         * @see Persoon_model::getAllWhereKlas()
+         * @see ajax_klaslijsten.php
+         * @see klaslijsten.php
+         */
         public function haalAjaxOp_Klassen() {
             $klasId = $this->input->get('klasId');
 
@@ -125,6 +148,16 @@
             $this->load->view('IspVerantwoordelijke/ajax_klaslijsten', $data);
         }
 
+        /**
+         * Haalt alle vak-records op via Vak_model
+         * Haalt de persoon-records met ispIngediend=1 (en berekent het aantal opgenomen studiepunten) op via Persoon_model
+         * en exporteert de resulterende objecten in een excel-document
+         * @see Vak_model::getAll()
+         * @see Persoon_model::getAllWhereIspIngediend()
+         * @see PersoonLes_model::getAllWithLesAndVakAndKlas()
+         * @see Les_model::getAllWithVakAndKlasWhereKlas()
+         * @see Persoon_model::getStudiepunten()
+         */
         public function documentExporteren() {
             $this->load->library('excel');
 

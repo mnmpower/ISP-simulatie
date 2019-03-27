@@ -48,6 +48,7 @@
 			$this->load->model('persoon_model');
         }
 
+
         public function index()
         {
             $persoon = $this->authex->getGebruikerInfo();
