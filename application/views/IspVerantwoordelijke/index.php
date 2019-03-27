@@ -1,4 +1,4 @@
-<h1>
+<div class="container70"><h1>
 	<?php
 		echo $title
 	?>
@@ -26,3 +26,4 @@
 	</tbody>
 </table>
 
+</div>
