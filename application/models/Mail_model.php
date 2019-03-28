@@ -59,4 +59,9 @@ class Mail_model extends CI_Model
         $this->db->where('id', $id);
         $this->db->delete('mail');
     }
+
+    function getAllMail(){
+		$query = $this->db->get('mail');
+		return $query->result();
+	}
 }
