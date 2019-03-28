@@ -5,6 +5,9 @@ if (!defined('BASEPATH'))
 
 class Authex
 {
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         $CI =& get_instance();

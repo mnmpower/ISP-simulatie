@@ -49,6 +49,15 @@
         }
 
 
+        /**
+         * Haalt het persoon-record op via Authex
+         * Kijkt na of de opgehaalde persoon is aangemeld
+         * Verwijst naar de juist methode afhankelijk van het typeId van de persoon indien aangemeld
+         * Toont de view index.php indien niet aangemeld
+         * @see Authex::getGebruikerInfo()
+         * @see Authex::isAangemeld()
+         * @see index.php
+         */
         public function index()
         {
             $persoon = $this->authex->getGebruikerInfo();
@@ -92,6 +101,10 @@
             $this->template->load('main_master', $partials, $data);
         }
 
+        /**
+         * Toont de view wachtwoordWijzigen.php
+         * @see wachtwoordWijzigen.php
+         */
         public function showWachtwoordWijzigen() {
             $data['title'] = "Wachtwoord wijzigen";
 
@@ -110,12 +123,21 @@
             $this->template->load('main_master', $partials, $data);
         }
 
+        /**
+         * Wijzigt en beveiligt het wachtwoord van de ingegeven gebruiker
+         * @see Authex::secureEditPassword()
+         */
         public function editPassword() {
             $nummer = $this->input->get('nummer');
             $password = $this->authex->secureEditPassword($nummer);
             echo $password;
         }
 
+        /**
+         * Controleert of de inloggegevens correct zijn
+         * Verwijst naar de juist methode afhankelijk van het typeId van de persoon en correctheid van de inloggegevens
+         * @see Authex::meldAan()
+         */
         public function controleerInloggen() {
             $nummer = $this->input->post('nummer');
             $wachtwoord = $this->input->post('wachtwoord');
@@ -144,11 +166,19 @@
             }
         }
 
+        /**
+         * Meld de gebruiker af
+         * @see Authex::meldAf()
+         */
         public function uitloggen() {
             $this->authex->meldAf();
             redirect('home/index');
         }
 
+        /**
+         * Toont de view fout.php
+         * @see fout.php
+         */
         public function toonFout($foutmelding) {
             $data['title'] = "Fout";
             $data['foutmelding'] = $foutmelding;
@@ -168,6 +198,9 @@
             $this->template->load('main_master', $partials, $data);
         }
 
+        /**
+         * Geeft foutmelding mee bij het fout inloggen
+         */
         function toonFoutInloggen() {
             $this->toonFout("Gelieve te controleren of uw gebruikersnaam en wachtwoord kloppen.");
         }
