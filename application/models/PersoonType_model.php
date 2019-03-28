@@ -33,7 +33,14 @@ class PersoonType_model extends CI_Model
     {
         $this->db->where('id', $id);
         $query = $this->db->get('persoonType');
-        return $query->row();
+        $type = $query->row();
+
+        $type->soort = ucfirst($type->soort);
+        if($type->soort == "Verantwoordelijke") {
+            $type->soort = "ISP-Verantwoordelijke";
+        }
+
+        return $type;
     }
 
     /**
@@ -42,6 +49,15 @@ class PersoonType_model extends CI_Model
      */
     function getAll(){
         $query = $this->db->get('persoonType');
-        return $query->result();
+        $types = $query->result();
+
+        foreach ($types as $type) {
+            $type->soort = ucfirst($type->soort);
+            if($type->soort == "Verantwoordelijke") {
+                $type->soort = "ISP-Verantwoordelijke";
+            }
+        }
+
+        return $types;
     }
 }
