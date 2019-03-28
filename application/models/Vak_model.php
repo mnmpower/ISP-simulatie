@@ -60,12 +60,14 @@
         {
             $this->load->model('keuzerichtingVak_model');
 
-            $vakken = $this->keuzerichtingVak_model->getAllWhereKeuzerichting($keuzerichtingId);
+            $vakken = $this->keuzerichtingVak_model->getAllWithVakWhereKeuzerichting($keuzerichtingId);
+            $this->db->where('fase', $faseId);
+            $id_array = array();
             foreach ($vakken as $vak){
-                $this->db->where('fase', $faseId);
-                $this->db->where('id', $vak->vakId);
-                $query = $this->db->get('vak');
+                array_push($id_array, $vak->id);
             }
+            $this->db->where_in('id', $id_array);
+            $query = $this->db->get('vak');;
             return $query->result();
         }
 

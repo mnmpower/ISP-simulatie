@@ -70,25 +70,4 @@
 
             return $vakkenNieuw;
         }
-
-        /**
-         * Retourneert alle records met keuzerichtingId=$keuzerichtingId uit de tabel team22_keuzerichtingVak
-         * @param $keuzerichtingId de keuzerichtingId van het record  dat opgevraagd wordt
-         * @return Alle opgevraagde records
-         */
-        function getAllWhereKeuzerichting($keuzerichtingId)
-        {
-            $this->db->where('keuzerichtingId', $keuzerichtingId);
-            $query = $this->db->get('keuzerichtingVak');
-            $vakken = $query->result();
-
-            return $vakken;
-        }
-
-
-
-
-
-
-
     }

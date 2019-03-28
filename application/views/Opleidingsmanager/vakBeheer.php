@@ -10,7 +10,7 @@
         function haalVakkenOp(keuzerichtingId, faseId) {
             $.ajax({
                 type: "GET",
-                url: site_url + "/opleidingsmanager/haalAjaxOp_Vakken/",
+                url: site_url + "/Opleidingsmanager/haalAjaxOp_Vakken/",
                 data: {keuzerichtingId: keuzerichtingId, faseId: faseId},
                 success: function(output) {
                     $('#resultaat').html(output);
@@ -62,3 +62,4 @@ $faseOpties = array('Kies een fase..', 'Fase 1', 'Fase 2', 'Fase 3');
     $faseattributes = array('id' => 'fasekeuze', 'class' => 'form-control');
     echo form_dropdown('fase', $faseOpties, '0', $faseattributes);
 ?>
+<div id="resultaat"></div>
