@@ -143,8 +143,54 @@
             }
         }
 
+        /**
+         * Haalt alle keuzerichting-records op via Keuzerichting_model
+         * en toont het resulterende object in de view vakBeheer.php
+         * @see Keuzerichting_model::getAll()
+         * @see vakBeheer.php
+         */
         public function vakBeheer()
         {
+            $data['title'] = "Vakken beheren";
+
+            // Defines roles for this page (You can also use "geen" or leave roles empty!).
+            $data['roles'] = getRoles('geen','Ontwikkelaar','geen','geen');
+
+            // Gets buttons for navbar);
+            $data['buttons'] = getNavbar('opleidingsmanager');
+
+            // Gets plugins if required
+            $data['plugins'] = getPlugin('geen');
+
+            $this->load->model('keuzerichting_model');
+
+            $keuzerichtingen = $this->keuzerichting_model->getAll();
+            $data['keuzerichtingen'] = $keuzerichtingen;
+
+            $partials = array(  'hoofding' => 'main_header',
+                'inhoud' => 'opleidingsmanager/vakBeheer',
+                'footer' => 'main_footer');
+            $this->template->load('main_master', $partials, $data);
+        }
+
+        /**
+         * Haalt de vak-records met fase=$faseId en keuzerichtingId=$keuzerichtingId op via Vak_model en KeuzerichtingVak_model
+         * en toont het resulterende object in de view ajax_vakBeheer
+         * Deze view wordt via een ajax-call in vakBeheer.php geplaatst
+         * @see Vak_model::getAllWhereKeuzerichtingAndFase($keuzerichtingId, $faseId)
+         * @see ajax_vakBeheer.php
+         * @see vakBeheer.php
+         */
+        public function haalAjaxOp_Vakken() {
+            $keuzerichtingId = $this->input->get('keuzerichtingId');
+            $faseId = $this->input->get('faseId');
+
+            $this->load->model('vak_model');
+
+            $vakken = $this->vak_model->getAllWhereKeuzerichtingAndFase($keuzerichtingId, $faseId);
+            $data['vakken'] = $vakken;
+
+            $this->load->view('Opleidingsmanager/ajax_vakBeheer', $data);
         }
 
 		public function gebruikerBeheer()

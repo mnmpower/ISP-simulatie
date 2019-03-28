@@ -5,6 +5,7 @@
      * Model-klasse die alle methodes bevat om te intrageren met de database-tabel team22_vak
      * @property Persoon_model $persoon_model
 	 * @property PersoonLes_model $persoonLes_model
+     * @property KeuzerichtingVak_model $keuzerichtingVak_model
      */
     class Vak_model extends CI_Model
     {
@@ -45,6 +46,26 @@
         function getAll()
         {
             $query = $this->db->get('vak');
+            return $query->result();
+        }
+
+        /**
+         * Haalt alle records op met keuzerichtingId=$keuzerichtingId uit de tabel team22_keuzerichtingVak
+         * Retourneert alle records met id=$vak->vakId en fase=$faseIduit de tabel team22_vak
+         * @param $keuzerichtingId de keuzerichtingId van het record  dat opgevraagd wordt
+         * @param $faseId de fase van het record  dat opgevraagd wordt
+         * @return Array met alle opgevraagde records
+         */
+        function getAllWhereKeuzerichtingAndFase($keuzerichtingId, $faseId)
+        {
+            $this->load->model('keuzerichtingVak_model');
+
+            $vakken = $this->keuzerichtingVak_model->getAllWhereKeuzerichting($keuzerichtingId);
+            foreach ($vakken as $vak){
+                $this->db->where('fase', $faseId);
+                $this->db->where('id', $vak->vakId);
+                $query = $this->db->get('vak');
+            }
             return $query->result();
         }
 

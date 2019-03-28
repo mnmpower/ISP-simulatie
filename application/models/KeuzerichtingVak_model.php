@@ -4,6 +4,7 @@
      * @brief Model-klasse voor de associatie tussen keuzerichtingen en vakken
      * Model-klasse die alle methodes bevat om te intrageren met de database-tabel team22_keuzerichtingVak
      * @property Persoon_model $persoon_model
+     * @property Vak_model $vak_model
      */
     class KeuzerichtingVak_model extends CI_Model
     {
@@ -48,9 +49,10 @@
         }
 
         /**
-         * Retourneert alle records met keuzerichtingId=$keuzerichtingId uit de tabel team22_keuzerichtingVak
+         * Haalt alle records op met keuzerichtingId=$keuzerichtingId uit de tabel team22_keuzerichtingVak
+         * Retourneert alle records met id=$vak->vakId uit de tabel team22_vak
          * @param $keuzerichtingId de keuzerichtingId van het record  dat opgevraagd wordt
-         * @return Alle opgevraagde records
+         * @return Array met alle opgevraagde records
          */
         function getAllWithVakWhereKeuzerichting($keuzerichtingId)
         {
@@ -67,6 +69,20 @@
             }
 
             return $vakkenNieuw;
+        }
+
+        /**
+         * Retourneert alle records met keuzerichtingId=$keuzerichtingId uit de tabel team22_keuzerichtingVak
+         * @param $keuzerichtingId de keuzerichtingId van het record  dat opgevraagd wordt
+         * @return Alle opgevraagde records
+         */
+        function getAllWhereKeuzerichting($keuzerichtingId)
+        {
+            $this->db->where('keuzerichtingId', $keuzerichtingId);
+            $query = $this->db->get('keuzerichtingVak');
+            $vakken = $query->result();
+
+            return $vakken;
         }
 
 
