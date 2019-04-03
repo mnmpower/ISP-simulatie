@@ -70,4 +70,35 @@
 
             return $vakkenNieuw;
         }
+
+        /**
+         * Voegt het record $keuzerichtingVak toe aan de tabel team22_keuzerichtingVak
+         * @param $keuzerichtingVak het record dat toegevoegd wordt
+         * @return int id
+         */
+        function insert($keuzerichtingVak)
+        {
+            $this->db->insert('keuzerichtingVak', $keuzerichtingVak);
+            return $this->db->insert_id();
+        }
+
+        /**
+         * Update het record $keuzerichtingVak uit de tabel team22_keuzerichtingVak
+         * @param $keuzerichtingVak het record dat geüpdatet wordt
+         */
+        function update($keuzerichtingVak)
+        {
+            $this->db->where('id', $keuzerichtingVak->keuzerichtingVakId);
+            $this->db->update('keuzerichtingVak', $keuzerichtingVak);
+        }
+
+        /**
+         * Verwijdert het record met id=$id uit de tabel team22_keuzerichtingVak
+         * @param $id de id van het record dat verwijderd wordt
+         */
+        function delete($id)
+        {
+            $this->db->where('id', $id);
+            $this->db->delete('keuzerichtingVak');
+        }
     }

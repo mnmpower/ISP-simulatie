@@ -194,6 +194,37 @@
             $this->load->view('Opleidingsmanager/ajax_vakBeheer', $data);
         }
 
+        public function voegVakToe(){
+
+            $this->load->model("vak_model");
+            $this->load->model("keuzerichtingVak_model");
+
+
+            $vak = new stdClass();
+            $vak->id = $this->input->post('vakId');
+            $vak->naam = $this->input->post("vakNaam");
+            $vak->studiepunt = $this->input->post("vakStudiepunten");
+            $vak->fase = $this->input->get('faseId');
+            $vak->semester = $this->input->get('semesterId');
+            $vak->volgtijdelijkheidinfo = $this->input->post("vakOpmerking");
+            $keuzerichtingvak = new stdClass();
+            $keuzerichtingvak->keuzerichtingVakId = $this->input->post('keuzerichtingVakId');
+            $keuzerichtingvak->keuzerichtingId = $this->input->get("keuzerichtingId");
+            $keuzerichtingvak->vakId = $this->input->post("vakId");
+
+            if ($vak->id == 0) {
+                //nieuw record
+                $this->vak_model->insert($vak);
+                $this->keuzerichtingVak_model->insert($keuzerichtingvak);
+            } else {
+                //bestaand record
+                $this->vak_model->update($vak);
+                $this->keuzerichtingVak_model->update($keuzerichtingvak);
+            }
+
+            redirect('Opleidingsmanager/vakBeheer');
+        }
+
 		public function gebruikerBeheer()
 		{
             $data['title'] = "Gebruikers beheren";
