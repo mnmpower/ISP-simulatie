@@ -16,7 +16,7 @@
                 $('#resultaat').html(output);
             },
             error: function (xhr, status, error) {
-                alert("-- ERROR IN AJAX --\n\n" + xhr.responseText);
+                console.log("-- ERROR IN AJAX --\n\n" + xhr.responseText);
             }
         });
     }
@@ -30,7 +30,7 @@
                 $('#uurrooster').html(output);
             },
             error: function (xhr, status, error) {
-                alert("-- ERROR IN AJAX --\n\n" + xhr.responseText);
+                console.log("-- ERROR IN AJAX --\n\n" + xhr.responseText);
             }
         });
     }
