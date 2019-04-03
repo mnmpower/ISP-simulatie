@@ -97,7 +97,6 @@
 			$this->template->load('main_master', $partials, $data);
         }
 
-
         public function showAfspraken() {
             $this->load->model('persoon_model');
             $this->load->model('persoonLes_model');
@@ -118,5 +117,60 @@
                 'inhoud' => 'Docent/overzichtAfspraken',
                 'footer' => 'main_footer');
             $this->template->load('main_master', $partials, $data);
+        }
+
+        public function haalAjaxop_AfsprakenDocent() {
+            $persoonId = $this->authex->getGebruikerInfo();
+
+            $this->load->model('afspraak_model');
+            $data['afspraken'] = $this->afspraak_model->getAfsprakenWherePersoonIdDocent($persoonId->id);
+
+            echo json_encode($data['afspraken']);
+        }
+
+        public function momentToevoegen() {
+            $plaats = $this->input->get('plaats');
+            $datum = $this->input->get('datum');
+            $startuur = $this->input->get('start');
+            $einduur = $this->input->get('end');
+            $herhaal = $this->input->get('herhaal') + 1;
+
+            $this->load->library('session');
+            $docent = $this->authex->getGebruikerInfo();
+
+            $this->load->model('afspraak_model');
+            for ($i = 1; $i <= $herhaal; $i++) {
+                $this->afspraak_model->addMoment($docent->id, $startuur, $einduur, $datum, $plaats);
+                $datum = strtotime($datum);
+                $datum = strtotime("+7 day", $datum);
+                $datum = date('Y-m-d', $datum);
+            }
+        }
+
+        public function afspraakUpdate() {
+            $id = $this->input->get('id');
+            $plaats = $this->input->get('plaats');
+            $datum = $this->input->get('datum');
+            $startuur = $this->input->get('start');
+            $einduur = $this->input->get('end');
+            $description = $this->input->get('description');
+
+            $this->load->model('afspraak_model');
+            $this->afspraak_model->updateAfspraak($id, $startuur, $einduur, $datum, $plaats, $description);
+        }
+
+        public function afspraakVerwijder() {
+            $id = $this->input->get('id');
+
+            $this->load->model('afspraak_model');
+            $this->afspraak_model->delete($id);
+        }
+
+        public function afspraakEmpty() {
+            $id = $this->input->get('id');
+            $beschikbaar = 1;
+
+            $this->load->model('afspraak_model');
+            $this->afspraak_model->updateAfspraakBeschikbaarheid($id, $beschikbaar);
         }
     }

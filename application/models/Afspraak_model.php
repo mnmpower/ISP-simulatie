@@ -84,11 +84,50 @@ class Afspraak_model extends CI_Model
      * @param $studentId het nieuwe persoonIdStudent van het record
      * @param $id de id van het record dat geüpdatet wordt
      */
-    function updateAfspraak($description, $studentId, $id) {
+    function updateAfspraakReserveer($description, $studentId, $id) {
         $data = array(
             'beschikbaar' => 0,
             'persoonIdStudent' => $studentId,
             'extraOpmerking' => $description
+        );
+
+        $this->db->where('id', $id);
+        $this->db->update('afspraak', $data);
+    }
+
+    function addMoment($docentId, $startuur, $einduur, $datum, $plaats) {
+        $data = array(
+            'persoonIdDocent' => $docentId,
+            'persoonIdStudent' => null,
+            'extraOpmerking' => null,
+            'startuur' => $startuur,
+            'einduur' => $einduur,
+            'datum' => $datum,
+            'plaats' => $plaats,
+            'beschikbaar' => 1
+        );
+
+        $this->db->insert('afspraak', $data);
+    }
+
+    function updateAfspraak($id, $startuur, $einduur, $datum, $plaats, $description) {
+        $data = array(
+            'extraOpmerking' => $description,
+            'startuur' => $startuur,
+            'einduur' => $einduur,
+            'datum' => $datum,
+            'plaats' => $plaats,
+        );
+
+        $this->db->where('id', $id);
+        $this->db->update('afspraak', $data);
+    }
+
+    function updateAfspraakBeschikbaarheid($id, $beschikbaar) {
+        $data = array(
+            'beschikbaar' => $beschikbaar,
+            'extraOpmerking' => null,
+            'persoonIdStudent' => null
         );
 
         $this->db->where('id', $id);

@@ -5,6 +5,8 @@ $('#calendar').fullCalendar({
     nowIndicator: true,
     allDaySlot: false,
     minTime: "08:00:00",
+    maxTime: "19:00:00",
+    height: "auto",
     eventClick: function (calEvent, jsEvent, view) {
         if (calEvent.bezet == 1) {
             var docent = $('#docentId option:selected').text();
@@ -12,7 +14,8 @@ $('#calendar').fullCalendar({
             var startdate = new Date(calEvent.start);
             var enddate = new Date(calEvent.end);
             $("#calendarModalDate").val(startdate.getDate() + '/' + startdate.getUTCMonth() + '/' + startdate.getFullYear());
-            $("#calendarModalTime").val(startdate.getUTCHours() + ':' + (startdate.getMinutes() < 10 ? '0' : '') + startdate.getMinutes() + ' tot ' + enddate.getUTCHours() + ':' + (enddate.getMinutes() < 10 ? '0' : '') + enddate.getMinutes());
+            $("#calendarModalTimeStart").val(startdate.getUTCHours() + ':' + (startdate.getMinutes() < 10 ? '0' : '') + startdate.getMinutes() + ' tot ' + enddate.getUTCHours() + ':' + (enddate.getMinutes() < 10 ? '0' : '') + enddate.getMinutes());
+            $("#calendarModalTimeStart").val(startdate.getUTCHours() + ':' + (startdate.getMinutes() < 10 ? '0' : '') + startdate.getMinutes() + ' tot ' + enddate.getUTCHours() + ':' + (enddate.getMinutes() < 10 ? '0' : '') + enddate.getMinutes());
             $("#calendarModalPlaats").val(calEvent.plaats);
             $('#CalendarModal').modal();
             $('#calendarModalConfirm').click(function () {
