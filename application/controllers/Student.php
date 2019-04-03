@@ -85,7 +85,7 @@
 				$this->session->set_userdata('type','combi');
 			}
 
-			redirect('student/home_student');
+			redirect('Student/home_student');
 		}
 
         /**
@@ -256,7 +256,7 @@
 
 			$this->session->set_userdata('type','model');
 
-            redirect('student/home_student');
+            redirect('Student/home_student');
         }
 
         /**
@@ -327,7 +327,7 @@
             $this->load->model('keuzerichtingVak_model');
             $data['vakken'] = $this->keuzerichtingVak_model->getAllWithVakWhereKeuzerichting($keuzerichtingId);
 
-            $this->load->view('student/ajax_jaarvakken', $data);
+            $this->load->view('Student/ajax_jaarvakken', $data);
         }
 
         /**
@@ -376,6 +376,6 @@
             $student = $this->authex->getGebruikerInfo();
 
             $this->load->model('afspraak_model');
-            $this->afspraak_model->updateAfspraak($description, $student->id, $id);
+            $this->afspraak_model->updateAfspraakReserveer($description, $student->id, $id);
         }
     }

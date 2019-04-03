@@ -10,7 +10,7 @@
     function haalKlassenOp(klasId, semester) {
         $.ajax({
             type: "GET",
-            url: site_url + "/ispverantwoordelijke/haalAjaxOp_Klassen/",
+            url: site_url + "/IspVerantwoordelijke/haalAjaxOp_Klassen/",
             data: {klasId: klasId, semester: semester},
             success: function(output) {
                 $('#resultaat').html(output);
@@ -24,7 +24,7 @@
     function haalUurroosterOp(klasId, semesterId) {
         $.ajax({
             type: "GET",
-            url: site_url + "/student/haalAjaxOp_Uurrooster/",
+            url: site_url + "/Student/haalAjaxOp_Uurrooster/",
             data: {klasId: klasId, semesterId: semesterId},
             success: function(output) {
                 $('#uurrooster').html(output);
