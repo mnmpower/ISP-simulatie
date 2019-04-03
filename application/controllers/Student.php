@@ -376,6 +376,6 @@
             $student = $this->authex->getGebruikerInfo();
 
             $this->load->model('afspraak_model');
-            $this->afspraak_model->updateAfspraak($description, $student->id, $id);
+            $this->afspraak_model->updateAfspraakReserveer($description, $student->id, $id);
         }
     }
