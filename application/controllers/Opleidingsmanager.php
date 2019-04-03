@@ -42,6 +42,7 @@
 			$this->load->library('session');
 			$this->load->library('pagination');
 
+
 			$this->load->model('persoon_model');
 			$this->load->model('les_model');
         }
@@ -315,7 +316,7 @@
 
 			$mail = new stdClass();
 			$mail->id = $this->input->post('mailId');
-			$mail->onderwerp = $this->input->post("mailOnderwerp");
+			$mail->onderwerp = htmlspecialchars($this->input->post("mailOnderwerp"));
 			$mail->tekst = $this->input->post("mailTekst");
 
 
