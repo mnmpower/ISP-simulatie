@@ -223,4 +223,10 @@
             
             return $personen;
         }
+
+		function getPersoonWhereKeuzerichtingId($keuzerichtingId) {
+			$this->db->where('keuzerichtingId', $keuzerichtingId);
+			$query = $this->db->get('persoon');
+			return $query->result();
+		}
     }
