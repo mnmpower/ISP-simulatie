@@ -160,11 +160,65 @@
             // Gets plugins if required
             $data['plugins'] = getPlugin('geen');
 
+            $this->load->model('persoonType_model');
+            $data['persoonTypes'] = $this->persoonType_model->getAll();
+
             $partials = array(  'hoofding' => 'main_header',
                 'inhoud' => 'opleidingsmanager/beheergebruikers',
                 'footer' => 'main_footer');
             $this->template->load('main_master', $partials, $data);
 		}
+
+        public function haalAjaxOp_Gebruikers()
+        {
+            $this->load->model('persoon_model');
+            $gebruikers = $this->persoon_model->getAllWithType();
+            foreach ($gebruikers as $gebruiker) {
+                if($gebruiker->id != 8) {
+                    $gebruikersNieuw[] = $gebruiker;
+                }
+            }
+            $data['gebruikers'] = $gebruikersNieuw;
+
+            $this->load->view('opleidingsmanager/ajax_gebruikers', $data);
+        }
+
+        public function haalJsonOp_Gebruiker()
+        {
+            $id = $this->input->get('gebruikerId');
+
+            $this->load->model('persoon_model');
+            $object = $this->persoon_model->get($id);
+
+            $this->output->set_content_type("application/json");
+            echo json_encode($object);
+        }
+
+        public function schrapAjax_Gebruiker()
+        {
+            $gebruikerId = $this->input->get('gebruikerId');
+
+            $this->load->model('persoon_model');
+            $this->persoon_model->delete($gebruikerId);
+        }
+
+        public function schrijfAjax_Gebruiker()
+        {
+            $object = new stdClass();
+            $object->id = $this->input->post('gebruikerId');
+            $object->naam = $this->input->post('gebruikerNaam');
+            $object->nummer = $this->input->post('gebruikerNummer');
+            $object->typeId = $this->input->post('gebruikerType');
+
+            $this->load->model('persoon_model');
+            if ($object->id == 0) {
+                //nieuw record
+                $this->persoon_model->insert($object);
+            } else {
+                //bestaand record
+                $this->persoon_model->update($object);
+            }
+        }
 
 		public function klasBeheer()
 		{

@@ -37,6 +37,7 @@
             $query = $this->db->get('persoon');
             return $query->row();
         }
+
       /**
        * Voegt het record $persoon toe aan de tabel team22_persoon
        * @param $persoon het record dat toegevoegd wordt
@@ -196,5 +197,30 @@
             $this->db->where('id', $id);
             $query = $this->db->select('naam')->get('persoon');
             return $query->row();
+        }
+
+        /**
+         * Retourneert alle records uit de tabel team22_persoon
+         * @return Array met alle records
+         */
+        function getAll() {
+            $query = $this->db->get('persoon');
+            return $query->result();
+        }
+
+        /**
+         * Retourneert alle records uit de tabel team22_persoon met bijhorende records uit de tabel team22_persoonType
+         * @return Array met alle records met bijhorend type
+         */
+        function getAllWithType() {
+            $query = $this->db->get('persoon');
+            $personen = $query->result();
+
+            foreach ($personen as $persoon) {
+                $this->load->model("persoonType_model");
+                $persoon->type = $this->persoonType_model->get($persoon->typeId);
+            }
+            
+            return $personen;
         }
     }
