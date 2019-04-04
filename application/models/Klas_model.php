@@ -37,19 +37,36 @@
 			return $query->row();
 		}
 
+		function insert($klas)
+		{
+			$this->db->insert('klas', $klas);
+			return $this->db->insert_id();
+		}
+
+		/**
+		 * Update het record $mail uit de tabel team22_mail
+		 * @param $mail het record dat geüpdatet wordt
+		 */
+		function update($klas)
+		{
+			$this->db->where('id', $klas->id);
+			$this->db->update('klas', $klas);
+		}
+
         /**
          * Retourneert alle records uit de tabel team22_keuzerichtingVak
          * @return Alle records
          */
-		function getAllKlassen(){
+		function getAllKlassenOrderByNaam(){
+			$this->db->order_by('naam');
             $query = $this->db->get('klas');
+
             return $query->result();
         }
 
-
-
-
-
-
-
+		function delete($id)
+		{
+			$this->db->where('id', $id);
+			$this->db->delete('klas');
+		}
     }

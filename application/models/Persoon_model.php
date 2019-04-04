@@ -230,6 +230,12 @@
 			return $query->result();
 		}
 
+		function getPersoonWhereKlasId($klasId) {
+			$this->db->where('klasId', $klasId);
+			$query = $this->db->get('persoon');
+			return $query->result();
+		}
+
         /**
          * Retourneert het record met nummer=$nummer uit de tabel team22_persoon
          * @param $nummer de nummer van het record  dat opgevraagd wordt
