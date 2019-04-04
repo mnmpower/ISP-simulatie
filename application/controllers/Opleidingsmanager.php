@@ -370,13 +370,60 @@
             }
         }
 
-		public function lesBeheer()
-		{
-		}
-
-
-
 		//VANAF HEIR MOOI ORDENEN
+		public function lesBeheer($foutmelding = NULL)
+        {
+            $data['title'] = "Lessen beheren";
+
+            // Defines roles for this page (You can also use "geen" or leave roles empty!).
+            $data['roles'] = getRoles('geen','geen','geen','Ontwikkelaar');
+
+            // Gets buttons for navbar);
+            $data['buttons'] = getNavbar('opleidingsmanager');
+
+            // Gets plugins if required
+            $data['plugins'] = getPlugin('geen');
+
+            // Gets foutmelding from parameter
+            $data['foutmelding'] = $foutmelding;
+
+            $this->load->model('vak_model');
+            $data['vakken'] = $this->vak_model->getAll();
+            $this->load->model('klas_model');
+            $data['klassen'] = $this->klas_model->getAllKlassenOrderByNaam();
+
+            $partials = array(  'hoofding' => 'main_header',
+                'inhoud' => 'opleidingsmanager/beheerlessen',
+                'footer' => 'main_footer');
+            $this->template->load('main_master', $partials, $data);
+        }
+
+        public function haalAjaxOp_Lessen()
+        {
+            $this->load->model('les_model');
+            $data['lessen'] = $this->les_model->getAllWithVakAndKlas();
+
+            $this->load->view('opleidingsmanager/ajax_lessen', $data);
+        }
+
+        public function haalJsonOp_Les()
+        {
+            $id = $this->input->get('lesId');
+
+            $this->load->model('les_model');
+            $object = $this->les_model->getWithVakAndKlasAndDag($id);
+
+            $this->output->set_content_type("application/json");
+            echo json_encode($object);
+        }
+
+        public function schrapAjax_Les()
+        {
+            $lesId = $this->input->get('lesId');
+
+            $this->load->model('les_model');
+            $this->les_model->delete($lesId);
+        }
 
 		public function mailBeheer()
 		{

@@ -39,6 +39,40 @@
         }
 
         /**
+         * Voegt het record $les toe aan de tabel team22_les
+         * @param $les het record dat toegevoegd wordt
+         * @return int id
+         */
+        function insert($les)
+        {
+            $this->db->insert('les', $les);
+            return $this->db->insert_id();
+        }
+
+        /**
+         * Update het record $les uit de tabel team22_les
+         * @param $persoon het record dat geüpdatet wordt
+         */
+        function update($les)
+        {
+            $this->db->where('id', $les->id);
+            $this->db->update('les', $les);
+        }
+
+        /**
+         * Verwijdert het record met id=$id uit de tabel team22_les en het bijhoorde record in de tabel team22_persoonLes
+         * @param $id de id van het record dat verwijderd wordt
+         */
+        function deleteWithPersoonLes($id)
+        {
+            // Verwijder bijhoordende persoonLessen
+            $this->load->model('persoonLes_model');
+            $this->persoonLes_model->deleteWhereLes($id);
+            $this->db->where('id', $id);
+            $this->db->delete('les');
+        }
+
+        /**
          * Retourneert het record met id=$id uit de tabel team22_les en bijhorend record uit de tabel team22_vak
          * @param $id de id van het record  dat opgevraagd wordt
          * @return Het opgevraagde en bijhorende record
@@ -96,4 +130,61 @@
 			$this->db->where('klasId', $klasId);
 			$this->db->delete('les');
 		}
+        /**
+         * Retourneert alle records  uit de tabel team22_les en bijhorende records uit de tabel team22_vak en team22_klas
+         * @return Array met alle opgevraagde records en de bijhorende records
+         */
+        function getAllWithVakAndKlas(){
+            $query = $this->db->get('les');
+            $lessen = $query->result();
+
+            $this->load->model('vak_model');
+            $this->load->model('klas_model');
+
+            foreach ($lessen as $les){
+                $les->vak = $this->vak_model->get($les->vakId);
+                $les->klas = $this->klas_model->get($les->klasId);
+            }
+            return $lessen;
+        }
+
+        /**
+         * Retourneert het record met id=$id uit de tabel team22_les en bijhorende records uit de tabel team22_vak en team22_klas
+         * @param $id de id van het record  dat opgevraagd wordt
+         * @return Het opgevraagde record en de bijhorende records
+         */
+        function getWithVakAndKlasAndDag($id)
+        {
+            $les = $this->get($id);
+
+            $this->load->model('vak_model');
+            $this->load->model('klas_model');
+
+            $les->vak = $this->vak_model->get($les->vakId);
+            $les->klas = $this->klas_model->get($les->klasId);
+
+            // Datum omzetten naar weekdag
+            switch ($les->datum) {
+                case '2019-09-16':
+                    $les->dag = 1;
+                    break;
+                case '2019-09-17':
+                    $les->dag = 2;
+                    break;
+                case '2019-09-18':
+                    $les->dag = 3;
+                    break;
+                case '2019-09-19':
+                    $les->dag = 4;
+                    break;
+                case '2019-09-20':
+                    $les->dag = 5;
+                    break;
+                default:
+                    $les->dag = "";
+                    break;
+            }
+
+            return $les;
+        }
     }
