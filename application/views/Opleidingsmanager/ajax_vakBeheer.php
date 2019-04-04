@@ -10,9 +10,9 @@
 
 
             foreach ($vakken as $vak) {
-                $wijzigButton = array('class' => 'btn btn-success wijzig', 'data-Vakid' => $vak->id, 'data-toggle' => 'tooltip',
+                $wijzigButton = array('class' => 'btn btn-success wijzig', 'data-vakid' => $vak->id, 'data-toggle' => 'tooltip',
                     "title" => "Wijzig vak");
-                $verwijderButton = array('class' => 'btn btn-danger verwijder', 'data-Vakid' => $vak->id, 'data-toggle' => 'tooltip',
+                $verwijderButton = array('class' => 'btn btn-danger verwijder', 'data-vakid' => $vak->id, 'data-toggle' => 'tooltip',
                     "title" => "Verwijder vak");
                 echo "<td>$vak->naam</td>";
                 echo "<td>" . form_button("knopwijzig" . $vak->id, '<i class="fas fa-edit"></i> Wijzig', $wijzigButton) . "</td>";

@@ -40,25 +40,24 @@
                 type: "GET",
                 url: site_url + "/Opleidingsmanager/haalJsonOp_Vak",
                 data: {vakId: vakId},
-                success: function (vak, keuzerichting) {
-                    $("#vakNaam").val(vak.Naam);
-                    $("#vakStudiepunten").val(vak.Studiepunt);
-                    $("#keuzerichtingkeuze").val(keuzerichting.Naam);
-                    $("#fasekeuze").val(vak.Fase);
-                    $("#semesterkeuze").val(vak.Semester);
-                    $("#vakOpmerking").val(vak.VolgtijdelijkheidInfo);
-
+                success: function (vak) {
+                    $("#vakNaam").val(vak.naam);
+                    $("#vakStudiepunten").val(vak.studiepunt);
+                    $("#keuzerichtingkeuze2").val(vak.keuzerichting);
+                    $("#fasekeuze2").val(vak.fase);
+                    $("#semesterkeuze").val(vak.semester);
+                    $("#vakOpmerking").val(vak.volgtijdelijkheidInfo);
                 },
                 error: function (xhr, status, error) {
-                    alert("-- ERROR IN AJAX (haalJsonOp_Mail) --\n\n" + xhr.responseText);
+                    alert("-- ERROR IN AJAX (haalJsonOp_Vak) --\n\n" + xhr.responseText);
                 }
             });
         }
 
         $(document).ready(function () {
             $("#keuzerichtingkeuze").change(function () {
-                keuzerichtingId = $('#keuzerichtingkeuze').val();
-                faseId = $('#fasekeuze').val();
+                var keuzerichtingId = $('#keuzerichtingkeuze').val();
+                var faseId = $('#fasekeuze').val();
                 if(keuzerichtingId == '0' || faseId == '0') {
                     $('#resultaat').html("");
                 } else {
@@ -67,8 +66,8 @@
             });
 
             $("#fasekeuze").change(function () {
-                keuzerichtingId = $('#keuzerichtingkeuze').val();
-                faseId = $('#fasekeuze').val();
+                var keuzerichtingId = $('#keuzerichtingkeuze').val();
+                var faseId = $('#fasekeuze').val();
                 if(keuzerichtingId == '0' || faseId == '0') {
                     $('#resultaat').html("");
                 } else {
@@ -80,8 +79,9 @@
                 $('#modalTitle').html('Vak toevoegen');
                 $("#vakNaam").val("");
                 $("#vakStudiepunten").val(0);
-                $("#keuzerichtingkeuze").val(0);
-                $("#fasekeuze").val(0);
+                for () 
+                $(".keuzerichtingcheckbox[]").checked = false;
+                $("#fasekeuze2").val(0);
                 $("#semesterkeuze").val(0);
                 $("#vakOpmerking").val("");
                 $('#modal').modal();
@@ -89,16 +89,16 @@
 
             $("#opslaanPopUp").click(function (e) {
                 e.preventDefault();
-                semesterId = $('#semesterkeuze').val();
-                faseId = $('#fasekeuze').val();
-                keuzerichtingId = $('#fasekeuze').val();
+                var semesterId = $('#semesterkeuze').val();
+                var faseId = $('#fasekeuze2').val();
+                var keuzerichtingId = $('#keuzerichtingkeuze2').val();
                 if(semesterId != '0' && faseId != '0' && keuzerichtingId != '0') {
                     $('#formInvoer').submit();
                 }
             });
 
             $("#resultaat").on('click', ".wijzig", function () {
-                $('#modalTitle').html('Mail bewerken');
+                $('#modalTitle').html('Vak bewerken');
                 var vakId = $(this).data('vakid');
                 haalVakOp(vakId);
                 $('#modal').modal();
@@ -186,8 +186,14 @@ $semesterOpties = array('Kies een semester..', 'Semester 1', 'Semester 2');
                             <td><?php echo form_label("Keuzerichting:", "KeuzerichtingLabel"); ?></td>
                             <td>
                                 <?php
-                                $keuzerichtingattributes = array('id' => 'keuzerichtingkeuze', 'class' => 'form-control');
-                                echo form_dropdown('keuzerichting', $keuzerichtingOpties, '0', $keuzerichtingattributes);
+                                foreach ($keuzerichtingOpties as $keuzerichtingOptie){
+                                    if ($keuzerichtingOptie != 'Kies een keuzerichting..'){
+                                        $keuzerichtingattributes = array('id' => $keuzerichtingOptie);
+                                        echo form_checkbox('keuzerichtingcheckbox[]', $keuzerichtingOptie, false, $keuzerichtingattributes);
+                                        echo $keuzerichtingOptie;
+                                        echo '<br />';
+                                    }
+                                }
                                 ?>
                             </td>
                         </tr>
@@ -195,8 +201,8 @@ $semesterOpties = array('Kies een semester..', 'Semester 1', 'Semester 2');
                             <td><?php echo form_label("Fase:", "FaseLabel"); ?></td>
                             <td>
                                 <?php
-                                    $faseattributes = array('id' => 'fasekeuze', 'class' => 'form-control');
-                                    echo form_dropdown('fase', $faseOpties, '0', $faseattributes);
+                                    $faseattributes = array('id' => 'fasekeuze2', 'class' => 'form-control');
+                                    echo form_dropdown('fase2', $faseOpties, '0', $faseattributes);
                                 ?>
                             </td>
                         </tr>

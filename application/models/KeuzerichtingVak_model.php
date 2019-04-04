@@ -72,6 +72,18 @@
         }
 
         /**
+         * Retourneert alle records op met vakId=$vakId uit de tabel team22_keuzerichtingVak
+         * @param $vakId de vakId van het record  dat opgevraagd wordt
+         * @return Array met alle opgevraagde records
+         */
+        function getAllWhereVak($vakId)
+        {
+            $this->db->where('vakId', $vakId);
+            $query = $this->db->get('keuzerichtingVak');
+            return $query->result();
+        }
+
+        /**
          * Voegt het record $keuzerichtingVak toe aan de tabel team22_keuzerichtingVak
          * @param $keuzerichtingVak het record dat toegevoegd wordt
          * @return int id
