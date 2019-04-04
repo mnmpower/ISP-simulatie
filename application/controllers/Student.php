@@ -212,7 +212,7 @@
 
             $data['title'] = "Klasvoorkeur doorgeven";
 
-            $klassen = $this->klas_model->getAllKlassen();
+            $klassen = $this->klas_model->getAllKlassenOrderByNaam();
             $data['klassen'] = $klassen;
 
             // Defines roles for this page (You can also use "geen" or leave roles empty!).
