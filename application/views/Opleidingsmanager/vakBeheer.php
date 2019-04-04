@@ -41,10 +41,11 @@
                 url: site_url + "/Opleidingsmanager/haalJsonOp_Vak",
                 data: {vakId: vakId},
                 success: function (vak) {
+                    $("#vakId").val(vak.id);
                     $("#vakNaam").val(vak.naam);
                     $("#vakStudiepunten").val(vak.studiepunt);
                     $('input[name*="keuzerichtingcheckbox[]"]').each(function(index) {
-                        if (vak.keuzerichting[index]){
+                        if (vak.keuzerichting[index] == this.value){
                             this.checked = true;
                         }
                         else{
@@ -85,6 +86,7 @@
 
             $("#voegtoe").click(function () {
                 $('#modalTitle').html('Vak toevoegen');
+                $("#vakId").val(0);
                 $("#vakNaam").val("");
                 $("#vakStudiepunten").val(0);
                 $('input[name*="keuzerichtingcheckbox[]"]').each(function() {
@@ -102,7 +104,9 @@
                 var faseId = $('#fasekeuze2').val();
                 var keuzerichtingenId = [];
                 $('input[name*="keuzerichtingcheckbox[]"]').each(function(index) {
-                    keuzerichtingenId += (index + 1);
+                    if (this.checked){
+                        keuzerichtingenId += index;
+                    }
                 });
                 if(semesterId != '0' && faseId != '0' && keuzerichtingenId.length != 0) {
                     $('#formInvoer').submit();
@@ -187,7 +191,6 @@ $semesterOpties = array('Kies een semester..', 'Semester 1', 'Semester 2');
                                     echo form_input(array('name' => 'vakStudiepunten',
                                     'id' => 'vakStudiepunten',
                                     'class' => 'form-control',
-                                    'placeholder' => 'Aan',
                                     'type' => 'number',
                                     'required' => 'required',
                                     ));
@@ -201,7 +204,7 @@ $semesterOpties = array('Kies een semester..', 'Semester 1', 'Semester 2');
                                 foreach ($keuzerichtingOpties as $keuzerichtingOptie){
                                     if ($keuzerichtingOptie != 'Kies een keuzerichting..'){
                                         $keuzerichtingattributes = array('id' => $keuzerichtingOptie);
-                                        echo form_checkbox('keuzerichtingcheckbox[]', $keuzerichtingOptie, false, $keuzerichtingattributes);
+                                        echo form_checkbox('keuzerichtingcheckbox[]', array_search($keuzerichtingOptie, $keuzerichtingOpties), false, $keuzerichtingattributes);
                                         echo $keuzerichtingOptie;
                                         echo '<br />';
                                     }
@@ -237,7 +240,6 @@ $semesterOpties = array('Kies een semester..', 'Semester 1', 'Semester 2');
                                     'placeholder' => 'Vul hier de volgtijdelijkheidsinfo in',
                                     ));
                                     echo form_input(array('type'=>'hidden', 'id' =>'vakId', 'name'=> 'vakId'));
-                                    echo form_input(array('type'=>'hidden', 'id' =>'keuzerichtingVakId', 'name'=> 'keuzerichtingVakId'));
                                 ?>
                             </td>
                         </tr>

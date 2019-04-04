@@ -204,6 +204,9 @@
 
             $this->load->model("vak_model");
             $this->load->model("keuzerichtingVak_model");
+            $this->load->model('keuzerichting_model');
+
+            $allekeuzerichtingen = $this->keuzerichting_model->getAll();
 
             $vak = new stdClass();
             $vak->id = $this->input->post('vakId');
@@ -212,19 +215,39 @@
             $vak->fase = $this->input->post('fase2');
             $vak->semester = $this->input->post('semester');
             $vak->volgtijdelijkheidinfo = $this->input->post("vakOpmerking");
-            $keuzerichtingvak = new stdClass();
-            $keuzerichtingvak->keuzerichtingVakId = $this->input->post('keuzerichtingVakId');
-            $keuzerichtingvak->keuzerichtingId = $this->input->post('keuzerichting2');
-            $keuzerichtingvak->vakId = $this->input->post("vakId");
+            $keuzerichtingen = $this->input->post('keuzerichtingcheckbox');
+
+            $i = 0;
+            $keuzerichtingenId = array();
+            foreach ($allekeuzerichtingen as $keuzerichting){
+                foreach ($keuzerichtingen as $gekozen){
+                    if ($gekozen == $keuzerichting){
+                        array_push($keuzerichtingenId, $i);
+                    }
+                }
+                $i++;
+            }
 
             if ($vak->id == 0) {
                 //nieuw record
                 $this->vak_model->insert($vak);
-                $this->keuzerichtingVak_model->insert($keuzerichtingvak);
             } else {
                 //bestaand record
                 $this->vak_model->update($vak);
-                $this->keuzerichtingVak_model->update($keuzerichtingvak);
+            }
+
+            foreach ($keuzerichtingenId as $keuzerichtingId){
+                $keuzerichtingvak = new stdClass();
+                $keuzerichtingvak->keuzerichtingVakId = $this->input->post('keuzerichtingVakId');
+                $keuzerichtingvak->keuzerichtingId = $keuzerichtingId;
+                $keuzerichtingvak->vakId = $this->input->post("vakId");
+                if ($vak->id == 0) {
+                    //nieuw record
+                    $this->keuzerichtingVak_model->insert($keuzerichtingvak);
+                } else {
+                    //bestaand record
+                    $this->keuzerichtingVak_model->update($keuzerichtingvak);
+                }
             }
 
             redirect('Opleidingsmanager/vakBeheer');
@@ -235,10 +258,12 @@
             $this->load->model("keuzerichtingVak_model");
 
             $vakId = $this->input->post('vakId');
-            $keuzerichtingVak = $this->keuzerichtingVak_model->getAllWhereVak($vakId);
+            $keuzerichtingVakken = $this->keuzerichtingVak_model->getAllWhereVak($vakId);
 
+            foreach ($keuzerichtingVakken as $keuzerichtingVak){
+                $this->keuzerichtingVak_model->delete($keuzerichtingVak->id);
+            }
             $this->vak_model->delete($vakId);
-            $this->keuzerichtingVak_model->delete($keuzerichtingVak->id);
 
         }
 
@@ -252,10 +277,11 @@
             $this->load->model("keuzerichtingVak_model");
             $keuzerichtingvakken = $this->keuzerichtingVak_model->getAllWhereVak($vakId);
 
+            $keuzerichtingenId  = array();
             foreach ($keuzerichtingvakken as $keuzerichtingvak){
-                $keuzerichtingId = $keuzerichtingvak->keuzerichtingId;
-                $vak->keuzerichting = $keuzerichtingId;
+                array_push($keuzerichtingenId, $keuzerichtingvak->keuzerichtingId);
             }
+            $vak->keuzerichting = $keuzerichtingenId;
 
             $this->output->set_content_type("application/json");
             echo json_encode($vak);

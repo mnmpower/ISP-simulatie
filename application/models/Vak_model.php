@@ -89,7 +89,7 @@
         function update($vak)
         {
             $this->db->where('id', $vak->id);
-            $this->db->update('mail', $vak);
+            $this->db->update('vak', $vak);
         }
 
         /**
