@@ -34,7 +34,7 @@
             </div>
             <div id="uurrooster"></div>
         </div>
-    </div>
+    </div> 
     <div class="row">
         <div class="container col-6 flex-column d-flex containersISP">
             <div id="klaskeuze1Container" class="flex-grow-1">
