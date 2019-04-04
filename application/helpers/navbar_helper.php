@@ -19,8 +19,8 @@ function getNavbar($role) {
             break;
 
         case 'opleidingsmanager':
-            $buttons = array(   'Home' =>site_url() . '/home/index',
-                                'Beheer' => 'beheer');
+            $buttons = array(   'Home' => site_url() . '/home/index',
+                                'Beheer' => site_url() . '/Opleidingsmanager/beheer');
             break;
 
         default:
