@@ -195,7 +195,7 @@
             $this->load->view('Opleidingsmanager/ajax_vakBeheer', $data);
         }
 
-		public function gebruikerBeheer()
+		public function gebruikerBeheer($foutmelding = NULL)
 		{
             $data['title'] = "Gebruikers beheren";
 
@@ -207,6 +207,9 @@
 
             // Gets plugins if required
             $data['plugins'] = getPlugin('geen');
+
+            // Gets foutmelding from parameter
+            $data['foutmelding'] = $foutmelding;
 
             $this->load->model('persoonType_model');
             $data['persoonTypes'] = $this->persoonType_model->getAll();
@@ -250,6 +253,28 @@
             $this->persoon_model->delete($gebruikerId);
         }
 
+        public function controleerJson_DubbelGebruiker()
+        {
+            $gebruikerId = $this->input->post('gebruikerId');
+            $gebruikerNummer = $this->input->post('gebruikerNummer');
+
+            $this->load->model('persoon_model');
+
+            $gebruiker = $this->persoon_model->getWhereNummer($gebruikerNummer);
+
+            $isDubbel = false;
+
+            if (count($gebruiker) > 0) {
+                if (($gebruiker->id === $gebruikerId)) {
+                    $isDubbel = false;
+                } else {
+                    $isDubbel = true;
+                }
+            }
+            $this->output->set_content_type("application/json");
+            echo json_encode($isDubbel);
+        }
+
         public function schrijfAjax_Gebruiker()
         {
             $object = new stdClass();
@@ -265,6 +290,77 @@
             } else {
                 //bestaand record
                 $this->persoon_model->update($object);
+            }
+        }
+
+        public function uploadGebruikersExcel()
+        {
+            $config['upload_path'] = './uploads/';
+            $config['allowed_types'] = 'xlsx|xls';
+            $this->load->library('upload', $config);
+
+            if (!$this->upload->do_upload('excelFile'))
+            {
+                redirect('Opleidingsmanager/gebruikerBeheer/fout');
+            }
+            else
+            {
+                $upload_data = $this->upload->data();
+                $fileName = $upload_data['file_name'];
+                $newName = 'gebruikers.xls';
+                if(substr($fileName, -4) == "xlsx") {
+                    $newName = "gebruikers.xlsx";
+                }
+                rename('./uploads/' . $fileName, './uploads/' . $newName);
+
+                // Excel file koppelen
+                $this->load->library('excel');
+                $file = './uploads/' . $newName;
+                $excelFile = PHPExcel_IOFactory::load($file);
+
+                // Excel file nakijken
+                $A1 = $excelFile->getActiveSheet()->getCell('A1')->getValue();
+                $B1 = $excelFile->getActiveSheet()->getCell('B1')->getValue();
+                if(strtolower($A1) == "naam" && strtolower($B1) == "nummer") {
+
+                    // Alleen ingevulde cellen selecteren
+                    $cell_collection = $excelFile->getActiveSheet()->getCellCollection();
+
+                    // Omzetten naar array
+                    foreach ($cell_collection as $cell) {
+                        $column = $excelFile->getActiveSheet()->getCell($cell)->getColumn();
+                        $row = $excelFile->getActiveSheet()->getCell($cell)->getRow();
+                        $cell_value = $excelFile->getActiveSheet()->getCell($cell)->getValue();
+
+                        if($row != 1) {
+                            $gebruikers[$row][$column] = $cell_value;
+                        }
+                    }
+
+                    // Array naar database
+                    $this->load->model('persoon_model');
+                    $toegevoegd = 0;
+                    $totaal = 0;
+                    foreach ($gebruikers as $object) {
+                        $gebruiker = new stdClass();
+                        $gebruiker->naam = $object["A"];
+                        $gebruiker->nummer = $object["B"];
+
+                        $gebruiker->id = 0;
+                        $gebruiker->typeId = $this->input->post('gebruikerTypeExcel');
+
+                        if($this->persoon_model->getWhereNummer($gebruiker->nummer) == null) {
+                            $this->persoon_model->insert($gebruiker);
+                            $toegevoegd++;
+                        }
+                        $totaal++;
+                    }
+
+                    // Redirect naar overzicht gebruikers
+                    redirect('Opleidingsmanager/gebruikerBeheer/' . $toegevoegd . ' van de ' . $totaal);
+                } else {
+                    redirect('Opleidingsmanager/gebruikerBeheer/fout');
+                }
             }
         }
 
