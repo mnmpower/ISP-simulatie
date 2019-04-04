@@ -28,3 +28,10 @@ $('.carousel').carousel(
     {
         interval: false
     });
+
+// Klassen checkbox limit
+$('.klasCheckbox').on('change', function() {
+    if($('.klasCheckbox:checked').length > 2) {
+        this.checked = false;
+    }
+});
