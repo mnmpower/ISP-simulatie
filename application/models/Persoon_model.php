@@ -223,4 +223,22 @@
             
             return $personen;
         }
+
+		function getPersoonWhereKeuzerichtingId($keuzerichtingId) {
+			$this->db->where('keuzerichtingId', $keuzerichtingId);
+			$query = $this->db->get('persoon');
+			return $query->result();
+		}
+
+        /**
+         * Retourneert het record met nummer=$nummer uit de tabel team22_persoon
+         * @param $nummer de nummer van het record  dat opgevraagd wordt
+         * @return Het opgevraagde record
+         */
+        function getWhereNummer($nummer)
+        {
+            $this->db->where('nummer', $nummer);
+            $query = $this->db->get('persoon');
+            return $query->row();
+        }
     }

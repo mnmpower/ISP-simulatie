@@ -37,6 +37,25 @@
 			return $query->row();
 		}
 
+		function insert($keuzerichting)
+		{
+			$this->db->insert('keuzerichting', $keuzerichting);
+			return $this->db->insert_id();
+		}
+
+
+		function update($keuzerichting)
+		{
+			$this->db->where('id', $keuzerichting->id);
+			$this->db->update('keuzerichting', $keuzerichting);
+		}
+
+		function delete($id)
+		{
+			$this->db->where('id', $id);
+			$this->db->delete('keuzerichting');
+		}
+
         /**
          * Retourneert alle records uit de tabel team22_keuzerichting
          * @return Alle records

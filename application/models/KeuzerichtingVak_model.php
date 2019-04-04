@@ -71,46 +71,15 @@
             return $vakkenNieuw;
         }
 
-        /**
-         * Retourneert alle records op met vakId=$vakId uit de tabel team22_keuzerichtingVak
-         * @param $vakId de vakId van het record  dat opgevraagd wordt
-         * @return Array met alle opgevraagde records
-         */
-        function getAllWhereVak($vakId)
-        {
-            $this->db->where('vakId', $vakId);
-            $query = $this->db->get('keuzerichtingVak');
-            return $query->result();
-        }
+		function delete($id)
+		{
+			$this->db->where('id', $id);
+			$this->db->delete('keuzerichtingVak');
+		}
 
-        /**
-         * Voegt het record $keuzerichtingVak toe aan de tabel team22_keuzerichtingVak
-         * @param $keuzerichtingVak het record dat toegevoegd wordt
-         * @return int id
-         */
-        function insert($keuzerichtingVak)
-        {
-            $this->db->insert('keuzerichtingVak', $keuzerichtingVak);
-            return $this->db->insert_id();
-        }
-
-        /**
-         * Update het record $keuzerichtingVak uit de tabel team22_keuzerichtingVak
-         * @param $keuzerichtingVak het record dat geüpdatet wordt
-         */
-        function update($keuzerichtingVak)
-        {
-            $this->db->where('id', $keuzerichtingVak->keuzerichtingVakId);
-            $this->db->update('keuzerichtingVak', $keuzerichtingVak);
-        }
-
-        /**
-         * Verwijdert het record met id=$id uit de tabel team22_keuzerichtingVak
-         * @param $id de id van het record dat verwijderd wordt
-         */
-        function delete($id)
-        {
-            $this->db->where('id', $id);
-            $this->db->delete('keuzerichtingVak');
-        }
+		function deleteAllWhereKeuzerichtingID($keuzerichtingId)
+		{
+			$this->db->where('keuzerichtingId', $keuzerichtingId);
+			$this->db->delete('keuzerichtingVak');
+		}
     }

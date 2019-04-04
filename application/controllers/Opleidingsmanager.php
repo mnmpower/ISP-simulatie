@@ -9,6 +9,9 @@
      * Controller-klasse met alle methodes die gebruikt worden in de pagina's voor de opleidingsmanager
      * @property Template $template
 	 * @property Persoon_model $persoon_model
+	 * @property Keuzerichting_model $keuzerichting_model
+	 * @property KeuzerichtingVak_model $keuzerichtingVak_model
+	 * @property KeuzerichtingKlas_model $keuzerichtingKlas_model
 	 * @property Mail_model $mail_model
      * @property Vak_model $vak_model
      */
@@ -189,7 +192,6 @@
             $faseId = $this->input->get('faseId');
 
             $this->load->model('vak_model');
-            $this->load->model('keuzerichtingVak_model');
 
             $vakken = $this->vak_model->getAllWhereKeuzerichtingAndFase($keuzerichtingId, $faseId);
             $data['vakken'] = $vakken;
@@ -197,68 +199,7 @@
             $this->load->view('Opleidingsmanager/ajax_vakBeheer', $data);
         }
 
-        public function voegVakToe(){
-
-            $this->load->model("vak_model");
-            $this->load->model("keuzerichtingVak_model");
-
-            $vak = new stdClass();
-            $vak->id = $this->input->post('vakId');
-            $vak->naam = $this->input->post("vakNaam");
-            $vak->studiepunt = $this->input->post("vakStudiepunten");
-            $vak->fase = $this->input->post('fase2');
-            $vak->semester = $this->input->post('semester');
-            $vak->volgtijdelijkheidinfo = $this->input->post("vakOpmerking");
-            $keuzerichtingvak = new stdClass();
-            $keuzerichtingvak->keuzerichtingVakId = $this->input->post('keuzerichtingVakId');
-            $keuzerichtingvak->keuzerichtingId = $this->input->post('keuzerichting2');
-            $keuzerichtingvak->vakId = $this->input->post("vakId");
-
-            if ($vak->id == 0) {
-                //nieuw record
-                $this->vak_model->insert($vak);
-                $this->keuzerichtingVak_model->insert($keuzerichtingvak);
-            } else {
-                //bestaand record
-                $this->vak_model->update($vak);
-                $this->keuzerichtingVak_model->update($keuzerichtingvak);
-            }
-
-            redirect('Opleidingsmanager/vakBeheer');
-        }
-
-        public function schrapAjax_Vak() {
-            $this->load->model("vak_model");
-            $this->load->model("keuzerichtingVak_model");
-
-            $vakId = $this->input->post('vakId');
-            $keuzerichtingVak = $this->keuzerichtingVak_model->getAllWhereVak($vakId);
-
-            $this->vak_model->delete($vakId);
-            $this->keuzerichtingVak_model->delete($keuzerichtingVak->id);
-
-        }
-
-
-        public function haalJsonOp_Vak(){
-            $vakId = $this->input->get('vakId');
-
-            $this->load->model("vak_model");
-            $vak = $this->vak_model->get($vakId);
-
-            $this->load->model("keuzerichtingVak_model");
-            $keuzerichtingvakken = $this->keuzerichtingVak_model->getAllWhereVak($vakId);
-
-            foreach ($keuzerichtingvakken as $keuzerichtingvak){
-                $keuzerichtingId = $keuzerichtingvak->keuzerichtingId;
-                $vak->keuzerichting = $keuzerichtingId;
-            }
-
-            $this->output->set_content_type("application/json");
-            echo json_encode($vak);
-        }
-
-		public function gebruikerBeheer()
+		public function gebruikerBeheer($foutmelding = NULL)
 		{
             $data['title'] = "Gebruikers beheren";
 
@@ -270,6 +211,9 @@
 
             // Gets plugins if required
             $data['plugins'] = getPlugin('geen');
+
+            // Gets foutmelding from parameter
+            $data['foutmelding'] = $foutmelding;
 
             $this->load->model('persoonType_model');
             $data['persoonTypes'] = $this->persoonType_model->getAll();
@@ -313,6 +257,28 @@
             $this->persoon_model->delete($gebruikerId);
         }
 
+        public function controleerJson_DubbelGebruiker()
+        {
+            $gebruikerId = $this->input->post('gebruikerId');
+            $gebruikerNummer = $this->input->post('gebruikerNummer');
+
+            $this->load->model('persoon_model');
+
+            $gebruiker = $this->persoon_model->getWhereNummer($gebruikerNummer);
+
+            $isDubbel = false;
+
+            if (count($gebruiker) > 0) {
+                if (($gebruiker->id === $gebruikerId)) {
+                    $isDubbel = false;
+                } else {
+                    $isDubbel = true;
+                }
+            }
+            $this->output->set_content_type("application/json");
+            echo json_encode($isDubbel);
+        }
+
         public function schrijfAjax_Gebruiker()
         {
             $object = new stdClass();
@@ -331,10 +297,83 @@
             }
         }
 
+        public function uploadGebruikersExcel()
+        {
+            $config['upload_path'] = './uploads/';
+            $config['allowed_types'] = 'xlsx|xls';
+            $this->load->library('upload', $config);
+
+            if (!$this->upload->do_upload('excelFile'))
+            {
+                redirect('Opleidingsmanager/gebruikerBeheer/fout');
+            }
+            else
+            {
+                $upload_data = $this->upload->data();
+                $fileName = $upload_data['file_name'];
+                $newName = 'gebruikers.xls';
+                if(substr($fileName, -4) == "xlsx") {
+                    $newName = "gebruikers.xlsx";
+                }
+                rename('./uploads/' . $fileName, './uploads/' . $newName);
+
+                // Excel file koppelen
+                $this->load->library('excel');
+                $file = './uploads/' . $newName;
+                $excelFile = PHPExcel_IOFactory::load($file);
+
+                // Excel file nakijken
+                $A1 = $excelFile->getActiveSheet()->getCell('A1')->getValue();
+                $B1 = $excelFile->getActiveSheet()->getCell('B1')->getValue();
+                if(strtolower($A1) == "naam" && strtolower($B1) == "nummer") {
+
+                    // Alleen ingevulde cellen selecteren
+                    $cell_collection = $excelFile->getActiveSheet()->getCellCollection();
+
+                    // Omzetten naar array
+                    foreach ($cell_collection as $cell) {
+                        $column = $excelFile->getActiveSheet()->getCell($cell)->getColumn();
+                        $row = $excelFile->getActiveSheet()->getCell($cell)->getRow();
+                        $cell_value = $excelFile->getActiveSheet()->getCell($cell)->getValue();
+
+                        if($row != 1) {
+                            $gebruikers[$row][$column] = $cell_value;
+                        }
+                    }
+
+                    // Array naar database
+                    $this->load->model('persoon_model');
+                    $toegevoegd = 0;
+                    $totaal = 0;
+                    foreach ($gebruikers as $object) {
+                        $gebruiker = new stdClass();
+                        $gebruiker->naam = $object["A"];
+                        $gebruiker->nummer = $object["B"];
+
+                        $gebruiker->id = 0;
+                        $gebruiker->typeId = $this->input->post('gebruikerTypeExcel');
+
+                        if($this->persoon_model->getWhereNummer($gebruiker->nummer) == null) {
+                            $this->persoon_model->insert($gebruiker);
+                            $toegevoegd++;
+                        }
+                        $totaal++;
+                    }
+
+                    // Redirect naar overzicht gebruikers
+                    redirect('Opleidingsmanager/gebruikerBeheer/' . $toegevoegd . ' van de ' . $totaal);
+                } else {
+                    redirect('Opleidingsmanager/gebruikerBeheer/fout');
+                }
+            }
+        }
+
 		public function klasBeheer()
 		{
 		}
 
+
+		//VANAF HEIR MOOI ORDENEN
 		public function lesBeheer()
 		{
 		}
@@ -363,6 +402,24 @@
 
 		public function keuzerichtingBeheer()
 		{
+			//loaden model
+			$this->load->model("mail_model");
+
+			// Defines roles for this page (You can also use "geen" or leave roles empty!).
+			$data['roles'] = getRoles('Ontwikkelaar','geen','geen','geen');
+
+			// Gets buttons for navbar);
+			$data['buttons'] = getNavbar('opleidingsmanager');
+
+			// Gets plugins if required
+			$data['plugins'] = getPlugin('geen');
+
+			$data['title'] = "Keuzerichtingen beheren";
+
+			$partials = array(  'hoofding' => 'main_header',
+				'inhoud' => 'opleidingsmanager/BeheerKeuzerichting/KeuzerichtingBeheer',
+				'footer' => 'main_footer');
+			$this->template->load('main_master', $partials, $data);
 		}
 
 		public function haalAjaxOp_Mails(){
@@ -371,6 +428,13 @@
 			$data['mails'] = $this->mail_model->getAllMail();
 
 			$this->load->view('Opleidingsmanager/ajax_MailCRUD', $data);
+		}
+
+		public function haalAjaxOp_Keuzerichtingen(){
+			$this->load->model('keuzerichting_model');
+			$data['keuzerichtingen'] = $this->keuzerichting_model->getAll();
+
+			$this->load->view('Opleidingsmanager/BeheerKeuzerichting/ajax_KeuzerichtingCRUD', $data);
 		}
 
 		public function voegMailToe(){
@@ -393,6 +457,23 @@
 			redirect('Opleidingsmanager/mailBeheer');
 		}
 
+		public function voegKeuzerichtingToe(){
+			$this->load->model('keuzerichting_model');
+
+			$keuzerichting = new stdClass();
+			$keuzerichting->id = $this->input->post('KeuzerichtingId');
+			$keuzerichting->naam = htmlspecialchars($this->input->post("KeuzerichtingNaam"));
+
+			if ($keuzerichting->id == 0) {
+				//nieuw record
+				$this->keuzerichting_model->insert($keuzerichting);
+			} else {
+				//bestaand record
+				$this->keuzerichting_model->update($keuzerichting);
+			}
+			redirect('Opleidingsmanager/keuzerichtingBeheer');
+		}
+
 		public function schrapAjax_Mail() {
 			$this->load->model("mail_model");
 
@@ -402,6 +483,43 @@
 
 		}
 
+		public function schrapAjax_Keuzerichting() {
+			$this->load->model('keuzerichting_model');
+			$this->load->model('keuzerichtingVak_model');
+			$this->load->model('keuzerichtingKlas_model');
+			$this->load->model('persoon_model');
+
+        	$keuzerichtingId = $this->input->get('keuzerichtingId');
+
+        	//NAKIJKEN OF ER PERSONEN BESTAAN IN DEZE KEUZERICHTING + AANPASSEN NAAR 0
+        	$persoonen = $this->persoon_model->getPersoonWhereKeuzerichtingId($keuzerichtingId);
+        	foreach ($persoonen as $persoon){
+
+				$persoon->keuzerichtingId = null;
+				$this->persoon_model->update($persoon);
+			}
+
+			//ALLE KEUZERICHTING VAKKEN SCHRAPPEN ALS DIE NOG BESTAAN
+			$this->keuzerichtingVak_model->deleteAllWhereKeuzerichtingID($keuzerichtingId);
+//			$keuzerichtingVakken = $this->keuzerichtingVak_model->getAll();
+//			foreach ($keuzerichtingVakken as $item) {
+//				if ($item->keuzerichtingId == $keuzerichtingId){
+//					$this->keuzerichtingVak_model->delete($item->id);
+//				}
+//        	}
+
+        	//ALLE KEUZERICHTING KLASSEN SCHRAPPEN ALS DIE NOG BESTAAN
+			$this->keuzerichtingKlas_model->deleteAllWhereKeuzerichtingID($keuzerichtingId);
+//			$keuzerichtingKlassen = $this->keuzerichtingKlas_model->getAll();
+//			foreach ($keuzerichtingKlassen as $item) {
+//				if ($item->keuzerichtingId == $keuzerichtingId){
+//					$this->keuzerichtingKlas_model->delete($item->id);
+//				}
+//			}
+
+        	$this->keuzerichting_model->delete($keuzerichtingId);
+
+		}
 
 		public function haalJsonOp_Mail(){
 			$id = $this->input->get('mailId');
@@ -411,5 +529,15 @@
 
 			$this->output->set_content_type("application/json");
 			echo json_encode($mail);
+		}
+
+		public function haalJsonOp_Keuzerichting(){
+			$id = $this->input->get('keuzerichtingId');
+
+			$this->load->model('keuzerichting_model');
+			$keuzerichting = $this->keuzerichting_model->get($id);
+
+			$this->output->set_content_type("application/json");
+			echo json_encode($keuzerichting);
 		}
     }
