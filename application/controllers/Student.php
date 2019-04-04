@@ -147,6 +147,7 @@
             }
             else if(isset($_POST['isp']))
             {
+                redirect('Student/ispSamenstellen');
             }
         }
 
@@ -377,5 +378,28 @@
 
             $this->load->model('afspraak_model');
             $this->afspraak_model->updateAfspraakReserveer($description, $student->id, $id);
+        }
+
+        public function ispSamenstellen(){
+            $this->load->model("klas_model");
+            $data['title'] = "ISP Samenstellen";
+            // Defines roles for this page (You can also use "geen" or leave roles empty!).
+            $data['roles'] = getRoles('geen','geen','Ontwikkelaar','geen');
+
+            // Gets buttons for navbar);
+            $data['buttons'] = getNavbar('student');
+
+            // Gets plugins if required
+            $data['plugins'] = getPlugin('fullCalendar');
+
+            $persoon = $this->authex->getGebruikerInfo();
+            $klas = $this->klas_model->get($persoon->klasId);
+
+            $data['klas'] = $klas;
+
+            $partials = array(  'hoofding' => 'main_header',
+                'inhoud' => 'Student/ispSamenstellen',
+                'footer' => 'main_footer');
+            $this->template->load('main_master', $partials, $data);
         }
     }

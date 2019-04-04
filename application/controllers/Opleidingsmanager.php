@@ -9,6 +9,9 @@
      * Controller-klasse met alle methodes die gebruikt worden in de pagina's voor de opleidingsmanager
      * @property Template $template
 	 * @property Persoon_model $persoon_model
+	 * @property Keuzerichting_model $keuzerichting_model
+	 * @property KeuzerichtingVak_model $keuzerichtingVak_model
+	 * @property KeuzerichtingKlas_model $keuzerichtingKlas_model
 	 * @property Mail_model $mail_model
      */
     class Opleidingsmanager extends CI_Controller
@@ -368,6 +371,8 @@
 		{
 		}
 
+
+		//VANAF HEIR MOOI ORDENEN
 		public function lesBeheer()
 		{
 		}
@@ -396,6 +401,24 @@
 
 		public function keuzerichtingBeheer()
 		{
+			//loaden model
+			$this->load->model("mail_model");
+
+			// Defines roles for this page (You can also use "geen" or leave roles empty!).
+			$data['roles'] = getRoles('Ontwikkelaar','geen','geen','geen');
+
+			// Gets buttons for navbar);
+			$data['buttons'] = getNavbar('opleidingsmanager');
+
+			// Gets plugins if required
+			$data['plugins'] = getPlugin('geen');
+
+			$data['title'] = "Keuzerichtingen beheren";
+
+			$partials = array(  'hoofding' => 'main_header',
+				'inhoud' => 'opleidingsmanager/BeheerKeuzerichting/KeuzerichtingBeheer',
+				'footer' => 'main_footer');
+			$this->template->load('main_master', $partials, $data);
 		}
 
 		public function haalAjaxOp_Mails(){
@@ -404,6 +427,13 @@
 			$data['mails'] = $this->mail_model->getAllMail();
 
 			$this->load->view('Opleidingsmanager/ajax_MailCRUD', $data);
+		}
+
+		public function haalAjaxOp_Keuzerichtingen(){
+			$this->load->model('keuzerichting_model');
+			$data['keuzerichtingen'] = $this->keuzerichting_model->getAll();
+
+			$this->load->view('Opleidingsmanager/BeheerKeuzerichting/ajax_KeuzerichtingCRUD', $data);
 		}
 
 		public function voegMailToe(){
@@ -426,6 +456,23 @@
 			redirect('Opleidingsmanager/mailBeheer');
 		}
 
+		public function voegKeuzerichtingToe(){
+			$this->load->model('keuzerichting_model');
+
+			$keuzerichting = new stdClass();
+			$keuzerichting->id = $this->input->post('KeuzerichtingId');
+			$keuzerichting->naam = htmlspecialchars($this->input->post("KeuzerichtingNaam"));
+
+			if ($keuzerichting->id == 0) {
+				//nieuw record
+				$this->keuzerichting_model->insert($keuzerichting);
+			} else {
+				//bestaand record
+				$this->keuzerichting_model->update($keuzerichting);
+			}
+			redirect('Opleidingsmanager/keuzerichtingBeheer');
+		}
+
 		public function schrapAjax_Mail() {
 			$this->load->model("mail_model");
 
@@ -435,6 +482,43 @@
 
 		}
 
+		public function schrapAjax_Keuzerichting() {
+			$this->load->model('keuzerichting_model');
+			$this->load->model('keuzerichtingVak_model');
+			$this->load->model('keuzerichtingKlas_model');
+			$this->load->model('persoon_model');
+
+        	$keuzerichtingId = $this->input->get('keuzerichtingId');
+
+        	//NAKIJKEN OF ER PERSONEN BESTAAN IN DEZE KEUZERICHTING + AANPASSEN NAAR 0
+        	$persoonen = $this->persoon_model->getPersoonWhereKeuzerichtingId($keuzerichtingId);
+        	foreach ($persoonen as $persoon){
+
+				$persoon->keuzerichtingId = null;
+				$this->persoon_model->update($persoon);
+			}
+
+			//ALLE KEUZERICHTING VAKKEN SCHRAPPEN ALS DIE NOG BESTAAN
+			$this->keuzerichtingVak_model->deleteAllWhereKeuzerichtingID($keuzerichtingId);
+//			$keuzerichtingVakken = $this->keuzerichtingVak_model->getAll();
+//			foreach ($keuzerichtingVakken as $item) {
+//				if ($item->keuzerichtingId == $keuzerichtingId){
+//					$this->keuzerichtingVak_model->delete($item->id);
+//				}
+//        	}
+
+        	//ALLE KEUZERICHTING KLASSEN SCHRAPPEN ALS DIE NOG BESTAAN
+			$this->keuzerichtingKlas_model->deleteAllWhereKeuzerichtingID($keuzerichtingId);
+//			$keuzerichtingKlassen = $this->keuzerichtingKlas_model->getAll();
+//			foreach ($keuzerichtingKlassen as $item) {
+//				if ($item->keuzerichtingId == $keuzerichtingId){
+//					$this->keuzerichtingKlas_model->delete($item->id);
+//				}
+//			}
+
+        	$this->keuzerichting_model->delete($keuzerichtingId);
+
+		}
 
 		public function haalJsonOp_Mail(){
 			$id = $this->input->get('mailId');
@@ -444,5 +528,15 @@
 
 			$this->output->set_content_type("application/json");
 			echo json_encode($mail);
+		}
+
+		public function haalJsonOp_Keuzerichting(){
+			$id = $this->input->get('keuzerichtingId');
+
+			$this->load->model('keuzerichting_model');
+			$keuzerichting = $this->keuzerichting_model->get($id);
+
+			$this->output->set_content_type("application/json");
+			echo json_encode($keuzerichting);
 		}
     }

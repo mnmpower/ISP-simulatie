@@ -15,3 +15,47 @@
 body, header, footer {
     min-width: 700px;
 }
+
+.container90{
+    width: 90%;
+    margin: auto;
+}
+
+.containersISP {
+    padding: 5px !important;
+}
+
+#carouselWarnings {
+    background-color: #f5f5f5;
+    text-align: center;
+}
+
+#klassenContainer {
+    background-color: #f5f5f5;
+    text-align: center;
+}
+
+#klaskeuze2Container {
+    background-color: #f5f5f5;
+    text-align: center;
+}
+
+#klaskeuze1Container {
+    background-color: #f5f5f5;
+    text-align: center;
+}
+
+#fasekeuzeContainer {
+    background-color: #f5f5f5;
+    text-align: center;
+}
+
+#vakkenkeuzeContainer {
+    background-color: #f5f5f5;
+    text-align: center;
+}
+
+#semesterkeuzeContainer {
+    background-color: #f5f5f5;
+    text-align: center;
+}

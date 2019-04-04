@@ -70,4 +70,16 @@
 
             return $vakkenNieuw;
         }
+
+		function delete($id)
+		{
+			$this->db->where('id', $id);
+			$this->db->delete('keuzerichtingVak');
+		}
+
+		function deleteAllWhereKeuzerichtingID($keuzerichtingId)
+		{
+			$this->db->where('keuzerichtingId', $keuzerichtingId);
+			$this->db->delete('keuzerichtingVak');
+		}
     }
