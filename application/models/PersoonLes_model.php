@@ -47,8 +47,13 @@
             $this->db->where('persoonIdStudent',$persoonIdStudent);
             $query =$this->db->get('persoonLes');
             return  $query->result();
-            //OK returnt alle persoonLESSEN van een persoonID
         }
+
+		function getAllWhereLesId($lesId){
+			$this->db->where('lesId',$lesId);
+			$query =$this->db->get('persoonLes');
+			return  $query->result();
+		}
 
         /**
          * Retourneert het record met persoonLesId=$persoonLesId uit de tabel team22_persoonLes en bijhorende records uit de tabel team22_vak en tabel team22_les
@@ -100,4 +105,16 @@
             }
             return $persoonLessen;
         }
+
+		function delete($id)
+		{
+			$this->db->where('id', $id);
+			$this->db->delete('persoonLes');
+		}
+
+		function deleteAllWhereLesID($lesId)
+		{
+			$this->db->where('lesId', $lesId);
+			$this->db->delete('persoonLes');
+		}
     }

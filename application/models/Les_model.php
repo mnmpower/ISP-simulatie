@@ -84,4 +84,16 @@
             }
             return $persoonLessen;
         }
+
+		function delete($id)
+		{
+			$this->db->where('id', $id);
+			$this->db->delete('les');
+		}
+
+		function deleteAllWhereKlasID($klasId)
+		{
+			$this->db->where('klasId', $klasId);
+			$this->db->delete('les');
+		}
     }

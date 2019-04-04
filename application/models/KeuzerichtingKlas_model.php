@@ -37,4 +37,10 @@
 			$this->db->where('keuzerichtingId', $keuzerichtingId);
 			$this->db->delete('keuzerichtingKlas');
 		}
+
+		function deleteAllWhereKlasID($klasId)
+		{
+			$this->db->where('klasId', $klasId);
+			$this->db->delete('keuzerichtingKlas');
+		}
     }
