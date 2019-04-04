@@ -34,7 +34,6 @@
                 $("#gebruikerNaam").val(gebruiker.naam);
                 $("#gebruikerNummer").val(gebruiker.nummer);
                 $("#gebruikerType").val(gebruiker.typeId);
-                //resetValidatie();
 
                 $("#knop").val("Wijzigen");
                 $("#actie").text("wijzigen");
