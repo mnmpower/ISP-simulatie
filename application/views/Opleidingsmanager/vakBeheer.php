@@ -43,6 +43,14 @@
                 success: function (vak) {
                     $("#vakNaam").val(vak.naam);
                     $("#vakStudiepunten").val(vak.studiepunt);
+                    $('input[name*="keuzerichtingcheckbox[]"]').each(function(index) {
+                        if (vak.keuzerichting[index]){
+                            this.checked = true;
+                        }
+                        else{
+                            this.checked = false;
+                        }
+                    });
                     $("#keuzerichtingkeuze2").val(vak.keuzerichting);
                     $("#fasekeuze2").val(vak.fase);
                     $("#semesterkeuze").val(vak.semester);
@@ -79,8 +87,9 @@
                 $('#modalTitle').html('Vak toevoegen');
                 $("#vakNaam").val("");
                 $("#vakStudiepunten").val(0);
-                for () 
-                $(".keuzerichtingcheckbox[]").checked = false;
+                $('input[name*="keuzerichtingcheckbox[]"]').each(function() {
+                    this.checked = false;
+                });
                 $("#fasekeuze2").val(0);
                 $("#semesterkeuze").val(0);
                 $("#vakOpmerking").val("");
@@ -91,8 +100,11 @@
                 e.preventDefault();
                 var semesterId = $('#semesterkeuze').val();
                 var faseId = $('#fasekeuze2').val();
-                var keuzerichtingId = $('#keuzerichtingkeuze2').val();
-                if(semesterId != '0' && faseId != '0' && keuzerichtingId != '0') {
+                var keuzerichtingenId = [];
+                $('input[name*="keuzerichtingcheckbox[]"]').each(function(index) {
+                    keuzerichtingenId += (index + 1);
+                });
+                if(semesterId != '0' && faseId != '0' && keuzerichtingenId.length != 0) {
                     $('#formInvoer').submit();
                 }
             });
