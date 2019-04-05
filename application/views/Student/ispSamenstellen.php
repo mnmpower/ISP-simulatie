@@ -17,20 +17,15 @@
         </div>
         <div class="container col-10 containersISP">
             <div id="carouselWarnings" class="carousel slide" data-ride="carousel">
-                <ol class="carousel-indicators">
+                <ol class="carousel-indicators indicatorsPad">
                     <li data-target="#carouselWarnings" data-slide-to="0" class="active"></li>
-                    <li data-target="#carouselWarnings" data-slide-to="1"></li>
-                    <li data-target="#carouselWarnings" data-slide-to="2"></li>
                 </ol>
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <p>TEST</p>
-                    </div>
-                    <div class="carousel-item">
-                        <p>TEST2</p>
-                    </div>
-                    <div class="carousel-item">
-                        <p>TEST3</p>
+                        <div class="alert alert-primary alertPad role="alert">
+                            <i class="fas fa-info-circle"></i>
+                            Geen fouten gedetecteerd.
+                        </div>
                     </div>
                 </div>
                 <a class="carousel-control-prev" href="#carouselWarnings" role="button" data-slide="prev">
@@ -44,44 +39,57 @@
             </div>
             <div id="uurrooster"></div>
         </div>
-    </div> 
-    <div class="row">
+    </div>
+    <div class="row ScrollKlasParent">
         <div class="container col-6 flex-column d-flex containersISP">
             <div id="klaskeuze1Container" class="flex-grow-1">
-                <p>TEST KLAS 1</p>
+                <div class="centered">
+                    <h5 id="klas1Titel" class="bg-primary text-white">Selecteer een klas..</h5>
+                </div>
+                <div id="klas1Tekst" class="ScrollChild">
+                </div>
             </div>
         </div>
         <div class="container col-6 flex-column d-flex containersISP">
-            <div id="klaskeuze2Container" class="flex-grow-1">
-                <p>TEST KLAS 2</p>
+            <div id="klaskeuze2Container" class="flex-grow-1 ScrollParent">
+                <div class="centered">
+                    <h5 id="klas2Titel" class="bg-primary text-white">Selecteer een klas..</h5>
+                </div>
+                <div id="klas2Tekst" class="ScrollChild">
+                </div>
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="container col-10 flex-column d-flex containersISP">
+        <div class="container col-10 flex-column d-flex containersISP paddingR20">
             <div id="vakkenkeuzeContainer" class="flex-grow-1">
-                <div class="row">
-                    <div class="col-4">
+                <div class="row ScrollParent">
+                    <div class="col-4 faseList">
                         <div class="list-group" id="list-tab" role="tablist">
-                            <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-fase1" role="tab" aria-controls="home">Fase 1</a>
-                            <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-fase2" role="tab" aria-controls="profile">Fase 2</a>
-                            <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-fase3" role="tab" aria-controls="messages">Fase 3</a>
+                            <a class="list-group-item list-group-item-action active" id="list-home-list"
+                               data-toggle="list" href="#list-fase1" role="tab" aria-controls="home">Fase 1</a>
+                            <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list"
+                               href="#list-fase2" role="tab" aria-controls="profile">Fase 2</a>
+                            <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list"
+                               href="#list-fase3" role="tab" aria-controls="messages">Fase 3</a>
                         </div>
                     </div>
-                    <div class="col-8">
+                    <div class="col-8 ScrollChild">
                         <div class="tab-content">
-                            <div class="tab-pane fade show active" id="list-fase1" role="tabpanel" aria-labelledby="list-home-list">
+                            <div class="tab-pane fade show active" id="list-fase1" role="tabpanel"
+                                 aria-labelledby="list-home-list">
                                 <?php foreach ($vakken as $vak) {
                                     if ($vak->fase == 1) {
-                                    echo "<div class='form-check' id='vakkenCheckContainer'>";
-                                    echo form_checkbox('vak' . $vak->id, $vak->id, false, array('class' => 'form-check-input vakCheckbox'));
-                                    echo form_label($vak->naam, 'vak' . $vak->id, array('class' => 'form-check-label'));
-                                    echo "</div>";
+                                        echo "<div class='form-check' id='vakkenCheckContainer'>";
+                                        echo form_checkbox('vak' . $vak->id, $vak->id, false, array('class' => 'form-check-input vakCheckbox'));
+                                        echo form_label($vak->naam, 'vak' . $vak->id, array('class' => 'form-check-label'));
+                                        echo "</div>";
                                     }
                                 }
                                 ?>
                             </div>
-                            <div class="tab-pane fade" id="list-fase2" role="tabpanel" aria-labelledby="list-profile-list">
+                            <div class="tab-pane fade" id="list-fase2" role="tabpanel"
+                                 aria-labelledby="list-profile-list">
                                 <?php foreach ($vakken as $vak) {
                                     if ($vak->fase == 2) {
                                         echo "<div class='form-check' id='vakkenCheckContainer'>";
@@ -92,7 +100,8 @@
                                 }
                                 ?>
                             </div>
-                            <div class="tab-pane fade h-25" id="list-fase3" role="tabpanel" aria-labelledby="list-messages-list">
+                            <div class="tab-pane fade h-25" id="list-fase3" role="tabpanel"
+                                 aria-labelledby="list-messages-list">
                                 <?php foreach ($vakken as $vak) {
                                     if ($vak->fase == 3) {
                                         echo "<div class='form-check' id='vakkenCheckContainer'>";
@@ -109,11 +118,13 @@
             </div>
         </div>
         <div class="container col-2 flex-column d-flex containersISP">
-            <div id="semesterkeuzeContainer" class="flex-grow-1">
-            <p>TEST VOLGEND SEMESTER</p>
+            <div id="semesterkeuzeContainer" class="flex-grow-1 centered">
+                <p>Semester 2</p>
+                <i class="fas fa-chevron-right fa-5x"></i>
             </div>
         </div>
     </div>
+</div>
 </div>
 
 <script src='<?php echo base_url() ?>assets/js/ispSamenstellen.js'></script>

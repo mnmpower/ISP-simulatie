@@ -402,4 +402,12 @@
                 'footer' => 'main_footer');
             $this->template->load('main_master', $partials, $data);
         }
+
+        public function haalAjaxOp_UurroosterPerKlas() {
+            $klasId = $this->input->get('klasId');
+
+            $this->load->model('les_model');
+            $data['vakken'] = $this->les_model->getAllWithVakAndKlasWhereKlas($klasId);
+            echo json_encode($data['vakken']);
+        }
     }

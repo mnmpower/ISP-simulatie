@@ -33,30 +33,71 @@ body, header, footer {
 #klassenContainer {
     background-color: #f5f5f5;
     padding: 5px;
+    height: 270px;
 }
 
 #klaskeuze2Container {
-    background-color: #f5f5f5;
-    text-align: center;
 }
 
 #klaskeuze1Container {
-    background-color: #f5f5f5;
-    text-align: center;
 }
 
 #fasekeuzeContainer {
-    background-color: #f5f5f5;
     text-align: center;
 }
 
 #vakkenkeuzeContainer {
     background-color: #f5f5f5;
-    overflow-y: scroll;
-    overflow-x: hidden;
 }
 
 #semesterkeuzeContainer {
-    background-color: #f5f5f5;
+    background-color: #007bff;
     text-align: center;
+    padding-top: 75px;
+    color: white;
+}
+
+.ScrollParent {
+    height: 270px;
+}
+
+.ScrollKlasParent {
+    height: 360px;
+}
+
+.ScrollChild {
+    display: block !important;
+    overflow-y: scroll !important;
+}
+
+#list-tab {
+    height: 100%;
+}
+
+.list-group-item {
+ height: 100%;
+}
+
+.paddingR20 {
+    padding-right: 20px !important;
+}
+
+.alertPad {
+    margin-bottom: 0;
+}
+
+.indicatorsPad {
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+    bottom: 5px;
+}
+
+#klas1Tekst, #klas2Tekst {
+    height: 300px;
+}
+
+#klas1Titel, #klas2Titel {
+    height: 50px;
+    margin-bottom: 0px;
+    padding: 12px;
 }
