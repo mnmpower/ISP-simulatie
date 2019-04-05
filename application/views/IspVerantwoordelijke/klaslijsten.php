@@ -24,7 +24,7 @@
 
     $(document).ready(function () {
         $("#klaskeuze").change(function () {
-            klasId = $('#klaskeuze').val();
+            var klasId = $('#klaskeuze').val();
             if(klasId == '') {
                 $('#resultaat').html("");
             } else {

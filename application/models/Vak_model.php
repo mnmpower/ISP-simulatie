@@ -71,4 +71,36 @@
             return $query->result();
         }
 
+        /**
+         * Voegt het record $vak toe aan de tabel team22_vak
+         * @param $vak het record dat toegevoegd wordt
+         * @return int id
+         */
+        function insert($vak)
+        {
+            $this->db->insert('vak', $vak);
+            return $this->db->insert_id();
+        }
+
+        /**
+         * Update het record $vak uit de tabel team22_vak
+         * @param $vak het record dat geüpdatet wordt
+         */
+        function update($vak)
+        {
+            $this->db->where('id', $vak->id);
+            $this->db->update('vak', $vak);
+        }
+
+        /**
+         * Verwijdert het record met id=$id uit de tabel team22_vak
+         * @param $id de id van het record dat verwijderd wordt
+         */
+        function delete($id)
+        {
+            $this->db->where('id', $id);
+            $this->db->delete('vak');
+        }
+
+
     }

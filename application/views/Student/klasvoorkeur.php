@@ -40,8 +40,8 @@
         $('#semesterkeuze').hide();
 
         $("#klaskeuze").change(function () {
-            klasId = $('#klaskeuze').val();
-            semesterId = $('#semesterkeuze').val();
+            var klasId = $('#klaskeuze').val();
+            var semesterId = $('#semesterkeuze').val();
             if(klasId == '0') {
                 $('#semesterkeuze').hide();
                 $('#resultaat').html("");
@@ -56,8 +56,8 @@
         });
 
         $("#semesterkeuze").change(function () {
-            klasId = $('#klaskeuze').val();
-            semesterId = $('#semesterkeuze').val();
+            var klasId = $('#klaskeuze').val();
+            var semesterId = $('#semesterkeuze').val();
             haalUurroosterOp(klasId, semesterId);
         });
     });
