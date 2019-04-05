@@ -1,78 +1,88 @@
 <?php
 /**
- * @file beheergebruikers.php
- * View waarin de admin aan de hand van een CRUD de gebruikers kan wijzigen
+ * @file beheerlessen.php
+ * View waarin de admin aan de hand van een CRUD de lessen kan wijzigen
  */
-    $types = Array("" => "-- Kies een type --");
-    foreach ($persoonTypes as $persoonType) {
-        $types[$persoonType->id] = $persoonType->soort;
+    $klassenList = Array("" => "-- Kies een klas --");
+    foreach ($klassen as $klas) {
+        $klassenList[$klas->id] = $klas->naam;
     }
-    ksort($types);
+    ksort($klassenList);
+
+    $vakkenList = Array("" => "-- Kies een vak --");
+    foreach ($vakken as $vak) {
+        $vakkenList[$vak->id] = $vak->naam;
+    }
+    ksort($vakkenList);
+
+    $dagenList = Array("" => "-- Kies een dag --", 1 => "Maandag", 2 => "Dinsdag", 3 => "Woensdag", 4 => "Donderdag", 5 => "Vrijdag");
 ?>
 <script>
-    function haalGebruikersOp() {
+    function haalLessenOp() {
         $.ajax({
             type: "GET",
-            url: site_url + "/Opleidingsmanager/haalAjaxOp_Gebruikers",
+            url: site_url + "/Opleidingsmanager/haalAjaxOp_Lessen",
             success: function (result) {
                 $("#lijst").html(result);
                 $('[data-toggle="tooltip"]').tooltip(); //bootstrap-tooltips activeren op dynamisch (mbv AJAX) gegenereerde content
             },
             error: function (xhr, status, error) {
-                alert("-- ERROR IN AJAX (haalGebruikersOp) --\n\n" + xhr.responseText);
+                alert("-- ERROR IN AJAX (haalLessenOp) --\n\n" + xhr.responseText);
             }
         });
     }
 
-    function haalGebruikerOp(gebruikerId) {
+    function haalLesOp(lesId) {
         $.ajax({
             type: "GET",
-            url: site_url + "/Opleidingsmanager/haalJsonOp_Gebruiker",
-            data: {gebruikerId: gebruikerId},
-            success: function (gebruiker) {
-                $("#gebruikerId").val(gebruiker.id);
-                $("#gebruikerNaam").val(gebruiker.naam);
-                $("#gebruikerNummer").val(gebruiker.nummer);
-                $("#gebruikerType").val(gebruiker.typeId);
+            url: site_url + "/Opleidingsmanager/haalJsonOp_Les",
+            data: {lesId: lesId},
+            success: function (les) {
+                $("#lesId").val(les.id);
+                $("#lesVak").val(les.vak.id);
+                $("#lesKlas").val(les.klas.id);
+                $("#lesDag").val(les.dag);
+                $("#lesStartuur").val(les.startuur);
+                $("#lesEinduur").val(les.einduur);
 
                 $("#knop").val("Wijzigen");
                 $("#actie").text("wijzigen");
                 $('#modalInvoer').modal('show');
             },
             error: function (xhr, status, error) {
-                alert("-- ERROR IN AJAX (haalGebruikerOp) --\n\n" + xhr.responseText);
+                alert("-- ERROR IN AJAX (haalLesOp) --\n\n" + xhr.responseText);
             }
         });
     }
 
-    function controleerGebruikerEnVraagBevestiging(gebruikerId) {
+    function controleerLesEnVraagBevestiging(lesId) {
         $.ajax({
             type: "GET",
-            url: site_url + "/Opleidingsmanager/haalJsonOp_Gebruiker",
-            data: {gebruikerId: gebruikerId},
-            success: function (gebruiker) {
-                $("#boodschap").html("<p>Bent u zeker dat u de gebruiker <b>" + gebruiker.naam + "</b> wil verwijderen?</p>");
-                $("#gebruikerIdBevestiging").val(gebruikerId);
+            url: site_url + "/Opleidingsmanager/haalJsonOp_Les",
+            data: {lesId: lesId},
+            success: function (les) {
+                $("#boodschap").html("<p>Bent u zeker dat u de les <b>" + les.vak.naam + " (" + les.klas.naam + ")</b> wil verwijderen?</p><p><b>Let op!</b> Als u deze les verwijderd wordt deze ook uit de ISP-simulatie van de personen die dit vak ingepland hebben verwijderd!");
+                $("#lesIdBevestiging").val(lesId);
 
                 $('#modalBevestiging').modal('show');
             },
             error: function (xhr, status, error) {
-                alert("-- ERROR IN AJAX (controleerGebruikerEnVraagBevestiging) --\n\n" + xhr.responseText);
+                alert("-- ERROR IN AJAX (controleerLesEnVraagBevestiging) --\n\n" + xhr.responseText);
             }
         });
     }
 
-    function schrapGebruiker(gebruikerId) {
+    function schrapLes(lesId) {
         $.ajax({
             type: "GET",
-            url: site_url + "/Opleidingsmanager/schrapAjax_Gebruiker",
-            data: {gebruikerId: gebruikerId},
+            url: site_url + "/Opleidingsmanager/schrapAjax_Les",
+            data: {lesId: lesId},
             success: function (result) {
                 $('#modalBevestiging').modal('hide');
-                haalGebruikersOp();
+                haalLessenOp();
             },
             error: function (xhr, status, error) {
-                alert("-- ERROR IN AJAX (schrapGebruiker) --\n\n" + xhr.responseText);
+                alert("-- ERROR IN AJAX (schrapLes) --\n\n" + xhr.responseText);
             }
         });
     }
@@ -84,16 +94,16 @@
 
         $.ajax({
             type: "POST",
-            url: site_url + "/Opleidingsmanager/controleerJson_DubbelGebruiker",
+            url: site_url + "/Opleidingsmanager/controleerJson_DubbelLes",
             data: dataString,
             success: function (result) {
                 isDubbel = result;
                 if (!isDubbel) {
-                    schrijfGebruikerWeg();
+                    schrijfLesWeg();
                 }
                 else {
-                    //$("div.invalid-feedback").html("Deze gebruiker bestaat reeds!");
-                    $("#gebruikerNummer").addClass("is-invalid");
+                    //$("div.invalid-feedback").html("Deze les bestaat reeds!");
+                    $("#lesNummer").addClass("is-invalid");
                 }
             },
             error: function (xhr, status, error) {
@@ -103,19 +113,19 @@
         });
     }
 
-    function schrijfGebruikerWeg() {
+    function schrijfLesWeg() {
         var dataString = $("#formInvoer").serialize();
 
         $.ajax({
             type: "POST",
-            url: site_url + "/Opleidingsmanager/schrijfAjax_Gebruiker",
+            url: site_url + "/Opleidingsmanager/schrijfAjax_Les",
             data: dataString,
             success: function (result) {
                 $('#modalInvoer').modal('hide');
-                haalGebruikersOp();
+                haalLessenOp();
             },
             error: function (xhr, status, error) {
-                alert("-- ERROR IN AJAX (schrijfGebruikerWeg) --\n\n" + xhr.responseText);
+                alert("-- ERROR IN AJAX (schrijfLesWeg) --\n\n" + xhr.responseText);
             }
         });
     }
@@ -135,14 +145,16 @@
     $(document).ready(function () {
         $('[data-toggle="tooltip"]').tooltip(); //bootstrap-tooltips activeren
 
-        haalGebruikersOp();
+        haalLessenOp();
         controleerFoutmelding();
 
         $("#voegtoe").click(function () {
-            $("#gebruikerId").val("0");
-            $("#gebruikerNaam").val("");
-            $("#gebruikerNummer").val("");
-            $("#gebruikerType").val("");
+            $("#lesId").val(0);
+            $("#lesVak").val("");
+            $("#lesKlas").val("");
+            $("#lesDag").val("");
+            $("#lesStartuur").val("");
+            $("#lesEinduur").val("");
 
             $("#knop").val("Toevoegen");
             $("#actie").text("toevoegen");
@@ -150,18 +162,18 @@
         });
 
         $("#lijst").on('click', ".wijzig", function () {
-            var gebruikerId = $(this).data('gebruikerid');
-            haalGebruikerOp(gebruikerId);
+            var lesId = $(this).data('lesid');
+            haalLesOp(lesId);
         });
 
         $("#lijst").on('click', ".schrap", function () {
-            var gebruikerId = $(this).data('gebruikerid');
-            controleerGebruikerEnVraagBevestiging(gebruikerId);
+            var lesId = $(this).data('lesid');
+            controleerLesEnVraagBevestiging(lesId);
         });
 
         $("#knopJa").on('click', function () {
-            var gebruikerId = $('#gebruikerIdBevestiging').val();
-            schrapGebruiker(gebruikerId);
+            var lesId = $('#lesIdBevestiging').val();
+            schrapLes(lesId);
         });
 
         $("#knop").on('click', function (e) {
@@ -172,14 +184,14 @@
 
         $("#voegexceltoe").click(function () {
             $("#excelFile").val("");
-            $("#gebruikerTypeExcel").val("");
+            $("#lesTypeExcel").val("");
 
             $('#modalExcel').modal('show');
         });
 
         $("#knopExcel").on('click', function (e) {
             $("#formExcel").checkValidity();
-            if($("#excelFile").val() == null || $("#gebruikerTypeExcel").val() == "") {
+            if($("#excelFile").val() == null || $("#lesTypeExcel").val() == "") {
                 e.preventDefault();
             }
         });
@@ -188,10 +200,10 @@
 <div class="container70">
     <h1><?php echo $title; ?></h1>
     <?php
-        $knop = array("class" => "btn btn-warning text-white", "id" => "voegtoe", "data-toggle" => "tooltip", "title" => "Gebruiker toevoegen");
-        echo "<p>" . form_button('gebruikernieuw', "<i class='fas fa-plus'></i> Voeg toe", $knop);
-        $knopExcel = array("class" => "btn btn-warning text-white", "id" => "voegexceltoe", "data-toggle" => "tooltip", "title" => "Meerdere gebruikers toevoegen uit Excel-file");
-        echo form_button('gebruikersnieuw', "<i class='fas fa-file-import'></i> Excel uploaden", $knopExcel) . "</p>";
+        $knop = array("class" => "btn btn-warning text-white", "id" => "voegtoe", "data-toggle" => "tooltip", "title" => "Les toevoegen");
+        echo "<p>" . form_button('lesnieuw', "<i class='fas fa-plus'></i> Voeg toe", $knop);
+        $knopExcel = array("class" => "btn btn-warning text-white", "id" => "voegexceltoe", "data-toggle" => "tooltip", "title" => "Meerdere lessen toevoegen uit Excel-file");
+        echo form_button('lessennieuw', "<i class='fas fa-file-import'></i> Excel uploaden", $knopExcel) . "</p>";
     ?>
     <div id="lijst"></div>
 </div>
@@ -202,7 +214,7 @@
         <!-- Inhoud invoervenster-->
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Gebruiker <span id="actie"></span></h4>
+                <h4 class="modal-title">Les <span id="actie"></span></h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <?php
@@ -210,28 +222,43 @@
                 echo form_open('', $attributenFormulier);
             ?>
             <div class="modal-body">
-                <input type="hidden" name="gebruikerId" id="gebruikerId">
+                <input type="hidden" name="lesId" id="lesId">
                 <table class="table table-hover table-borderless">
                     <tr>
-                        <td><?php echo form_label("Naam:", "gebruikerNaam"); ?></td>
-                        <td><?php echo form_input(array('name' => 'gebruikerNaam',
-                                'id' => 'gebruikerNaam',
+                        <td><?php echo form_label("Vak:", "lesVak"); ?></td>
+                        <td><?php echo form_dropdown('lesVak', $vakkenList, "", array('id' => 'lesVak',
                                 'class' => 'form-control',
                                 'required' => 'required'
                             )); ?></td>
                     </tr>
                     <tr>
-                        <td><?php echo form_label("Nummer:", "gebruikerNummer"); ?></td>
-                        <td><?php echo form_input(array('name' => 'gebruikerNummer',
-                                'id' => 'gebruikerNummer',
+                        <td><?php echo form_label("Klas:", "lesKlas"); ?></td>
+                        <td><?php echo form_dropdown('lesKlas', $klassenList, "", array('id' => 'lesKlas',
                                 'class' => 'form-control',
                                 'required' => 'required'
                             )); ?></td>
                     </tr>
-
                     <tr>
-                        <td><?php echo form_label("Type:", "gebruikerType"); ?></td>
-                        <td><?php echo form_dropdown('gebruikerType', $types, "", array('id' => 'gebruikerType',
+                        <td><?php echo form_label("Weekdag:", "lesDag"); ?></td>
+                        <td><?php echo form_dropdown('lesDag', $dagenList, "", array('id' => 'lesDag',
+                                'class' => 'form-control',
+                                'required' => 'required'
+                            )); ?></td>
+                    </tr>
+                    <tr>
+                        <td><?php echo form_label("Startuur:", "lesStartuur"); ?></td>
+                        <td><?php echo form_input(array('type' => 'time',
+                                'name' => 'lesStartuur',
+                                'id' => 'lesStartuur',
+                                'class' => 'form-control',
+                                'required' => 'required'
+                            )); ?></td>
+                    </tr>
+                    <tr>
+                        <td><?php echo form_label("Einduur:", "lesEinduur"); ?></td>
+                        <td><?php echo form_input(array('type' => 'time',
+                                'name' => 'lesEinduur',
+                                'id' => 'lesEinduur',
                                 'class' => 'form-control',
                                 'required' => 'required'
                             )); ?></td>
@@ -262,7 +289,7 @@
             </div>
 
             <div class="modal-body">
-                <input type="hidden" id="gebruikerIdBevestiging">
+                <input type="hidden" id="lesIdBevestiging">
                 <div id="boodschap"></div>
             </div>
             <div class="modal-footer">
@@ -279,11 +306,11 @@
         <!-- Inhoud invoervenster-->
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Gebruikers toevoegen vanuit Excel</h4>
+                <h4 class="modal-title">Lessen toevoegen vanuit Excel</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <?php
-            echo form_open_multipart('Opleidingsmanager/uploadGebruikersExcel', array('id' => 'formExcel'));
+            echo form_open_multipart('Opleidingsmanager/uploadLessenExcel', array('id' => 'formExcel'));
             ?>
             <div class="modal-body">
                 <table class="table table-hover table-borderless">
@@ -294,13 +321,6 @@
                                 'class' => 'form-control',
                                 'required' => 'required',
                                 'accept' => ".xlsx,.xls"
-                            )); ?></td>
-                    </tr>
-                    <tr>
-                        <td><?php echo form_label("Type:", "gebruikerTypeExcel"); ?></td>
-                        <td><?php echo form_dropdown('gebruikerTypeExcel', $types, "", array('id' => 'gebruikerTypeExcel',
-                                'class' => 'form-control',
-                                'required' => 'required'
                             )); ?></td>
                     </tr>
                 </table>
@@ -323,12 +343,12 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Gebruikers toegevoegd</h4>
+                <h4 class="modal-title">Lessen toegevoegd</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
             <div class="modal-body">
-                <p>Er zijn <span id="aantalExcel"></span> gebruikers succesvol toegevoegd.</p>
+                <p>Er zijn <span id="aantalExcel"></span> lessen succesvol toegevoegd.</p>
             </div>
             <div class="modal-footer">
                 <?php echo form_button(array('content' => "Sluiten", 'id' => 'knopNee', 'class' => 'btn', 'data-dismiss' => 'modal')); ?>

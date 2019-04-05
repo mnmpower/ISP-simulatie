@@ -9,11 +9,14 @@
      * Controller-klasse met alle methodes die gebruikt worden in de pagina's voor de opleidingsmanager
      * @property Template $template
 	 * @property Persoon_model $persoon_model
+	 * @property PersoonLes_model $persoonLes_model
 	 * @property Keuzerichting_model $keuzerichting_model
 	 * @property KeuzerichtingVak_model $keuzerichtingVak_model
 	 * @property KeuzerichtingKlas_model $keuzerichtingKlas_model
 	 * @property Mail_model $mail_model
      * @property Vak_model $vak_model
+	 * @property Klas_model $klas_model
+	 * @property Les_model $les_model
      */
     class Opleidingsmanager extends CI_Controller
     {
@@ -456,15 +459,60 @@
             }
         }
 
-		public function klasBeheer()
-		{
-		}
-
-
 		//VANAF HEIR MOOI ORDENEN
-		public function lesBeheer()
-		{
-		}
+		public function lesBeheer($foutmelding = NULL)
+        {
+            $data['title'] = "Lessen beheren";
+
+            // Defines roles for this page (You can also use "geen" or leave roles empty!).
+            $data['roles'] = getRoles('geen','geen','geen','Ontwikkelaar');
+
+            // Gets buttons for navbar);
+            $data['buttons'] = getNavbar('opleidingsmanager');
+
+            // Gets plugins if required
+            $data['plugins'] = getPlugin('geen');
+
+            // Gets foutmelding from parameter
+            $data['foutmelding'] = $foutmelding;
+
+            $this->load->model('vak_model');
+            $data['vakken'] = $this->vak_model->getAll();
+            $this->load->model('klas_model');
+            $data['klassen'] = $this->klas_model->getAllKlassenOrderByNaam();
+
+            $partials = array(  'hoofding' => 'main_header',
+                'inhoud' => 'opleidingsmanager/beheerlessen',
+                'footer' => 'main_footer');
+            $this->template->load('main_master', $partials, $data);
+        }
+
+        public function haalAjaxOp_Lessen()
+        {
+            $this->load->model('les_model');
+            $data['lessen'] = $this->les_model->getAllWithVakAndKlas();
+
+            $this->load->view('opleidingsmanager/ajax_lessen', $data);
+        }
+
+        public function haalJsonOp_Les()
+        {
+            $id = $this->input->get('lesId');
+
+            $this->load->model('les_model');
+            $object = $this->les_model->getWithVakAndKlasAndDag($id);
+
+            $this->output->set_content_type("application/json");
+            echo json_encode($object);
+        }
+
+        public function schrapAjax_Les()
+        {
+            $lesId = $this->input->get('lesId');
+
+            $this->load->model('les_model');
+            $this->les_model->delete($lesId);
+        }
 
 		public function mailBeheer()
 		{
@@ -510,6 +558,30 @@
 			$this->template->load('main_master', $partials, $data);
 		}
 
+		public function klasBeheer()
+		{
+			//loaden model
+			//$this->load->model("klas_model");
+
+			// Defines roles for this page (You can also use "geen" or leave roles empty!).
+			$data['roles'] = getRoles('Ontwikkelaar','geen','geen','geen');
+
+			// Gets buttons for navbar);
+			$data['buttons'] = getNavbar('opleidingsmanager');
+
+			// Gets plugins if required
+			$data['plugins'] = getPlugin('geen');
+
+			$data['title'] = "Klassen beheren";
+
+			$partials = array(  'hoofding' => 'main_header',
+				'inhoud' => 'opleidingsmanager/BeheerKlas/KlasBeheer',
+				'footer' => 'main_footer');
+			$this->template->load('main_master', $partials, $data);
+		}
+
+
+
 		public function haalAjaxOp_Mails(){
 
 			$this->load->model('mail_model');
@@ -524,6 +596,15 @@
 
 			$this->load->view('Opleidingsmanager/BeheerKeuzerichting/ajax_KeuzerichtingCRUD', $data);
 		}
+
+		public function haalAjaxOp_Klassen(){
+			$this->load->model('klas_model');
+			$data['klassen'] = $this->klas_model->getAllKlassenOrderByNaam();
+
+			$this->load->view('Opleidingsmanager/BeheerKlas/ajax_KlasCRUD', $data);
+		}
+
+
 
 		public function voegMailToe(){
 
@@ -561,6 +642,27 @@
 			}
 			redirect('Opleidingsmanager/keuzerichtingBeheer');
 		}
+
+		public function voegKlasToe(){
+			$this->load->model('klas_model');
+
+			$klas = new stdClass();
+			$klas->id = $this->input->post('klasId');
+			$klas->naam = htmlspecialchars($this->input->post("klasNaam"));
+			$klas->maximumAantal = htmlspecialchars($this->input->post("aantalLeerlingen"));
+			$klas->maximumAantalModel = htmlspecialchars($this->input->post("aantalModel"));
+
+			if ($klas->id == 0) {
+				//nieuw record
+				$this->klas_model->insert($klas);
+			} else {
+				//bestaand record
+				$this->klas_model->update($klas);
+			}
+			redirect('Opleidingsmanager/klasBeheer');
+		}
+
+
 
 		public function schrapAjax_Mail() {
 			$this->load->model("mail_model");
@@ -608,6 +710,39 @@
         	$this->keuzerichting_model->delete($keuzerichtingId);
 
 		}
+		//DEZE NOG DOEN
+		public function schrapAjax_Klas() {
+			$this->load->model('keuzerichtingKlas_model');
+			$this->load->model('persoon_model');
+			$this->load->model('les_model');
+			$this->load->model('klas_model');
+			$this->load->model('persoonLes_model');
+
+        	$klasId = $this->input->get('klasId');
+
+        	//NAKIJKEN OF ER PERSONEN BESTAAN IN DEZE KEUZERICHTING + AANPASSEN NAAR 0
+        	$persoonen = $this->persoon_model->getPersoonWhereKlasId($klasId);
+        	foreach ($persoonen as $persoon){
+
+				$persoon->klasId = null;
+				$this->persoon_model->update($persoon);
+			}
+
+			//ALLE KEUZERICHTING KLASSEN SCHRAPPEN ALS DIE NOG BESTAAN
+			$this->keuzerichtingKlas_model->deleteAllWhereKlasID($klasId);
+
+        	//ALLE PERSOON LESSEN SCHRAPPEN ALS DIE NOG BESTAAN
+			$lessen = $this->les_model->getAllLesWhere($klasId);
+			foreach ($lessen as $les){
+				$this->persoonLes_model->deleteAllWhereLesID($les->id);
+			}
+
+			//ALLE LESSEN SCHRAPPEN ALS DIE NOG BESTAAN
+			$this->les_model->deleteAllWhereKlasID($klasId);
+
+			$this->klas_model->delete($klasId);
+
+		}
 
 		public function haalJsonOp_Mail(){
 			$id = $this->input->get('mailId');
@@ -627,5 +762,15 @@
 
 			$this->output->set_content_type("application/json");
 			echo json_encode($keuzerichting);
+		}
+
+		public function haalJsonOp_Klas(){
+			$id = $this->input->get('klasId');
+
+			$this->load->model('klas_model');
+			$klas = $this->klas_model->get($id);
+
+			$this->output->set_content_type("application/json");
+			echo json_encode($klas);
 		}
     }
