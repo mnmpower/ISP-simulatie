@@ -381,7 +381,6 @@
         }
 
         public function ispSamenstellen(){
-            $this->load->model("klas_model");
             $data['title'] = "ISP Samenstellen";
             // Defines roles for this page (You can also use "geen" or leave roles empty!).
             $data['roles'] = getRoles('geen','geen','Ontwikkelaar','geen');
@@ -392,10 +391,11 @@
             // Gets plugins if required
             $data['plugins'] = getPlugin('fullCalendar');
 
-            $persoon = $this->authex->getGebruikerInfo();
-            $klas = $this->klas_model->get($persoon->klasId);
+            $this->load->model("klas_model");
+            $data['klassen'] = $this->klas_model->getAllKlassen();
 
-            $data['klas'] = $klas;
+            $this->load->model("vak_model");
+            $data['vakken'] = $this->vak_model->getAll();
 
             $partials = array(  'hoofding' => 'main_header',
                 'inhoud' => 'Student/ispSamenstellen',

@@ -64,6 +64,12 @@
             return $query->result();
         }
 
+        function getAllKlassen(){
+            $query = $this->db->get('klas');
+
+            return $query->result();
+        }
+
 		function delete($id)
 		{
 			$this->db->where('id', $id);
