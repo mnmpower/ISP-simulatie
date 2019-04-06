@@ -101,3 +101,39 @@ body, header, footer {
     margin-bottom: 0px;
     padding: 12px;
 }
+
+.padding0 {
+    padding: 0 !important;
+}
+
+.vakButton {
+    border-radius: 0 !important;
+}
+
+#klassenLijstFaseContainer {
+    display: none;
+}
+
+#backButtonFase {
+    background-color: #007bff;
+    text-align: center;
+    padding-top: 123px;
+    color: white;
+    display: none;
+    border-radius: 4px 0 0 4px;
+    width: 30px;
+    cursor:pointer;
+}
+
+.rowTabList {
+    margin: 0;
+    border-radius: 4px 0 0 4px;
+}
+
+#list-fase1-list {
+    border-radius: 4px 0 0 0;
+}
+
+#list-fase3-list {
+    border-radius: 0 0 0 4px;
+}

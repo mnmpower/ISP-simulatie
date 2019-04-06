@@ -60,59 +60,67 @@
             </div>
         </div>
     </div>
+<div class="row">
+    <div class="alert alert-primary col-12" role="alert">
+        <div class="col-1 float-left"><i class="fas fa-info-circle fa-2x"></i></div><br>
+    </div>
+</div>
     <div class="row">
         <div class="container col-10 flex-column d-flex containersISP paddingR20">
             <div id="vakkenkeuzeContainer" class="flex-grow-1">
-                <div class="row ScrollParent">
-                    <div class="col-4 faseList">
+                <div class="row ScrollParent rowTabList">
+                    <div class="btn" id="backButtonFase">
+                        <i class="fas fa-chevron-left"></i>
+                    </div>
+                    <div class="col-4 faseList padding0">
                         <div class="list-group" id="list-tab" role="tablist">
-                            <a class="list-group-item list-group-item-action active" id="list-home-list"
+                            <a class="list-group-item list-group-item-action active" id="list-fase1-list"
                                data-toggle="list" href="#list-fase1" role="tab" aria-controls="home">Fase 1</a>
-                            <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list"
+                            <a class="list-group-item list-group-item-action" id="list-fase2-list" data-toggle="list"
                                href="#list-fase2" role="tab" aria-controls="profile">Fase 2</a>
-                            <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list"
+                            <a class="list-group-item list-group-item-action" id="list-fase3-list" data-toggle="list"
                                href="#list-fase3" role="tab" aria-controls="messages">Fase 3</a>
                         </div>
                     </div>
-                    <div class="col-8 ScrollChild">
+                    <div class="col-8 ScrollChild padding0" id="vakkenList">
                         <div class="tab-content">
                             <div class="tab-pane fade show active" id="list-fase1" role="tabpanel"
-                                 aria-labelledby="list-home-list">
+                                 aria-labelledby="list-fase1-list">
                                 <?php foreach ($vakken as $vak) {
                                     if ($vak->fase == 1) {
-                                        echo "<div class='form-check' id='vakkenCheckContainer'>";
-                                        echo form_checkbox('vak' . $vak->id, $vak->id, false, array('class' => 'form-check-input vakCheckbox'));
-                                        echo form_label($vak->naam, 'vak' . $vak->id, array('class' => 'form-check-label'));
+                                        echo "<div>";
+                                        echo "<button type='button' class='btn list-group-item list-group-item-action vakButton'>" . $vak->naam ."</button>";
                                         echo "</div>";
                                     }
                                 }
                                 ?>
                             </div>
                             <div class="tab-pane fade" id="list-fase2" role="tabpanel"
-                                 aria-labelledby="list-profile-list">
+                                 aria-labelledby="list-fase2-list">
                                 <?php foreach ($vakken as $vak) {
                                     if ($vak->fase == 2) {
-                                        echo "<div class='form-check' id='vakkenCheckContainer'>";
-                                        echo form_checkbox('vak' . $vak->id, $vak->id, false, array('class' => 'form-check-input vakCheckbox'));
-                                        echo form_label($vak->naam, 'vak' . $vak->id, array('class' => 'form-check-label'));
+                                        echo "<div>";
+                                        echo "<button type='button' class='btn list-group-item list-group-item-action vakButton'>" . $vak->naam ."</button>";
                                         echo "</div>";
                                     }
                                 }
                                 ?>
                             </div>
                             <div class="tab-pane fade h-25" id="list-fase3" role="tabpanel"
-                                 aria-labelledby="list-messages-list">
+                                 aria-labelledby="list-fase3-list">
                                 <?php foreach ($vakken as $vak) {
                                     if ($vak->fase == 3) {
-                                        echo "<div class='form-check' id='vakkenCheckContainer'>";
-                                        echo form_checkbox('vak' . $vak->id, $vak->id, false, array('class' => 'form-check-input vakCheckbox'));
-                                        echo form_label($vak->naam, 'vak' . $vak->id, array('class' => 'form-check-label'));
+                                        echo "<div>";
+                                        echo "<button type='button' class='btn list-group-item list-group-item-action vakButton'>" . $vak->naam ."</button>";
                                         echo "</div>";
                                     }
                                 }
                                 ?>
                             </div>
                         </div>
+                    </div>
+                    <div class="col padding0" id="klassenLijstFaseContainer">
+                        <p>Test</p>
                     </div>
                 </div>
             </div>

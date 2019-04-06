@@ -1,7 +1,7 @@
 var oldId1 = "";
 var oldId2 = "";
-var id1 = "";
-var id2 = "";
+var id1 = null;
+var id2 = null;
 
 // Calendar settings
 $('#uurrooster').fullCalendar({
@@ -47,18 +47,21 @@ $('.klasCheckbox').on('change', function () {
         checked.push($(this).val());
     });
 
-        if (checkIfNew(checked[0], checked[1])) {
-            if (checked[0] != null) {
-                getKlasInfo(checked[0], 'klas1Titel', 'klas1Tekst');
-            } else {
-                emptyKlasInfo('klas1Titel', 'klas1Tekst')
-            }
-            if (checked[1] != null) {
-                getKlasInfo(checked[1], 'klas2Titel', 'klas2Tekst');
-            } else {
-                emptyKlasInfo('klas2Titel', 'klas2Tekst')
-            }
+    console.log(checked);
+    console.log(id1, id2);
+
+    if (checkIfNew(checked[0], checked[1])) {
+        if (checked[0] != null) {
+            getKlasInfo(checked[0], 'klas1Titel', 'klas1Tekst');
+        } else {
+            emptyKlasInfo('klas1Titel', 'klas1Tekst')
         }
+        if (checked[1] != null) {
+            getKlasInfo(checked[1], 'klas2Titel', 'klas2Tekst');
+        } else {
+            emptyKlasInfo('klas2Titel', 'klas2Tekst')
+        }
+    }
 
 });
 
@@ -69,7 +72,6 @@ function getKlasInfo(id, titel, tekst) {
         data: {klasId: id},
         success: function (output) {
             JSONoutput = JSON.parse(output);
-            console.log(JSONoutput);
             $('#' + titel).text(JSONoutput[0].lesWithVak.klas.naam);
             $('#' + tekst).text('');
             var html = "";
@@ -77,11 +79,11 @@ function getKlasInfo(id, titel, tekst) {
                 '<table class="table">\n' +
                 '<tbody>\n'
 
-            $.each( JSONoutput, function( i, item ) {
+            $.each(JSONoutput, function (i, item) {
 
                 html +=
                     '<tr>\n' +
-                    '<td>' + item.lesWithVak.vak.naam +'</td>\n' +
+                    '<td>' + item.lesWithVak.vak.naam + '</td>\n' +
                     '<td>' + capitalizeFirstLetter(getDayName(item.datum)) + '</td>\n' +
                     '<td>' + item.startuur.slice(0, -3) + '</td>\n' +
                     '<td>' + item.einduur.slice(0, -3) + '</td>\n' +
@@ -107,13 +109,29 @@ function checkIfNew(id1, id2) {
     return result;
 }
 
-function getDayName(dateStr)
-{
+function getDayName(dateStr) {
     var date = new Date(dateStr);
-    return date.toLocaleDateString('nl-NL', { weekday: 'long' });
+    return date.toLocaleDateString('nl-NL', {weekday: 'long'});
 }
 
 function capitalizeFirstLetter(string) {
     if (typeof string !== 'string') return '';
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
+function ToggleVakOn() {
+        $('.faseList').toggle();
+        $('#backButtonFase').toggle();
+        $('#vakkenList').toggleClass('col-8').toggleClass('col-4');
+        $('#klassenLijstFaseContainer').toggle();
+        $("body").off( "click", ".vakButton", ToggleVakOn );
+}
+
+function ToggleVakOff() {
+    $('.faseList').toggle();
+    $('#backButtonFase').toggle();
+    $('#vakkenList').toggleClass('col-8').toggleClass('col-4');
+    $('#klassenLijstFaseContainer').toggle();
+    $("body").on( "click", ".vakButton", ToggleVakOn );
+}
+
+$("body").on( "click", ".vakButton", ToggleVakOn).on( "click", "#backButtonFase", ToggleVakOff);
