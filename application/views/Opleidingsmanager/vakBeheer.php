@@ -27,10 +27,12 @@
                 url: site_url + "/Opleidingsmanager/schrapAjax_Vak",
                 data: {vakId: vakId},
                 success: function () {
-                    haalVakkenOp();
+                    var keuzerichtingId = $('#keuzerichtingkeuze').val();
+                    var faseId = $('#fasekeuze').val();
+                    haalVakkenOp(keuzerichtingId, faseId);
                 },
                 error: function (xhr, status, error) {
-                    alert("-- ERROR IN AJAX (Opleidingsmanager/schrapAjax_Mail) --\n\n" + xhr.responseText);
+                    alert("-- ERROR IN AJAX (Opleidingsmanager/schrapAjax_Vak) --\n\n" + xhr.responseText);
                 }
             });
         }
@@ -143,8 +145,8 @@ $semesterOpties = array('Kies een semester..', 'Semester 1', 'Semester 2');
     <h1 class="col-12 mt-3"><?php echo $title ?></h1>
     <div class="col-12">
         <?php
-            $knop = array("class" => "btn btn-warning text-white", "id" => "voegtoe", "data-toggle" => "tooltip", "title" => "Mail toevoegen");
-            echo "<p>" . form_button('nieuweMail', "<i class='fas fa-plus'></i> Voeg toe", $knop) . "</p>";
+            $knop = array("class" => "btn btn-warning text-white", "id" => "voegtoe", "data-toggle" => "tooltip", "title" => "Vak toevoegen");
+            echo "<p>" . form_button('nieuwVak', "<i class='fas fa-plus'></i> Voeg toe", $knop) . "</p>";
             $keuzerichtingattributes = array('id' => 'keuzerichtingkeuze', 'class' => 'form-control');
             echo form_dropdown('keuzerichting', $keuzerichtingOpties, '0', $keuzerichtingattributes);
             $faseattributes = array('id' => 'fasekeuze', 'class' => 'form-control');

@@ -105,12 +105,12 @@
         }
 
         /**
-         * Verwijdert het record met id=$id uit de tabel team22_keuzerichtingVak
-         * @param $keuzerichtingId de id van het record dat verwijderd wordt
+         * Verwijdert het record met keuzerichtingVakId=$keuzerichtingVakId uit de tabel team22_keuzerichtingVak
+         * @param $keuzerichtingVakId de id van het record dat verwijderd wordt
          */
-		function delete($id)
+		function delete($keuzerichtingVakId)
 		{
-			$this->db->where('id', $id);
+			$this->db->where('keuzerichtingVakId', $keuzerichtingVakId);
 			$this->db->delete('keuzerichtingVak');
 		}
 
