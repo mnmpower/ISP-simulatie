@@ -2,6 +2,7 @@ var oldId1 = "";
 var oldId2 = "";
 var id1 = null;
 var id2 = null;
+var isp = [];
 
 // Calendar settings
 $('#uurrooster').fullCalendar({
@@ -66,6 +67,8 @@ $('.klasCheckbox').on('change', function () {
 });
 
 function getKlasInfo(id, titel, tekst) {
+    $('#' + tekst).append("<div class=\"centered lds-ring\"><div></div><div></div><div></div><div></div></div>");
+    $('.lds-ring').toggle();
     $.ajax({
         type: "GET",
         url: site_url + "/student/haalAjaxOp_UurroosterPerKlas/",
@@ -92,7 +95,47 @@ function getKlasInfo(id, titel, tekst) {
             html +=
                 '</tbody>\n' +
                 '</table>';
+            $('.lds-ring').toggle();
             $('#' + tekst).append(html);
+        }
+    });
+}
+
+function getVakInfo(id) {
+    $('#klassenLijstFaseContainer').text('');
+    $('#klassenLijstFaseContainer').append("<div class=\"centered lds-ring\"><div></div><div></div><div></div><div></div></div>");
+    $('.lds-ring').toggle();
+    $.ajax({
+        type: "GET",
+        url: site_url + "/student/haalAjaxOp_lesPerVak/",
+        data: {vakId: id},
+        success: function (output) {
+            JSONoutput = JSON.parse(output);
+            var html = "";
+            html +=
+                '<table class="table">\n' +
+                '<tbody>\n'
+
+            $.each(JSONoutput, function (i, item) {
+
+                html +=
+                    '<tr class="list-group-item-action vakButton lesButton';
+                    if (isp.indexOf(item.id) != -1) {
+                        html += ' activeButton'
+                    }
+                html +=
+                    '" data-id="' + item.id + '">\n' +
+                    '<td>' + item.klas.naam + '</td>\n' +
+                    '<td>' + capitalizeFirstLetter(getDayName(item.datum)) + '</td>\n' +
+                    '<td>' + item.startuur.slice(0, -3) + '</td>\n' +
+                    '<td>' + item.einduur.slice(0, -3) + '</td>\n' +
+                    '</tr>\n'
+            });
+            html +=
+                '</tbody>\n' +
+                '</table>';
+            $('.lds-ring').toggle();
+            $('#klassenLijstFaseContainer').append(html);
         }
     });
 }
@@ -118,6 +161,7 @@ function capitalizeFirstLetter(string) {
     if (typeof string !== 'string') return '';
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
+
 function ToggleVakOn() {
         $('.faseList').toggle();
         $('#backButtonFase').toggle();
@@ -134,4 +178,27 @@ function ToggleVakOff() {
     $("body").on( "click", ".vakButton", ToggleVakOn );
 }
 
-$("body").on( "click", ".vakButton", ToggleVakOn).on( "click", "#backButtonFase", ToggleVakOff);
+function editISP(el) {
+    var id = $(this).attr('data-id');
+    var pos = isp.indexOf(id);
+    if (pos != -1) {
+        isp.splice(pos, 1);
+        $(this).removeClass('activeButton');
+    } else {
+        isp.push(id);
+        $(this).addClass('activeButton');
+    }
+    console.log(isp);
+}
+
+
+
+$("body")
+    .on( "click", ".vakButton", ToggleVakOn)
+    .on( "click", ".lesButton", editISP)
+    .on( "click", "#backButtonFase", ToggleVakOff);
+
+$('.vakButton').click(function () {
+   var id = $(this).attr("data-id");
+   getVakInfo(id);
+});

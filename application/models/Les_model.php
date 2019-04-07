@@ -187,4 +187,19 @@
 
             return $les;
         }
+
+        function getAllWithKlasWhereKlas($vakId){
+            $this->db->where('vakId',$vakId);
+            $this->db->order_by("klasId", "asc");
+            $query = $this->db->get('les');
+            $lessen = $query->result();
+
+            $this->load->model('klas_model');
+
+            foreach ($lessen as $les){
+                $les->klas = $this->klas_model->get($les->klasId);
+            }
+            return $lessen;
+        }
+
     }

@@ -410,4 +410,12 @@
             $data['vakken'] = $this->les_model->getAllWithVakAndKlasWhereKlas($klasId);
             echo json_encode($data['vakken']);
         }
+
+        public function haalAjaxOp_lesPerVak() {
+            $vakId = $this->input->get('vakId');
+
+            $this->load->model('les_model');
+            $data['lessen'] = $this->les_model->getAllWithKlasWhereKlas($vakId);
+            echo json_encode($data['lessen']);
+        }
     }
