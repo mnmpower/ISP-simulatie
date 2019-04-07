@@ -2,16 +2,19 @@
     <div class="row">
         <div class="container col-2 flex-column d-flex containersISP">
             <div class="flex-grow-1" id="klassenContainer">
-                <h5>Klassen:</h5>
                 <?php
-                echo form_open();
+                echo "<div class='form-check'>";
+                echo '<table class="table">';
+                echo '<tbody>';
                 foreach ($klassen as $klas) {
-                    echo "<div class='form-check' id='KlassenCheckContainer'>";
-                    echo form_checkbox('klas' . $klas->id, $klas->id, false, array('class' => 'form-check-input klasCheckbox'));
-                    echo form_label($klas->naam, 'klas' . $klas->id, array('class' => 'form-check-label'));
-                    echo "</div>";
+                    echo '<tr class="list-group-item-action klasbutton" data-klas="' . $klas->id .'">';
+                    echo '<td>' . $klas->naam . '</td>';
+                    echo '<td><i class="fas fa-check invisible"></i></td>';
+                    echo '</tr>';
                 }
-                echo form_close();
+                echo '</tbody>';
+                echo '</table>';
+                echo "</div>";
                 ?>
             </div>
         </div>
@@ -81,7 +84,7 @@
     <div class="container col-10 flex-column d-flex containersISP paddingR20">
         <div id="vakkenkeuzeContainer" class="flex-grow-1">
             <div class="row ScrollParent rowTabList">
-                <div class="btn" id="backButtonFase">
+                <div class="btn activeButton" id="backButtonFase">
                     <i class="fas fa-chevron-left"></i>
                 </div>
                 <div class="col-4 faseList padding0">
@@ -101,7 +104,7 @@
                             <?php foreach ($vakken as $vak) {
                                 if ($vak->fase == 1) {
                                     echo "<div>";
-                                    echo "<button type='button' class='btn list-group-item list-group-item-action vakButton' data-id='" . $vak->id . "'>" . $vak->naam . "</button>";
+                                    echo "<button type='button' class='btn list-group-item list-group-item-action vakButton' data-id='" . $vak->id . "' data-vak='" . $vak->naam . "'>" . $vak->naam . "</button>";
                                     echo "</div>";
                                 }
                             }
@@ -112,7 +115,7 @@
                             <?php foreach ($vakken as $vak) {
                                 if ($vak->fase == 2) {
                                     echo "<div>";
-                                    echo "<button type='button' class='btn list-group-item list-group-item-action vakButton' data-id='" . $vak->id . "'>" . $vak->naam . "</button>";
+                                    echo "<button type='button' class='btn list-group-item list-group-item-action vakButton' data-id='" . $vak->id . "' data-vak='" . $vak->naam . "'>" . $vak->naam . "</button>";
                                     echo "</div>";
                                 }
                             }
@@ -123,7 +126,7 @@
                             <?php foreach ($vakken as $vak) {
                                 if ($vak->fase == 3) {
                                     echo "<div>";
-                                    echo "<button type='button' class='btn list-group-item list-group-item-action vakButton' data-id='" . $vak->id . "'>" . $vak->naam . "</button>";
+                                    echo "<button type='button' class='btn list-group-item list-group-item-action vakButton' data-id='" . $vak->id . "' data-vak='" . $vak->naam . "'>" . $vak->naam . "</button>";
                                     echo "</div>";
                                 }
                             }
@@ -137,7 +140,7 @@
         </div>
     </div>
     <div class="container col-2 flex-column d-flex containersISP">
-        <div id="semesterkeuzeContainer" class="flex-grow-1 centered">
+        <div id="semesterkeuzeContainer" class="flex-grow-1 centered activeButton">
             <p>Semester 2</p>
             <i class="fas fa-chevron-right fa-5x"></i>
         </div>

@@ -102,5 +102,13 @@
             $this->db->delete('vak');
         }
 
-
+        function getAllWhereSemester($semester, $both)
+        {
+            $this->db->where('semester', $semester);
+            if ($both == true) {
+                $this->db->or_where('semester', 3);
+            }
+            $query = $this->db->get('vak');
+            return $query->result();
+        }
     }

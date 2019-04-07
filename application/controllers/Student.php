@@ -395,7 +395,7 @@
             $data['klassen'] = $this->klas_model->getAllKlassen();
 
             $this->load->model("vak_model");
-            $data['vakken'] = $this->vak_model->getAll();
+            $data['vakken'] = $this->vak_model->getAllWhereSemester(1, true);
 
             $partials = array(  'hoofding' => 'main_header',
                 'inhoud' => 'Student/ispSamenstellen',

@@ -1,7 +1,5 @@
-var oldId1 = "";
-var oldId2 = "";
-var id1 = null;
-var id2 = null;
+var id1 = 'a';
+var id2 = 'b';
 var isp = [];
 
 // Calendar settings
@@ -38,30 +36,29 @@ $('.carousel').carousel(
     });
 
 // Klassen checkbox limit & AJAX Klas selection
-$('.klasCheckbox').on('change', function () {
-    if ($('.klasCheckbox:checked').length > 2) {
-        this.checked = false;
-    }
+$('.klasbutton').click(function () {
+    var selected = $(this).attr('data-klas');
+    var el = this;
 
-    var checked = [];
-    $.each($(".klasCheckbox:checked"), function () {
-        checked.push($(this).val());
-    });
 
-    console.log(checked);
-    console.log(id1, id2);
-
-    if (checkIfNew(checked[0], checked[1])) {
-        if (checked[0] != null) {
-            getKlasInfo(checked[0], 'klas1Titel', 'klas1Tekst');
-        } else {
-            emptyKlasInfo('klas1Titel', 'klas1Tekst')
-        }
-        if (checked[1] != null) {
-            getKlasInfo(checked[1], 'klas2Titel', 'klas2Tekst');
-        } else {
-            emptyKlasInfo('klas2Titel', 'klas2Tekst')
-        }
+    if (id1 == selected) {
+        id1 = 'a';
+        toggleKlas(0, el);
+        removeKlasISP(1);
+        emptyKlasInfo('klas1Titel', 'klas1Tekst');
+    } else if (id2 == selected) {
+        id2 = 'b';
+        toggleKlas(0, el);
+        removeKlasISP(2);
+        emptyKlasInfo('klas2Titel', 'klas2Tekst');
+    } else if (id1 == 'a' && selected != id2) {
+        id1 = selected;
+        toggleKlas(1, el);
+        getKlasInfo(id1, 'klas1Titel', 'klas1Tekst');
+    } else if (id2 == 'b' && selected != id2) {
+        id2 = selected;
+        toggleKlas(1, el);
+        getKlasInfo(id2, 'klas2Titel', 'klas2Tekst');
     }
 
 });
@@ -80,23 +77,32 @@ function getKlasInfo(id, titel, tekst) {
             var html = "";
             html +=
                 '<table class="table">\n' +
-                '<tbody>\n'
+                '<tbody>\n';
 
             $.each(JSONoutput, function (i, item) {
-
+                isp.push(item.id);
                 html +=
-                    '<tr>\n' +
+                    '<tr class="list-group-item-action klasVakbutton activeButton' +
+                    '" data-id="' + item.id + '">\n' +
                     '<td>' + item.lesWithVak.vak.naam + '</td>\n' +
                     '<td>' + capitalizeFirstLetter(getDayName(item.datum)) + '</td>\n' +
                     '<td>' + item.startuur.slice(0, -3) + '</td>\n' +
-                    '<td>' + item.einduur.slice(0, -3) + '</td>\n' +
-                    '</tr>\n'
+                    '<td>' + item.einduur.slice(0, -3) + '</td>\n';
+
+                if (isp.indexOf(item.id) != -1) {
+                    html += '<td><i class="fas fa-check"></i></td>';
+                } else {
+                    html += '<td><i class="fas fa-check invisible"></i></td>';
+                }
+
+                html += '</tr>\n'
             });
             html +=
                 '</tbody>\n' +
                 '</table>';
             $('.lds-ring').toggle();
             $('#' + tekst).append(html);
+            console.log(isp);
         }
     });
 }
@@ -117,19 +123,24 @@ function getVakInfo(id) {
                 '<tbody>\n'
 
             $.each(JSONoutput, function (i, item) {
-
                 html +=
                     '<tr class="list-group-item-action vakButton lesButton';
-                    if (isp.indexOf(item.id) != -1) {
-                        html += ' activeButton'
-                    }
+                if (isp.indexOf(item.id) != -1) {
+                    html += ' activeButton'
+                }
                 html +=
                     '" data-id="' + item.id + '">\n' +
                     '<td>' + item.klas.naam + '</td>\n' +
                     '<td>' + capitalizeFirstLetter(getDayName(item.datum)) + '</td>\n' +
                     '<td>' + item.startuur.slice(0, -3) + '</td>\n' +
-                    '<td>' + item.einduur.slice(0, -3) + '</td>\n' +
-                    '</tr>\n'
+                    '<td>' + item.einduur.slice(0, -3) + '</td>\n';
+
+                if (isp.indexOf(item.id) != -1) {
+                    html += '<td><i class="fas fa-check"></i></td>';
+                } else {
+                    html += '<td><i class="fas fa-check invisible"></i></td>';
+                }
+                '</tr>\n'
             });
             html +=
                 '</tbody>\n' +
@@ -145,13 +156,6 @@ function emptyKlasInfo(titel, tekst) {
     $('#' + tekst).text('');
 }
 
-function checkIfNew(id1, id2) {
-    var result = id1 != oldId1 || id2 != oldId2;
-    oldId1 = id1;
-    oldId2 = id2;
-    return result;
-}
-
 function getDayName(dateStr) {
     var date = new Date(dateStr);
     return date.toLocaleDateString('nl-NL', {weekday: 'long'});
@@ -163,11 +167,11 @@ function capitalizeFirstLetter(string) {
 }
 
 function ToggleVakOn() {
-        $('.faseList').toggle();
-        $('#backButtonFase').toggle();
-        $('#vakkenList').toggleClass('col-8').toggleClass('col-4');
-        $('#klassenLijstFaseContainer').toggle();
-        $("body").off( "click", ".vakButton", ToggleVakOn );
+    $('.faseList').toggle();
+    $('#backButtonFase').toggle();
+    $('#vakkenList').toggleClass('col-8').toggleClass('col-4');
+    $('#klassenLijstFaseContainer').toggle();
+    $("body").off("click", ".vakButton", ToggleVakOn);
 }
 
 function ToggleVakOff() {
@@ -175,30 +179,66 @@ function ToggleVakOff() {
     $('#backButtonFase').toggle();
     $('#vakkenList').toggleClass('col-8').toggleClass('col-4');
     $('#klassenLijstFaseContainer').toggle();
-    $("body").on( "click", ".vakButton", ToggleVakOn );
+    $("body").on("click", ".vakButton", ToggleVakOn);
 }
 
-function editISP(el) {
+function editISPAttr() {
     var id = $(this).attr('data-id');
     var pos = isp.indexOf(id);
     if (pos != -1) {
         isp.splice(pos, 1);
-        $(this).removeClass('activeButton');
+        $(this).removeClass('activeButton').find('.fa-check').addClass('invisible');
     } else {
         isp.push(id);
-        $(this).addClass('activeButton');
+        $(this).addClass('activeButton').find('.fa-check').removeClass('invisible');
     }
     console.log(isp);
 }
 
+function editISP(id) {
+    var pos = isp.indexOf(id);
+    if (pos != -1) {
+        isp.splice(pos, 1);
+        $(this).removeClass('activeButton').find('.fa-check').addClass('invisible');
+    } else {
+        isp.push(id);
+        $(this).addClass('activeButton').find('.fa-check').removeClass('invisible');
+    }
+}
 
+function toggleKlas(toggle, el) {
+    if (toggle != 1) {
+        $(el).removeClass('activeButton').find('.fa-check').addClass('invisible');
+    } else {
+        $(el).addClass('activeButton').find('.fa-check').removeClass('invisible');
+    }
+}
+
+function removeKlasISP(nr) {
+    if (nr == 1) {
+        $('#klas1Tekst > table > tbody > tr').each(function () {
+            var id = $(this).attr('data-id');
+            var pos = isp.indexOf(id);
+            isp.splice(pos, 1);
+        })
+    }
+    if (nr == 2) {
+        $('#klas2Tekst > table > tbody > tr').each(function () {
+            var id = $(this).attr('data-id');
+            var pos = isp.indexOf(id);
+            isp.splice(pos, 1);
+        })
+    }
+    console.log(isp);
+}
 
 $("body")
-    .on( "click", ".vakButton", ToggleVakOn)
-    .on( "click", ".lesButton", editISP)
-    .on( "click", "#backButtonFase", ToggleVakOff);
+    .on("click", ".vakButton", ToggleVakOn)
+    .on("click", ".lesButton", editISPAttr)
+    .on("click", "#backButtonFase", ToggleVakOff)
+    .on("click", ".klasVakbutton", editISPAttr);
 
 $('.vakButton').click(function () {
-   var id = $(this).attr("data-id");
-   getVakInfo(id);
+    var id = $(this).attr("data-id");
+    getVakInfo(id);
 });
