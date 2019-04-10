@@ -425,6 +425,45 @@
             $this->les_model->delete($lesId);
         }
 
+        public function schrijfAjax_Les()
+        {
+            $object = new stdClass();
+            $object->id = $this->input->post('lesId');
+            $object->vakId = $this->input->post('lesVak');
+            $object->klasId = $this->input->post('lesKlas');
+            $dag = $this->input->post('lesDag');
+            $object->startuur = $this->input->post('lesStartuur');
+            $object->einduur = $this->input->post('lesEinduur');
+
+            // Weekdag omzetten naar datum
+            switch ($dag) {
+                case 1:
+                    $object->datum = '2019-09-16';
+                    break;
+                case 2:
+                    $object->datum = '2019-09-17';
+                    break;
+                case 3:
+                    $object->datum = '2019-09-18';
+                    break;
+                case 4:
+                    $object->datum = '2019-09-19';
+                    break;
+                case 5:
+                    $object->datum =  '2019-09-20';
+                    break;
+            }
+
+            $this->load->model('les_model');
+            if ($object->id == 0) {
+                //nieuw record
+                $this->les_model->insert($object);
+            } else {
+                //bestaand record
+                $this->les_model->update($object);
+            }
+        }
+
 		public function mailBeheer()
 		{
 			//loaden model

@@ -87,36 +87,11 @@
         });
     }
 
-    function controleerDubbelEnSchrijfWegOfToonFout() {
-        var isDubbel = false;
-
-        var dataString = $("#formInvoer").serialize();
-
-        $.ajax({
-            type: "POST",
-            url: site_url + "/Opleidingsmanager/controleerJson_DubbelLes",
-            data: dataString,
-            success: function (result) {
-                isDubbel = result;
-                if (!isDubbel) {
-                    schrijfLesWeg();
-                }
-                else {
-                    //$("div.invalid-feedback").html("Deze les bestaat reeds!");
-                    $("#lesNummer").addClass("is-invalid");
-                }
-            },
-            error: function (xhr, status, error) {
-                alert("-- ERROR IN AJAX (controleerDubbelEnSchrijfWegOfToonFout) --\n\n" + xhr.responseText);
-                return true;
-            }
-        });
-    }
-
     function schrijfLesWeg() {
         var dataString = $("#formInvoer").serialize();
 
-        $.ajax({
+        alert(dataString);
+        /*$.ajax({
             type: "POST",
             url: site_url + "/Opleidingsmanager/schrijfAjax_Les",
             data: dataString,
@@ -127,7 +102,7 @@
             error: function (xhr, status, error) {
                 alert("-- ERROR IN AJAX (schrijfLesWeg) --\n\n" + xhr.responseText);
             }
-        });
+        });*/
     }
 
     function controleerFoutmelding() {
@@ -177,14 +152,14 @@
         });
 
         $("#knop").on('click', function (e) {
+            e.preventDefault(); // ------------------------------------------HIER WERKT NIET NIE
             $("#formInvoer").checkValidity();
-            controleerDubbelEnSchrijfWegOfToonFout();
-            e.preventDefault();
+            alert("Test");
+            //schrijfLesWeg();
         });
 
         $("#voegexceltoe").click(function () {
             $("#excelFile").val("");
-            $("#lesTypeExcel").val("");
 
             $('#modalExcel').modal('show');
         });
