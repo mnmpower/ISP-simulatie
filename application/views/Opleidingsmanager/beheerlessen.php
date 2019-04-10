@@ -87,24 +87,6 @@
         });
     }
 
-    function schrijfLesWeg() {
-        var dataString = $("#formInvoer").serialize();
-
-        alert(dataString);
-        /*$.ajax({
-            type: "POST",
-            url: site_url + "/Opleidingsmanager/schrijfAjax_Les",
-            data: dataString,
-            success: function (result) {
-                $('#modalInvoer').modal('hide');
-                haalLessenOp();
-            },
-            error: function (xhr, status, error) {
-                alert("-- ERROR IN AJAX (schrijfLesWeg) --\n\n" + xhr.responseText);
-            }
-        });*/
-    }
-
     function controleerFoutmelding() {
         var foutmelding = "<?php echo $foutmelding; ?>";
 
@@ -152,10 +134,7 @@
         });
 
         $("#knop").on('click', function (e) {
-            e.preventDefault(); // ------------------------------------------HIER WERKT NIET NIE
             $("#formInvoer").checkValidity();
-            alert("Test");
-            //schrijfLesWeg();
         });
 
         $("#voegexceltoe").click(function () {
@@ -194,7 +173,7 @@
             </div>
             <?php
                 $attributenFormulier = array('id' => 'formInvoer');
-                echo form_open('', $attributenFormulier);
+                echo form_open('Opleidingsmanager/voegLesToe', $attributenFormulier);
             ?>
             <div class="modal-body">
                 <input type="hidden" name="lesId" id="lesId">

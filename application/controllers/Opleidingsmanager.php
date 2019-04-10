@@ -505,8 +505,7 @@
             $this->les_model->delete($lesId);
         }
 
-        public function schrijfAjax_Les()
-        {
+        public function voegLesToe(){
             $object = new stdClass();
             $object->id = $this->input->post('lesId');
             $object->vakId = $this->input->post('lesVak');
@@ -542,6 +541,8 @@
                 //bestaand record
                 $this->les_model->update($object);
             }
+
+            redirect('Opleidingsmanager/lesBeheer');
         }
 
 		public function mailBeheer()
