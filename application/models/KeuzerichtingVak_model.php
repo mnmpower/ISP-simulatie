@@ -49,6 +49,18 @@
         }
 
         /**
+         * Retourneert alle records op met vakId=$vakId uit de tabel team22_keuzerichtingVak
+         * @param $vakId de vakId van het record  dat opgevraagd wordt
+         * @return Array met alle opgevraagde records
+         */
+        function getAllWhereVak($vakId)
+        {
+            $this->db->where('vakId', $vakId);
+            $query = $this->db->get('keuzerichtingVak');
+            return $query->result();
+        }
+
+        /**
          * Haalt alle records op met keuzerichtingId=$keuzerichtingId uit de tabel team22_keuzerichtingVak
          * Retourneert alle records met id=$vak->vakId uit de tabel team22_vak
          * @param $keuzerichtingId de keuzerichtingId van het record  dat opgevraagd wordt
@@ -71,9 +83,34 @@
             return $vakkenNieuw;
         }
 
-		function delete($id)
+        /**
+         * Voegt het record $keuzerichtingVak toe aan de tabel team22_keuzerichtingVak
+         * @param $keuzerichtingVak het record dat toegevoegd wordt
+         * @return int id
+         */
+        function insert($keuzerichtingVak)
+        {
+            $this->db->insert('keuzerichtingVak', $keuzerichtingVak);
+            return $this->db->insert_id();
+        }
+
+        /**
+         * Update het record $keuzerichtingVak uit de tabel team22_keuzerichtingVak
+         * @param $keuzerichtingVak het record dat geüpdatet wordt
+         */
+        function update($keuzerichtingVak)
+        {
+            $this->db->where('id', $keuzerichtingVak->keuzerichtingVakId);
+            $this->db->update('keuzerichtingVak', $keuzerichtingVak);
+        }
+
+        /**
+         * Verwijdert het record met keuzerichtingVakId=$keuzerichtingVakId uit de tabel team22_keuzerichtingVak
+         * @param $keuzerichtingVakId de id van het record dat verwijderd wordt
+         */
+		function delete($keuzerichtingVakId)
 		{
-			$this->db->where('id', $id);
+			$this->db->where('keuzerichtingVakId', $keuzerichtingVakId);
 			$this->db->delete('keuzerichtingVak');
 		}
 

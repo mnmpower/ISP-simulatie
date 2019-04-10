@@ -26,36 +26,198 @@ body, header, footer {
 }
 
 #carouselWarnings {
-    background-color: #f5f5f5;
     text-align: center;
 }
 
 #klassenContainer {
-    background-color: #f5f5f5;
-    text-align: center;
+    height: 100%
 }
 
 #klaskeuze2Container {
-    background-color: #f5f5f5;
-    text-align: center;
 }
 
 #klaskeuze1Container {
-    background-color: #f5f5f5;
-    text-align: center;
 }
 
 #fasekeuzeContainer {
-    background-color: #f5f5f5;
     text-align: center;
 }
 
 #vakkenkeuzeContainer {
-    background-color: #f5f5f5;
-    text-align: center;
+
 }
 
 #semesterkeuzeContainer {
-    background-color: #f5f5f5;
+    background-color: #007bff;
     text-align: center;
+    padding-top: 75px;
+    color: white;
+}
+
+.ScrollParent {
+    height: 270px;
+}
+
+.ScrollKlasParent {
+    height: 360px;
+}
+
+.ScrollChild {
+    display: block !important;
+    overflow-y: scroll !important;
+}
+
+#list-tab {
+    height: 100%;
+}
+
+.list-group-item {
+ height: 100%;
+}
+
+.paddingR20 {
+    padding-right: 20px !important;
+}
+
+.alertPad {
+    margin-bottom: 0;
+}
+
+.indicatorsPad {
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+    bottom: 5px;
+}
+
+#klas1Tekst, #klas2Tekst {
+    height: 300px;
+}
+
+#klas1Titel, #klas2Titel {
+    height: 50px;
+    margin-bottom: 0px;
+    padding: 12px;
+}
+
+.padding0 {
+    padding: 0 !important;
+}
+
+.vakButton {
+    border-radius: 0 !important;
+    cursor: pointer;
+}
+
+#klassenLijstFaseContainer {
+    display: none;
+}
+
+#backButtonFase {
+    background-color: #007bff;
+    text-align: center;
+    padding-top: 123px;
+    padding-left: 0; !important;
+    padding-right: 0; !important;
+    color: white;
+    display: none;
+    border-radius: 4px 0 0 4px;
+    width: 30px;
+    cursor:pointer;
+}
+
+.rowTabList {
+    margin: 0;
+    border-radius: 4px 0 0 4px;
+}
+
+#list-fase1-list {
+    border-radius: 4px 0 0 0;
+}
+
+#list-fase3-list {
+    border-radius: 0 0 0 4px;
+}
+
+.infoAlert {
+    padding: 15px;
+    margin: 15px 0 5px 0;
+    width: 100%;
+}
+
+.infoAlert > .col-1 {
+    margin: auto;
+}
+
+.infoAlert > .col {
+    margin: auto;
+}
+
+.infoAlert > .col > p {
+    margin-bottom: 0 ;
+}
+
+/* SPINNERS */
+.lds-ring {
+    display: none;
+    position: relative;
+    width: 64px;
+    height: 64px;
+}
+.lds-ring div {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 51px;
+    height: 51px;
+    margin: 6px;
+    border: 6px solid #007bff;
+    border-radius: 50%;
+    animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: #007bff transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+    animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+    animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+    animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+#vakkenList {
+    border-top: 1px solid rgba(0, 0, 0, 0.125);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.activeButton {
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+.activeButton:hover {
+    background-color: #0069d9 !important;
+    color: white;
+}
+
+.klasbutton {
+    border-radius: 0 !important;
+    cursor: pointer;
+}
+
+.klasbutton > td {
+    padding: 2px;
+}
+
+.klasVakbutton {
+    cursor: pointer;
 }
