@@ -241,4 +241,35 @@
             // Bestand direct downloaden zonder het op te slaan op de server
             $objWriter->save('php://output');
         }
+
+        public function toonISPDetails($studentid){
+
+            $data['title'] = "Details ISP";
+
+            $student = $this->persoon_model->get($studentid);
+            $student->persoonLessen = $this->persoonLes_model->getAllWithLesAndVakAndKlas($student->id);
+            $student->studiepunten = $this->persoon_model->getStudiepunten($student);
+
+            $data['student'] = $student;
+
+            // Defines roles for this page (You can also use "geen" or leave roles empty!).
+            $data['roles'] = getRoles('geen','Ontwikkelaar','geen','geen');
+
+            // Gets buttons for navbar);
+            $data['buttons'] = getNavbar('ispverantwoordelijke');
+
+            // Gets plugins if required
+            $data['plugins'] = getPlugin('geen');
+
+            $partials = array(  'hoofding' => 'main_header',
+                'inhoud' => 'IspVerantwoordelijke/ISPDetails',
+                'footer' => 'main_footer');
+            $this->template->load('main_master', $partials, $data);
+        }
+
+        public function adviesOpslaan(){
+
+
+            redirect('ISPVerantwoordelijke/index');
+        }
     }
