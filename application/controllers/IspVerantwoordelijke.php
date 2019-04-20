@@ -248,9 +248,10 @@
 
             $student = $this->persoon_model->get($studentid);
             $student->persoonLessen = $this->persoonLes_model->getAllWithLesAndVakAndKlas($student->id);
-            $student->studiepunten = $this->persoon_model->getStudiepunten($student);
+            $studiepunten = $this->persoon_model->getStudiepunten($student);
 
             $data['student'] = $student;
+            $data['studiepunten'] = $studiepunten;
 
             // Defines roles for this page (You can also use "geen" or leave roles empty!).
             $data['roles'] = getRoles('geen','Ontwikkelaar','geen','geen');
@@ -259,7 +260,7 @@
             $data['buttons'] = getNavbar('ispverantwoordelijke');
 
             // Gets plugins if required
-            $data['plugins'] = getPlugin('geen');
+            $data['plugins'] = getPlugin('fullCalendar');
 
             $partials = array(  'hoofding' => 'main_header',
                 'inhoud' => 'IspVerantwoordelijke/ISPDetails',
@@ -269,7 +270,38 @@
 
         public function adviesOpslaan(){
 
+            $student = json_decode($this->input->post('student'));
+            $student->advies = $this->input->post('advies');
+            $this->persoon_model->update($student);
 
             redirect('ISPVerantwoordelijke/index');
+        }
+
+        public function haalAjaxOp_UurroosterCombi() {
+            $semesterId = $this->input->get('semesterId');
+            $data['studentId'] = $this->input->get('studentId');
+
+            if($semesterId == 0){
+                $this->load->view('IspVerantwoordelijke/ajax_uurroosterCombiSemester1', $data);
+            }
+            else{
+                $this->load->view('IspVerantwoordelijke/ajax_uurroosterCombiSemester2', $data);
+            }
+        }
+
+        public function haalJsonOp_lessenPerStudent($studentId){
+            $this->load->model('les_model');
+            $this->load->model('vak_model');
+
+            $lessen = $this->les_model->getAllWhereStudentId($studentId);
+
+            foreach ($lessen as $les){
+                $vak = $this->vak_model->get($les->vakId);
+                $les->vaknaam = $vak->naam;
+                $les->semester = $vak ->semester;
+            }
+
+            $this->output->set_content_type("application/json");
+            echo json_encode($lessen);
         }
     }

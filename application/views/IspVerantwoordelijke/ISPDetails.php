@@ -1,3 +1,36 @@
+<?php
+/**
+ * @file ISPDetails.php
+ * View waarin de details van een student zijn ISP worden weergegeven en de ISP verantwoordelijk advies kan geven aan de student
+ * Krijgt een $persoonobject met bijhorende $les- en $vakobjecten binnen
+ * Gebruikt ajax-call om de uurrooster van de student op te halen
+ */
+?>
+<script>
+    function haalUurroosterOp(semesterId, studentId) {
+        $.ajax({
+            type: "GET",
+            url: site_url + "/IspVerantwoordelijke/haalAjaxOp_UurroosterCombi/",
+            data: {semesterId: semesterId, studentId: studentId},
+            success: function(output) {
+                $('#uurrooster').html(output);
+            },
+            error: function (xhr, status, error) {
+                alert("-- ERROR IN AJAX --\n\n" + xhr.responseText);
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        haalUurroosterOp(0, <?php echo $student->id ?>);
+
+        $("#semesterkeuze").change(function () {
+            var semesterId = $('#semesterkeuze').val();
+            haalUurroosterOp(semesterId, <?php echo $student->id ?>);
+        });
+    });
+
+</script>
 <div class="container">
     <h1>
         <?php
@@ -52,12 +85,18 @@
         </div>
     </div>
     <?php
-        echo "<p><b>Totaal opgenomen studiepunten: </b>" . $student->studiepunten . "</p>";
+        echo "<h5>Totaal opgenomen studiepunten: " . $studiepunten . "</h5></br>";
+        $semesterOpties = array('Semester 1', 'Semester 2');
+        $semesterattributes = array('id' => 'semesterkeuze', 'class' => 'form-control');
+        echo form_dropdown('semester', $semesterOpties, '0', $semesterattributes);
     ?>
-    <p><b>Advies voor de student:</b></p>
+    <div id="uurrooster"></div>
+    </br>
+    <h5>Advies voor de student:</h5>
     <?php
     $attributes = array('name' => 'mijnFormulier');
     echo form_open('IspVerantwoordelijke/adviesOpslaan', $attributes);
+    echo form_hidden('student', json_encode($student,TRUE));
     $adviesattributes = array('class' => 'form-control', 'id' => 'TextBoxAdvies');
     echo form_textarea('advies', $student->advies, $adviesattributes);
     echo "<div class='row'><div class='col-6'>";
