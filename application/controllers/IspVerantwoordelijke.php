@@ -270,9 +270,11 @@
 
         public function adviesOpslaan(){
 
-            $student = json_decode($this->input->post('student'));
-            $student->advies = $this->input->post('advies');
-            $this->persoon_model->update($student);
+            if(isset($_POST['opslaan'])){
+                $student = json_decode($this->input->post('student'));
+                $student->advies = $this->input->post('advies');
+                $this->persoon_model->update($student);
+            }
 
             redirect('ISPVerantwoordelijke/index');
         }

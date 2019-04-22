@@ -104,7 +104,7 @@
     echo form_submit('opslaan', 'Advies opslaan', $submitattributes);
     echo "</div><div class='col-6'>";
     $overzichtattributes = array('class' => 'form-control', 'id' => 'ButtonOverzicht' );
-    echo form_submit('Overzicht', 'Naar ISP overzicht', $overzichtattributes);
+    echo form_submit('overzicht', 'Naar ISP overzicht', $overzichtattributes);
     echo "</div></div>";
     echo form_close();
     ?>
