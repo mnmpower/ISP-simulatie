@@ -19,7 +19,7 @@
 			echo "<td>$student->naam</td>";
 			echo "<td>$student->studiepunten</td>";
 			echo "<td>$student->advies</td>";
-			echo "<td><a href=''><i class=\"far fa-eye \"></i></a></td></tr>";
+			echo "<td><a href='toonISPDetails/" . $student->id .  "'><i class=\"far fa-eye \"></i></a></td></tr>";
 		}
 	?>
 
