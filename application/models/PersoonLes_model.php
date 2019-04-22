@@ -127,4 +127,14 @@
             $this->db->where('lesId', $lesId);
             $this->db->delete('persoonLes');
         }
+
+        /**
+         * Verwijdert het record met persoonIdStudent=$persoonIdStudent uit de tabel team22_persoonLes
+         * @param $persoonIdStudent de persoonIdStudent van het record dat verwijderd wordt
+         */
+        function deleteWherePersoon($persoonIdStudent)
+        {
+            $this->db->where('persoonIdStudent', $persoonIdStudent);
+            $this->db->delete('persoonLes');
+        }
     }

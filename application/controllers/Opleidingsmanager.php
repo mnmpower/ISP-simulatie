@@ -414,6 +414,12 @@
                 $B1 = $excelFile->getActiveSheet()->getCell('B1')->getValue();
                 if(strtolower($A1) == "naam" && strtolower($B1) == "nummer") {
 
+                    // Studenten verwijderen indien aangeduid
+                    $deleteUsers = $this->input->post('deleteUsersExcel');
+                    if($deleteUsers == true) {
+                        $this->persoon_model->deleteWhereType(1);
+                    }
+
                     // Alleen ingevulde cellen selecteren
                     $cell_collection = $excelFile->getActiveSheet()->getCellCollection();
 

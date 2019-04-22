@@ -284,6 +284,11 @@
                                 'required' => 'required'
                             )); ?></td>
                     </tr>
+                    <tr>
+                        <td colspan="2"><?php echo form_checkbox('deleteUsersExcel', true, false, array('id' => 'deleteUsersExcel'
+                            )); ?>
+                        <?php echo form_label("Verwijder alle studenten", "deleteUsersExcel"); ?></td>
+                    </tr>
                 </table>
             </div>
             <div class="modal-footer">

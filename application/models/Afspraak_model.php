@@ -133,4 +133,18 @@ class Afspraak_model extends CI_Model
         $this->db->where('id', $id);
         $this->db->update('afspraak', $data);
     }
+
+    /**
+     * Ontkoppelt de student van het record met persoonIdStudent=$persoonIdStudent uit de tabel team22_afspraak
+     * @param $persoonIdStudent de persoonIdStudent van het record dat geupdate wordt
+     */
+    function updateAfspraakOntkoppelStudent($persoonIdStudent)
+    {
+        $data = array(
+            'persoonIdStudent' => null
+        );
+
+        $this->db->where('persoonIdStudent', $persoonIdStudent);
+        $this->db->update('afspraak', $data);
+    }
 }
