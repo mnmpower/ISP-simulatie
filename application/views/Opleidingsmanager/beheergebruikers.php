@@ -89,33 +89,16 @@
             success: function (result) {
                 isDubbel = result;
                 if (!isDubbel) {
-                    schrijfGebruikerWeg();
+                    alert("Submit"); //$("#formInvoer").submit();
                 }
                 else {
                     //$("div.invalid-feedback").html("Deze gebruiker bestaat reeds!");
-                    $("#gebruikerNummer").addClass("is-invalid");
+                    alert("Invalid"); //$("#gebruikerNummer").addClass("is-invalid");
                 }
             },
             error: function (xhr, status, error) {
                 alert("-- ERROR IN AJAX (controleerDubbelEnSchrijfWegOfToonFout) --\n\n" + xhr.responseText);
                 return true;
-            }
-        });
-    }
-
-    function schrijfGebruikerWeg() {
-        var dataString = $("#formInvoer").serialize();
-
-        $.ajax({
-            type: "POST",
-            url: site_url + "/Opleidingsmanager/schrijfAjax_Gebruiker",
-            data: dataString,
-            success: function (result) {
-                $('#modalInvoer').modal('hide');
-                haalGebruikersOp();
-            },
-            error: function (xhr, status, error) {
-                alert("-- ERROR IN AJAX (schrijfGebruikerWeg) --\n\n" + xhr.responseText);
             }
         });
     }
@@ -166,8 +149,6 @@
 
         $("#knop").on('click', function (e) {
             $("#formInvoer").checkValidity();
-            controleerDubbelEnSchrijfWegOfToonFout();
-            e.preventDefault();
         });
 
         $("#voegexceltoe").click(function () {
@@ -207,7 +188,7 @@
             </div>
             <?php
                 $attributenFormulier = array('id' => 'formInvoer');
-                echo form_open('', $attributenFormulier);
+                echo form_open('Opleidingsmanager/voegGebruikerToe', $attributenFormulier);
             ?>
             <div class="modal-body">
                 <input type="hidden" name="gebruikerId" id="gebruikerId">
@@ -243,7 +224,7 @@
                     $annuleerButton = array('class' => 'btn btn-secundary annuleren', 'data-dismiss' => 'modal');
                     echo form_button("knopAnnuleer", ' Annuleren', $annuleerButton);
                     $opslaanButton = array('class' => 'btn btn-primary opslaan', 'id' => 'knop');
-                    echo form_submit("knopOpslaan", '', $opslaanButton);
+                    echo form_submit("knopOpslaan", 'Opslaan', $opslaanButton);
                 ?>
             </div>
             <?php echo form_close(); ?>

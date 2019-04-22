@@ -361,22 +361,27 @@
             echo json_encode($isDubbel);
         }
 
-        public function schrijfAjax_Gebruiker()
+        public function voegGebruikerToe()
         {
             $object = new stdClass();
             $object->id = $this->input->post('gebruikerId');
-            $object->naam = $this->input->post('gebruikerNaam');
-            $object->nummer = $this->input->post('gebruikerNummer');
+            $object->naam = htmlspecialchars($this->input->post('gebruikerNaam'));
+            $object->nummer = htmlspecialchars($this->input->post('gebruikerNummer'));
             $object->typeId = $this->input->post('gebruikerType');
 
             $this->load->model('persoon_model');
             if ($object->id == 0) {
-                //nieuw record
-                $this->persoon_model->insert($object);
+                $gebruiker = $this->persoon_model->getWhereNummer($object->nummer);
+                if (count($gebruiker) == 0) {
+                    //nieuw record
+                    $this->persoon_model->insert($object);
+                }
             } else {
                 //bestaand record
                 $this->persoon_model->update($object);
             }
+
+            redirect('Opleidingsmanager/gebruikerBeheer');
         }
 
         public function uploadGebruikersExcel()
