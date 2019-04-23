@@ -221,3 +221,14 @@ body, header, footer {
 .klasVakbutton {
     cursor: pointer;
 }
+
+.activeKlas {
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+.activeKlas:hover {
+    background-color: #0069d9 !important;
+    color: white;
+}

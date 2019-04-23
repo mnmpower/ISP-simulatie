@@ -145,7 +145,7 @@
             {
 				redirect('Student/uurroosterWeergeven');
             }
-            else if(isset($_POST['isp']))
+            else if(isset($_POST['isp2']))
             {
                 redirect('Student/ispSamenstellen');
             }
@@ -381,6 +381,11 @@
         }
 
         public function ispSamenstellen(){
+            $isp1 = array();
+            $isp2 = array();
+            $_SESSION['isp1'] = $isp1;
+            $_SESSION['isp2'] = $isp2;
+
             $data['title'] = "ISP Samenstellen";
             // Defines roles for this page (You can also use "geen" or leave roles empty!).
             $data['roles'] = getRoles('geen','geen','Ontwikkelaar','geen');
@@ -403,6 +408,46 @@
             $this->template->load('main_master', $partials, $data);
         }
 
+        public function ispSamenstellen2(){
+            $data['title'] = "ISP Samenstellen";
+            // Defines roles for this page (You can also use "geen" or leave roles empty!).
+            $data['roles'] = getRoles('geen','geen','Ontwikkelaar','geen');
+
+            // Gets buttons for navbar);
+            $data['buttons'] = getNavbar('student');
+
+            // Gets plugins if required
+            $data['plugins'] = getPlugin('fullCalendar');
+
+            $this->load->model("klas_model");
+            $data['klassen'] = $this->klas_model->getAllKlassen();
+
+            $this->load->model("vak_model");
+            $data['vakken'] = $this->vak_model->getAllWhereSemester(2, true);
+
+            $partials = array(  'hoofding' => 'main_header',
+                'inhoud' => 'Student/ispSamenstellen2',
+                'footer' => 'main_footer');
+            $this->template->load('main_master', $partials, $data);
+        }
+
+        public function ispSamenstellenConfirm(){
+            $data['title'] = "ISP Samenstellen";
+            // Defines roles for this page (You can also use "geen" or leave roles empty!).
+            $data['roles'] = getRoles('geen','geen','Ontwikkelaar','geen');
+
+            // Gets buttons for navbar);
+            $data['buttons'] = getNavbar('student');
+
+            // Gets plugins if required
+            $data['plugins'] = getPlugin('fullCalendar');
+
+            $partials = array(  'hoofding' => 'main_header',
+                'inhoud' => 'Student/ispSamenstellenConfirm',
+                'footer' => 'main_footer');
+            $this->template->load('main_master', $partials, $data);
+        }
+
         public function haalAjaxOp_UurroosterPerKlas() {
             $klasId = $this->input->get('klasId');
 
@@ -417,5 +462,20 @@
             $this->load->model('les_model');
             $data['lessen'] = $this->les_model->getAllWithKlasWhereKlas($vakId);
             echo json_encode($data['lessen']);
+        }
+
+        public function haalAjaxOp_lesKlas() {
+            $lessen = $this->input->get('lessen');
+            $this->load->model('les_model');
+
+            $data['rooster'] = $this->les_model->getAllWithVakAndKlasWhereLessen(json_decode($lessen));
+            echo json_encode($data['rooster']);
+        }
+
+        public function sessions_lesKlas($lessen) {
+            $this->load->model('les_model');
+
+            $data['rooster'] = $this->les_model->getAllWithVakAndKlasWhereLessen(json_decode($lessen));
+            echo json_encode($data['rooster']);
         }
     }

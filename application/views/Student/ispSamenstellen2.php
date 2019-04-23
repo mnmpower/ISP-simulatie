@@ -25,7 +25,8 @@
                 </ol>
                 <div class="carousel-inner">
                     <div id="#defaultAlert" class="carousel-item active">
-                        <div class="alert alert-primary alertPad active" role="alert">
+                        <div class="alert alert-primary alertPad role=" alert
+                        ">
                         <i class="fas fa-info-circle"></i>
                         Geen fouten gedetecteerd.
                     </div>
@@ -140,14 +141,13 @@
     </div>
     <div class="container col-2 flex-column d-flex containersISP">
         <div id="semesterkeuzeContainer" class="flex-grow-1 centered activeButton">
-            <p>Semester 2</p>
+            <p>Bevestigen</p>
             <i class="fas fa-chevron-right fa-5x"></i>
         </div>
     </div>
 </div>
 </div>
-<form id="gotoSemester2" action="ispSamenstellen2">
-<input type="hidden" value="null" id="ispString"/>
+<form id="gotoIspConfirm" action="ispSamenstellenConfirm">
+    <input type="hidden" value="null" id="ispString"/>
 </form>
-
-<script src='<?php echo base_url() ?>assets/js/ispSamenstellen.js'></script>
+<script src='<?php echo base_url() ?>assets/js/ispSamenstellen2.js'></script>
