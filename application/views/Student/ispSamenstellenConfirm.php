@@ -1,15 +1,15 @@
 <div class="container container90 containerISP">
-    <div id="uurrooster"></div>
-    <div id="uurrooster2"></div>
-    <div class="row">
-    <div class="container col-2 flex-column d-flex containersISP">
-        <div id="semesterkeuzeContainer" class="flex-grow-1 centered activeButton">
+    <div id="roosterConfirm"></div>
+    <div id="roosterConfirm2"></div>
+    <div class="row" id="confirmButtons">
+    <div id="ispCancel" class="container col flex-column d-flex">
+        <div class="flex-grow-1 centered activeButton confirmButton">
             <p>Annuleren</p>
-            <i class="fas fa-chevron-right fa-5x"></i>
+            <i class="fas fa-trash-alt fa-5x"></i>
         </div>
     </div>
-    <div class="container col-2 flex-column d-flex containersISP">
-        <div id="semesterkeuzeContainer" class="flex-grow-1 centered activeButton">
+    <div id="ispConfirm" class="container col flex-column d-flex">
+        <div class="flex-grow-1 centered activeButton confirmButton">
             <p>Bevestigen</p>
             <i class="fas fa-chevron-right fa-5x"></i>
         </div>
