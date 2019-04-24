@@ -232,3 +232,10 @@ body, header, footer {
     background-color: #0069d9 !important;
     color: white;
 }
+
+.carousel-caption {
+    color: black;
+    position: relative;
+    left: auto;
+    right: auto;
+}

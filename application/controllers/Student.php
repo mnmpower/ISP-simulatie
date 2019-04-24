@@ -386,6 +386,12 @@
             $_SESSION['isp1'] = $isp1;
             $_SESSION['isp2'] = $isp2;
 
+            $cookie_name = "walkthrough";
+            if(!isset($_COOKIE[$cookie_name])) {
+                $cookie_value = "aan";
+                setcookie($cookie_name, $cookie_value, time() + (86400 * 30));
+            }
+
             $data['title'] = "ISP Samenstellen";
             // Defines roles for this page (You can also use "geen" or leave roles empty!).
             $data['roles'] = getRoles('geen','geen','Ontwikkelaar','geen');
@@ -477,5 +483,16 @@
 
             $data['rooster'] = $this->les_model->getAllWithVakAndKlasWhereLessen(json_decode($lessen));
             echo json_encode($data['rooster']);
+        }
+
+        public function haalAjaxOp_ToggleCookie() {
+            $cookie_name = "walkthrough";
+            if ($_COOKIE[$cookie_name] == "aan"){
+                $cookie_value = "uit";
+            }
+            else{
+                $cookie_value = "aan";
+            }
+            setcookie($cookie_name, $cookie_value, time() + (86400 * 30));
         }
     }
