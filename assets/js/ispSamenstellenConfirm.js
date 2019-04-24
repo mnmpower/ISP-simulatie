@@ -1,5 +1,5 @@
 // Calendar settings
-$('#uurrooster, #uurrooster2').fullCalendar({
+$('#roosterConfirm, #roosterConfirm2').fullCalendar({
     schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
     defaultView: 'agendaWeek',
     weekends: false,
@@ -18,13 +18,15 @@ $('#uurrooster, #uurrooster2').fullCalendar({
 // Mobile
 $(window).resize(function () {
     if (600 < $(window).width()) {
-        $('#uurrooster').fullCalendar('changeView', 'agendaWeek');
+        $('#roosterConfirm').fullCalendar('changeView', 'agendaWeek');
+        $('#roosterConfirm2').fullCalendar('changeView', 'agendaWeek');
     } else {
-        $('#uurrooster').fullCalendar('changeView', 'agendaDay');
+        $('#roosterConfirm').fullCalendar('changeView', 'agendaDay');
+        $('#roosterConfirm2').fullCalendar('changeView', 'agendaDay');
     }
 });
 
-function updateRoosters(rooster, isp) {
+function updateRoosters(roosterNr, isp) {
         var lessen = isp;
         postData = lessen;
         console.log(lessen);
@@ -45,13 +47,14 @@ function updateRoosters(rooster, isp) {
                         });
                 });
                 console.log(roosterEvents);
-                if (rooster == 1) {
-                    $("#uurrooster").fullCalendar('removeEventSources');
-                    $('#uurrooster').fullCalendar('addEventSource', roosterEvents);
+                if (roosterNr == 1) {
+                    $('#roosterConfirm').fullCalendar('removeEventSources');
+                    $('#roosterConfirm').fullCalendar('addEventSource', roosterEvents);
+
                 }
-                if (rooster == 2) {
-                    $("#uurrooster2").fullCalendar('removeEventSources');
-                    $('#uurrooster2').fullCalendar('addEventSource', roosterEvents);
+                if (roosterNr == 2) {
+                    $('#roosterConfirm2').fullCalendar('removeEventSources');
+                    $('#roosterConfirm2').fullCalendar('addEventSource', roosterEvents);
                 }
             }, error: function (e) {
                 console.log(e.message);

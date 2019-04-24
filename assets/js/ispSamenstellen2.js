@@ -186,15 +186,15 @@ function ToggleVakOff() {
 
 function editISPAttr() {
     var id = $(this).attr('data-id');
-    var pos = isp2.indexOf(id);
+    var pos = isp.indexOf(id);
     if (pos != -1) {
-        isp2.splice(pos, 1);
-        $(this).removeClass('activeButton').find('.fa-check').addClass('invisible');
+        isp.splice(pos, 1);
+        checkButton(id, false);
     } else {
-        isp2.push(id);
-        $(this).addClass('activeButton').find('.fa-check').removeClass('invisible');
+        isp.push(id);
+        checkButton(id, true);
     }
-    console.log(isp2);
+    console.log(isp);
     updateRooster();
 }
 
@@ -311,5 +311,16 @@ function resetAlerts() {
 function continueISP() {
     sessionStorage.setItem("ISP2", JSON.stringify(isp2));
     $('#gotoIspConfirm').submit();
+}
+
+function checkButton(id, checked) {
+    $('[data-id=' + id + ']').each(function() {
+        if (checked == true) {
+            $(this).addClass('activeButton').find('.fa-check').removeClass('invisible');
+        }
+        else {
+            $(this).removeClass('activeButton').find('.fa-check').addClass('invisible');
+        }
+    });
 }
 
