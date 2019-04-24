@@ -203,6 +203,22 @@
             return $lessen;
         }
 
+
+        function getAllWithVakAndKlasWhereLessen($lessen){
+            $this->db->where_in('id', $lessen);
+            $query = $this->db->get('les');
+            $rooster = $query->result();
+
+            $this->load->model('vak_model');
+            $this->load->model('klas_model');
+
+            foreach ($rooster as $les){
+                $les->vak = $this->vak_model->get($les->vakId);
+                $les->klas = $this->klas_model->get($les->klasId);
+            }
+            return $rooster;
+        }
+
         function getAllWhereStudentId($studentId)
         {
             $result = array();
@@ -217,4 +233,5 @@
             }
             return $result;
         }
+
     }

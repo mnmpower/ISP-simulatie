@@ -12,8 +12,8 @@
         'role'  => 'form');
 
     echo form_open('student/keuzemenu', $attributen);
-    $ispattributen = array('name' => 'isp', "id" => "isp", 'class' => 'form-control');
-    echo form_submit('isp', 'ISP-simulatie maken', $ispattributen);
+    $ispattributen = array('name' => 'isp2', "id" => "isp2", 'class' => 'form-control');
+    echo form_submit('isp2', 'ISP-simulatie maken', $ispattributen);
     $vakattributen = array('name' => 'vakken', "id" => "vakken", 'class' => 'form-control');
     echo form_submit('vakken', 'Vakken per fase bekijken', $vakattributen);
     $afspraakattributen = array('name' => 'afspraak', "id" => "afspraak", 'class' => 'form-control');

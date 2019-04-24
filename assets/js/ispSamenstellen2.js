@@ -1,7 +1,6 @@
 var id1 = 'a';
 var id2 = 'b';
-var isp = [];
-
+var isp2 = [];
 
 // Calendar settings
 $('#uurrooster').fullCalendar({
@@ -82,7 +81,7 @@ function getKlasInfo(id, titel, tekst) {
                 '<tbody>\n';
 
             $.each(JSONoutput, function (i, item) {
-                isp.push(item.id);
+                isp2.push(item.id);
                 html +=
                     '<tr class="list-group-item-action klasVakbutton activeButton' +
                     '" data-id="' + item.id + '">\n' +
@@ -91,7 +90,7 @@ function getKlasInfo(id, titel, tekst) {
                     '<td>' + item.startuur.slice(0, -3) + '</td>\n' +
                     '<td>' + item.einduur.slice(0, -3) + '</td>\n';
 
-                if (isp.indexOf(item.id) != -1) {
+                if (isp2.indexOf(item.id) != -1) {
                     html += '<td><i class="fas fa-check"></i></td>';
                 } else {
                     html += '<td><i class="fas fa-check invisible"></i></td>';
@@ -104,7 +103,7 @@ function getKlasInfo(id, titel, tekst) {
                 '</table>';
             $('.lds-ring').toggle();
             $('#' + tekst).append(html);
-            console.log(isp);
+            console.log(isp2);
             updateRooster();
         }
     });
@@ -128,7 +127,7 @@ function getVakInfo(id) {
             $.each(JSONoutput, function (i, item) {
                 html +=
                     '<tr class="list-group-item-action vakButton lesButton';
-                if (isp.indexOf(item.id) != -1) {
+                if (isp2.indexOf(item.id) != -1) {
                     html += ' activeButton'
                 }
                 html +=
@@ -138,7 +137,7 @@ function getVakInfo(id) {
                     '<td>' + item.startuur.slice(0, -3) + '</td>\n' +
                     '<td>' + item.einduur.slice(0, -3) + '</td>\n';
 
-                if (isp.indexOf(item.id) != -1) {
+                if (isp2.indexOf(item.id) != -1) {
                     html += '<td><i class="fas fa-check"></i></td>';
                 } else {
                     html += '<td><i class="fas fa-check invisible"></i></td>';
@@ -187,15 +186,15 @@ function ToggleVakOff() {
 
 function editISPAttr() {
     var id = $(this).attr('data-id');
-    var pos = isp.indexOf(id);
+    var pos = isp2.indexOf(id);
     if (pos != -1) {
-        isp.splice(pos, 1);
+        isp2.splice(pos, 1);
         $(this).removeClass('activeButton').find('.fa-check').addClass('invisible');
     } else {
-        isp.push(id);
+        isp2.push(id);
         $(this).addClass('activeButton').find('.fa-check').removeClass('invisible');
     }
-    console.log(isp);
+    console.log(isp2);
     updateRooster();
 }
 
@@ -211,24 +210,24 @@ function removeKlasISP(nr) {
     if (nr == 1) {
         $('#klas1Tekst > table > tbody > tr').each(function () {
             var id = $(this).attr('data-id');
-            var pos = isp.indexOf(id);
-            isp.splice(pos, 1);
+            var pos = isp2.indexOf(id);
+            isp2.splice(pos, 1);
         })
     }
     if (nr == 2) {
         $('#klas2Tekst > table > tbody > tr').each(function () {
             var id = $(this).attr('data-id');
-            var pos = isp.indexOf(id);
-            isp.splice(pos, 1);
+            var pos = isp2.indexOf(id);
+            isp2.splice(pos, 1);
         })
     }
-    console.log(isp);
+    console.log(isp2);
     updateRooster();
 }
 
 function updateRooster() {
-    if (isp != '') {
-        var lessen = isp;
+    if (isp2 != '') {
+        var lessen = isp2;
         postData = JSON.stringify(lessen);
         $.ajax({
             type: "GET",
@@ -309,8 +308,8 @@ function resetAlerts() {
     $('.carousel-indicators').empty().append('<li data-target="#carouselWarnings" data-slide-to="0" class="active"></li>');
 }
 
-
 function continueISP() {
-    sessionStorage.setItem("ISP1", JSON.stringify(isp));
-    $('#gotoSemester2').submit();
+    sessionStorage.setItem("ISP2", JSON.stringify(isp2));
+    $('#gotoIspConfirm').submit();
 }
+
