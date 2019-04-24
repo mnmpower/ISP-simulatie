@@ -39,15 +39,15 @@
         }
 
       /**
-       * Voegt het record $persoon toe aan de tabel team22_persoon
-       * @param $persoon het record dat toegevoegd wordt
-       * @return int id
-       */
-		function insert($persoon)
-		{
-			$this->db->insert('persoon', $persoon);
-			return $this->db->insert_id();
-		}
+     * Voegt het record $persoon toe aan de tabel team22_persoon
+     * @param $persoon het record dat toegevoegd wordt
+     * @return int id
+     */
+        function insert($persoon)
+        {
+            $this->db->insert('persoon', $persoon);
+            return $this->db->insert_id();
+        }
 
         /**
          * Update het record $persoon uit de tabel team22_persoon
@@ -63,11 +63,11 @@
          * Verwijdert het record met id=$id uit de tabel team22_persoon
          * @param $id de id van het record dat verwijderd wordt
          */
-		function delete($id)
-		{
-			$this->db->where('id', $id);
-			$this->db->delete('persoon');
-		}
+        function delete($id)
+        {
+            $this->db->where('id', $id);
+            $this->db->delete('persoon');
+        }
 
         /**
          * Retourneert alle records met id=$id uit de tabel team22_persoon
@@ -246,5 +246,36 @@
             $this->db->where('nummer', $nummer);
             $query = $this->db->get('persoon');
             return $query->row();
+        }
+
+        /**
+         * Retourneert alle records met typeid=$typeid uit de tabel team22_persoon
+         * @return Array met alle opgevraagde records
+         */
+        function getAllStudenten()
+        {
+            $this->db->where('typeId', 1);
+            $query = $this->db->get('persoon');
+            return $query->result();
+        }
+
+        /**
+         * Verwijdert alle records met typeid=$typeid uit de tabel team22_persoon
+         * @param $typeid de typeid van de records die verwijderd worden
+         */
+        function deleteWhereType($typeid)
+        {
+            // delete afspraak en persoonles
+            $studenten = $this->getAllStudenten();
+            foreach ($studenten as $student) {
+                $this->load->model('afspraak_model');
+                $this->afspraak_model->updateAfspraakOntkoppelStudent($student->id);
+                $this->load->model('persoonLes_model');
+                $this->persoonLes_model->deleteWherePersoon($student->id);
+            }
+
+            // delete persoon
+            $this->db->where('typeId', $typeid);
+            $this->db->delete('persoon');
         }
     }

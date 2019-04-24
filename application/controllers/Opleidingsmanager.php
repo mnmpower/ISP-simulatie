@@ -79,7 +79,7 @@
 			$data['buttons'] = getNavbar('opleidingsmanager');
 
 			// Gets plugins if required
-			$data['plugins'] = getPlugin('geen');
+			$data['plugins'] = getPlugin('table');
 
 			$ingediendeIspStudenten = $this->persoon_model->getAllWhereIspIngediend();
 
@@ -361,22 +361,27 @@
             echo json_encode($isDubbel);
         }
 
-        public function schrijfAjax_Gebruiker()
+        public function voegGebruikerToe()
         {
             $object = new stdClass();
             $object->id = $this->input->post('gebruikerId');
-            $object->naam = $this->input->post('gebruikerNaam');
-            $object->nummer = $this->input->post('gebruikerNummer');
+            $object->naam = htmlspecialchars($this->input->post('gebruikerNaam'));
+            $object->nummer = htmlspecialchars($this->input->post('gebruikerNummer'));
             $object->typeId = $this->input->post('gebruikerType');
 
             $this->load->model('persoon_model');
             if ($object->id == 0) {
-                //nieuw record
-                $this->persoon_model->insert($object);
+                $gebruiker = $this->persoon_model->getWhereNummer($object->nummer);
+                if (count($gebruiker) == 0) {
+                    //nieuw record
+                    $this->persoon_model->insert($object);
+                }
             } else {
                 //bestaand record
                 $this->persoon_model->update($object);
             }
+
+            redirect('Opleidingsmanager/gebruikerBeheer');
         }
 
         public function uploadGebruikersExcel()
@@ -408,6 +413,12 @@
                 $A1 = $excelFile->getActiveSheet()->getCell('A1')->getValue();
                 $B1 = $excelFile->getActiveSheet()->getCell('B1')->getValue();
                 if(strtolower($A1) == "naam" && strtolower($B1) == "nummer") {
+
+                    // Studenten verwijderen indien aangeduid
+                    $deleteUsers = $this->input->post('deleteUsersExcel');
+                    if($deleteUsers == true) {
+                        $this->persoon_model->deleteWhereType(1);
+                    }
 
                     // Alleen ingevulde cellen selecteren
                     $cell_collection = $excelFile->getActiveSheet()->getCellCollection();
@@ -503,6 +514,46 @@
 
             $this->load->model('les_model');
             $this->les_model->delete($lesId);
+        }
+
+        public function voegLesToe(){
+            $object = new stdClass();
+            $object->id = $this->input->post('lesId');
+            $object->vakId = $this->input->post('lesVak');
+            $object->klasId = $this->input->post('lesKlas');
+            $dag = $this->input->post('lesDag');
+            $object->startuur = $this->input->post('lesStartuur');
+            $object->einduur = $this->input->post('lesEinduur');
+
+            // Weekdag omzetten naar datum
+            switch ($dag) {
+                case 1:
+                    $object->datum = '2019-09-16';
+                    break;
+                case 2:
+                    $object->datum = '2019-09-17';
+                    break;
+                case 3:
+                    $object->datum = '2019-09-18';
+                    break;
+                case 4:
+                    $object->datum = '2019-09-19';
+                    break;
+                case 5:
+                    $object->datum =  '2019-09-20';
+                    break;
+            }
+
+            $this->load->model('les_model');
+            if ($object->id == 0) {
+                //nieuw record
+                $this->les_model->insert($object);
+            } else {
+                //bestaand record
+                $this->les_model->update($object);
+            }
+
+            redirect('Opleidingsmanager/lesBeheer');
         }
 
 		public function mailBeheer()

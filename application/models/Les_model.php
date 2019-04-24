@@ -4,6 +4,7 @@
      * @brief Model-klasse voor de lessen
      * Model-klasse die alle methodes bevat om te intrageren met de database-tabel team22_les
 	 * @property Persoon_model $persoon_model
+     * @property PersoonLes_model $persoonLes_model
 	 * @property Vak_model $vak_model
      */
     class Les_model extends CI_Model
@@ -202,6 +203,7 @@
             return $lessen;
         }
 
+
         function getAllWithVakAndKlasWhereLessen($lessen){
             $this->db->where_in('id', $lessen);
             $query = $this->db->get('les');
@@ -215,6 +217,21 @@
                 $les->klas = $this->klas_model->get($les->klasId);
             }
             return $rooster;
+        }
+
+        function getAllWhereStudentId($studentId)
+        {
+            $result = array();
+            $this->load->model('persoonLes_model');
+            $persoonLessen = $this->persoonLes_model->getAllWherePersoonId($studentId);
+            foreach ($persoonLessen as $persoonLes){
+                $result1 = $result;
+                $this->db->where('id',$persoonLes->lesId);
+                $query = $this->db->get('les');
+                $result2 = $query->result();
+                $result = array_merge($result1, $result2);
+            }
+            return $result;
         }
 
     }

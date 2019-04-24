@@ -11,6 +11,12 @@ function getPlugin($plugin) {
             "<script src='" . base_url() . "assets/js/scheduler.js'></script>",
             "<script src='" . base_url() . "assets/js/nl-be.js'></script>");
             break;
+		case 'table':
+			$lines = array(
+				"<link href='https://unpkg.com/bootstrap-table@1.14.2/dist/bootstrap-table.min.css' rel='stylesheet' />",
+				"<script src='https://unpkg.com/bootstrap-table@1.14.2/dist/bootstrap-table.min.js'></script>"
+			);
+			break;
 
         case 'geen':
             $lines = array('<!--None-->');
