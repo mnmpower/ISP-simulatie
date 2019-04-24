@@ -190,10 +190,10 @@ function editISPAttr() {
     var pos = isp.indexOf(id);
     if (pos != -1) {
         isp.splice(pos, 1);
-        $(this).removeClass('activeButton').find('.fa-check').addClass('invisible');
+        checkButton(id, false);
     } else {
         isp.push(id);
-        $(this).addClass('activeButton').find('.fa-check').removeClass('invisible');
+        checkButton(id, true);
     }
     console.log(isp);
     updateRooster();
@@ -294,7 +294,7 @@ $("body")
     .on("click", "#semesterkeuzeContainer", continueISP);
 
 $('.vakButton').click(function () {
-    var id = $(this).attr("data-id");
+    var id = $(this).attr("data-vakId");
     getVakInfo(id);
 });
 
@@ -313,4 +313,15 @@ function resetAlerts() {
 function continueISP() {
     sessionStorage.setItem("ISP1", JSON.stringify(isp));
     $('#gotoSemester2').submit();
+}
+
+function checkButton(id, checked) {
+    $('[data-id=' + id + ']').each(function() {
+        if (checked == true) {
+            $(this).addClass('activeButton').find('.fa-check').removeClass('invisible');
+        }
+        else {
+            $(this).removeClass('activeButton').find('.fa-check').addClass('invisible');
+        }
+    });
 }

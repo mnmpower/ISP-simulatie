@@ -104,7 +104,7 @@
                             <?php foreach ($vakken as $vak) {
                                 if ($vak->fase == 1) {
                                     echo "<div>";
-                                    echo "<button type='button' class='btn list-group-item list-group-item-action vakButton' data-id='" . $vak->id . "' data-vak='" . $vak->naam . "'>" . $vak->naam . "</button>";
+                                    echo "<button type='button' class='btn list-group-item list-group-item-action vakButton' data-vakId='" . $vak->id . "' data-vak='" . $vak->naam . "'>" . $vak->naam . "</button>";
                                     echo "</div>";
                                 }
                             }
@@ -115,7 +115,7 @@
                             <?php foreach ($vakken as $vak) {
                                 if ($vak->fase == 2) {
                                     echo "<div>";
-                                    echo "<button type='button' class='btn list-group-item list-group-item-action vakButton' data-id='" . $vak->id . "' data-vak='" . $vak->naam . "'>" . $vak->naam . "</button>";
+                                    echo "<button type='button' class='btn list-group-item list-group-item-action vakButton' data-vakId='" . $vak->id . "' data-vak='" . $vak->naam . "'>" . $vak->naam . "</button>";
                                     echo "</div>";
                                 }
                             }
@@ -126,7 +126,7 @@
                             <?php foreach ($vakken as $vak) {
                                 if ($vak->fase == 3) {
                                     echo "<div>";
-                                    echo "<button type='button' class='btn list-group-item list-group-item-action vakButton' data-id='" . $vak->id . "' data-vak='" . $vak->naam . "'>" . $vak->naam . "</button>";
+                                    echo "<button type='button' class='btn list-group-item list-group-item-action vakButton' data-vakId='" . $vak->id . "' data-vak='" . $vak->naam . "'>" . $vak->naam . "</button>";
                                     echo "</div>";
                                 }
                             }
