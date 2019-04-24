@@ -815,4 +815,8 @@
 			$this->output->set_content_type("application/json");
 			echo json_encode($klas);
 		}
+
+		public function downloadSjabloon() {
+            redirect(base_url('assets/sjabloonStudenten.xlsx'));
+        }
     }

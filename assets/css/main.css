@@ -221,3 +221,22 @@ body, header, footer {
 .klasVakbutton {
     cursor: pointer;
 }
+
+.helpicon {
+    font-size:32px;
+    float:right;
+    color:#212529;
+}
+
+.helpicon:hover {
+    cursor: pointer;
+}
+
+.insprong {
+    padding-left: 1.2em;
+}
+
+.helptitel {
+    margin-bottom: 0px;
+    font-weight: 500;
+}

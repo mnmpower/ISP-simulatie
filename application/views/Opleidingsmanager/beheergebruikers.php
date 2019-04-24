@@ -164,10 +164,16 @@
                 e.preventDefault();
             }
         });
+
+        $("#helpicon").on('click', function (e) {
+            $("#modalHelp").modal('show');
+        });
     });
 </script>
+
 <div class="container70">
     <h1><?php echo $title; ?></h1>
+    <i class="fa fa-question-circle helpicon" id="helpicon"></i>
     <?php
         $knop = array("class" => "btn btn-warning text-white", "id" => "voegtoe", "data-toggle" => "tooltip", "title" => "Gebruiker toevoegen");
         echo "<p>" . form_button('gebruikernieuw', "<i class='fas fa-plus'></i> Voeg toe", $knop);
@@ -315,6 +321,43 @@
 
             <div class="modal-body">
                 <p>Er zijn <span id="aantalExcel"></span> gebruikers succesvol toegevoegd.</p>
+            </div>
+            <div class="modal-footer">
+                <?php echo form_button(array('content' => "Sluiten", 'id' => 'knopNee', 'class' => 'btn', 'data-dismiss' => 'modal')); ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal dialog help -->
+<div class="modal fade" id="modalHelp" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Hulp bij het uploaden van een Excel-bestand</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <p class="helptitel">1. Opbouw van het Excel-bestand</p>
+                <p class="insprong">In de cellen A1 en B1 horen de titels 'naam' en 'nummer' te staan, staan deze er neit dan zal het inlezen van het Excel-bestand automatisch stopgezet worden. Dit om te voorkomen dat er per ongeluk een verkeerd bestand geüpload kan worden.</p>
+                <p class="helptitel">2. Sjabloon voor studentenlijst</p>
+                <p class="insprong">Download <a href="downloadSjabloon">een sjabloon</a> waarin je de studenten kan invullen. In het document staan 2 voorbeeldstudenten, deze kan je best verwijderen alvorens het bestand te uploaden.</p>
+                <p class="helptitel">3. Bestand uploaden</p>
+                <ul>
+                    <li>Open het pop-up venster door op de gele knop bovenaan met de tekst 'Excel uploaden' te klikken.</li>
+                    <li>Kies het juiste bestand door op de knop 'Bestand kiezen' te klikken. Selecteer het juiste bestand en klik onderaan op 'Openen'</li>
+                    <li>Selecteer in de dropdownlist het type van de personen die je toevoegt. LET OP! Dit type wordt op alle personen in het Excel-bestand toegepast.</li>
+                    <li>Vink het vinkje alleen aan als je alle studenten wilt verwijderen. Indien het vinkje niet aangevinkt is behoudt het systeem de studenten, dit wil zeggen dat de nieuwe studenten in het Excel-bestand toegevoegd worden. Als je het vinkje wel aanvinkt worden de huidige studenten verwijderd en dus vervangen door de nieuwe. LET OP! Deze actie kan niet ongedaan gemaakt worden!</li>
+                    <li>Om het Excel-bestand te verzenden klik je op de blauwe knop 'Uploaden'.</li>
+                </ul>
+                <p class="helptitel">4. Melding na uploaden</p>
+                <p class="insprong">Na het uploaden van het Excel-bestand komt er een venster met daarin het aantal studenten dat toegevoegd is. Als niet alle studenten toegevoegd zijn moet u het Excel-bestand nog eens nakijken op fouten.</p>
+                <p class="insprong" style="margin-bottom: 0px;">De meest voorkomende fouten zijn:</p>
+                <ul>
+                    <li>De opbouw van het Excel-bestand klopt niet (zie '1. Opbouw van het Excel-bestand')</li>
+                    <li>Er bestaat al een gebruiker met dezelfde nummer</li>
+                </ul>
             </div>
             <div class="modal-footer">
                 <?php echo form_button(array('content' => "Sluiten", 'id' => 'knopNee', 'class' => 'btn', 'data-dismiss' => 'modal')); ?>
