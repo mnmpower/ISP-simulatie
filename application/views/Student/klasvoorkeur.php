@@ -2,7 +2,7 @@
 /**
  * @file klasvoorkeur.php
  * View waarin de uurrooster en samenstelling van de klassen wordt weergegeven
- * Krijgt een $klasobject binnen
+ * Krijgt een array van $klasobjecten binnen
  * Gebruikt ajax-call om de uurrooster en samenstelling van de klassen op te halen
  */
 ?>

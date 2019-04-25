@@ -1,3 +1,9 @@
+<?php
+/**
+ * @file overzichtAfspraken.php
+ * View waarin een kalender met de docent zijn afspraken en vrije momenten wordt weergegeven
+ */
+?>
 <div id="showOverzichtAfspraken">
     <div id="calendarContainer">
         <div id="calendarDocent">

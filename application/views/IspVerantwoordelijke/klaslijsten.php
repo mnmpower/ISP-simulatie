@@ -2,8 +2,8 @@
 /**
  * @file klaslijsten.php
  * View waarin de samenstelling van de klassen wordt weergegeven
- * krijgt een $klasobject binnen
- * gebruikt ajax-call om de samenstelling van de klassen op te halen
+ * Krijgt een array van $klasobjecten binnen
+ * Gebruikt ajax-call om de samenstelling van de klassen op te halen
  */
 ?>
 <script>
