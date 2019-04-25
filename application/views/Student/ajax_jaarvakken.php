@@ -12,6 +12,9 @@
                     if($vak->fase == 1 && $vak->semester == 1) {
                         echo '<tr><td>' . $vak->naam . '</td><td>' . $vak->studiepunt . '</td></tr>';
                     }
+                    if($vak->fase == 1 && $vak->semester == 3) {
+                        echo '<tr><td>' . $vak->naam . '</td><td>' . $vak->studiepunt . '</td></tr>';
+                    }
                 }
             ?>
         </table>
@@ -26,6 +29,9 @@
             <?php
             foreach ($vakken as $vak) {
                 if($vak->fase == 1 && $vak->semester == 2) {
+                    echo '<tr><td>' . $vak->naam . '</td><td>' . $vak->studiepunt . '</td></tr>';
+                }
+                if($vak->fase == 1 && $vak->semester == 3) {
                     echo '<tr><td>' . $vak->naam . '</td><td>' . $vak->studiepunt . '</td></tr>';
                 }
             }
@@ -47,6 +53,9 @@
                 if($vak->fase == 2 && $vak->semester == 1) {
                     echo '<tr><td>' . $vak->naam . '</td><td>' . $vak->studiepunt . '</td></tr>';
                 }
+                if($vak->fase == 2 && $vak->semester == 3) {
+                    echo '<tr><td>' . $vak->naam . '</td><td>' . $vak->studiepunt . '</td></tr>';
+                }
             }
             ?>
         </table>
@@ -61,6 +70,9 @@
             <?php
             foreach ($vakken as $vak) {
                 if($vak->fase == 2 && $vak->semester == 2) {
+                    echo '<tr><td>' . $vak->naam . '</td><td>' . $vak->studiepunt . '</td></tr>';
+                }
+                if($vak->fase == 2 && $vak->semester == 3) {
                     echo '<tr><td>' . $vak->naam . '</td><td>' . $vak->studiepunt . '</td></tr>';
                 }
             }
@@ -82,6 +94,9 @@
                 if($vak->fase == 3 && $vak->semester == 1) {
                     echo '<tr><td>' . $vak->naam . '</td><td>' . $vak->studiepunt . '</td></tr>';
                 }
+                if($vak->fase == 3 && $vak->semester == 3) {
+                    echo '<tr><td>' . $vak->naam . '</td><td>' . $vak->studiepunt . '</td></tr>';
+                }
             }
             ?>
         </table>
@@ -96,6 +111,9 @@
             <?php
             foreach ($vakken as $vak) {
                 if($vak->fase == 3 && $vak->semester == 2) {
+                    echo '<tr><td>' . $vak->naam . '</td><td>' . $vak->studiepunt . '</td></tr>';
+                }
+                if($vak->fase == 3 && $vak->semester == 3) {
                     echo '<tr><td>' . $vak->naam . '</td><td>' . $vak->studiepunt . '</td></tr>';
                 }
             }
