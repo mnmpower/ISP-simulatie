@@ -387,6 +387,13 @@
             $_SESSION['isp1'] = $isp1;
             $_SESSION['isp2'] = $isp2;
 
+            $cookie_name = "walkthrough";
+            if(!isset($_COOKIE[$cookie_name])) {
+                $cookie_value = "aan";
+                setcookie($cookie_name, $cookie_value, time() + (86400 * 30), '/team22/index.php/Student');
+                header('Location: ' . $_SERVER['REQUEST_URI']);
+            }
+
             $data['title'] = "ISP Samenstellen";
             // Defines roles for this page (You can also use "geen" or leave roles empty!).
             $data['roles'] = getRoles('geen','geen','Ontwikkelaar','geen');
@@ -480,17 +487,18 @@
             echo json_encode($data['rooster']);
         }
 
-        public function ispSubmit() {
+        public function ispSubmit()
+        {
             $student = $this->authex->getGebruikerInfo();
-            $isp1 = str_replace('"','', $this->input->get('isp1'));
-            $isp1 = str_replace('[','', $isp1);
-            $isp1 = str_replace(']','', $isp1);
-            $isp1array = array_map('intval',explode(',', $isp1));
+            $isp1 = str_replace('"', '', $this->input->get('isp1'));
+            $isp1 = str_replace('[', '', $isp1);
+            $isp1 = str_replace(']', '', $isp1);
+            $isp1array = array_map('intval', explode(',', $isp1));
 
-            $isp2 = str_replace('"','', $this->input->get('isp2'));
-            $isp2 = str_replace('[','', $isp2);
-            $isp2 = str_replace(']','', $isp2);
-            $isp2array = array_map('intval',explode(',', $isp2));
+            $isp2 = str_replace('"', '', $this->input->get('isp2'));
+            $isp2 = str_replace('[', '', $isp2);
+            $isp2 = str_replace(']', '', $isp2);
+            $isp2array = array_map('intval', explode(',', $isp2));
             $this->load->model('persoonLes_model');
 
             foreach ($isp1array as $les) {
@@ -502,5 +510,17 @@
             }
 
             redirect('Student/home_student');
+        }
+
+        public function haalAjaxOp_ToggleCookie() {
+            $cookie_name = "walkthrough";
+            if ($_COOKIE[$cookie_name] == "aan"){
+                $cookie_value = "uit";
+            }
+            else{
+                $cookie_value = "aan";
+            }
+            setcookie($cookie_name, $cookie_value, time() + (86400 * 30), '/team22/index.php/Student');
+
         }
     }

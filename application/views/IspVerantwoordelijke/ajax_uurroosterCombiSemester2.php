@@ -1,3 +1,9 @@
+<?php
+/**
+ * @file ajax_uurroosterCombiSemester2.php
+ * Ajaxpagina waarin de uurrooster van semester 2 van een combistudent wordt weergeven
+ */
+?>
 <script>
     var studentid = "<?php
         echo $studentId;

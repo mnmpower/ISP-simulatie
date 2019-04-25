@@ -1,3 +1,10 @@
+<?php
+/**
+ * @file afspraakMaken.php
+ * View waarin een kalender met de docent zijn afspraken en vrije momenten wordt weergegeven
+ * Krijgt een array van $persoonobjecten binnen
+ */
+?>
 <div id="showAfspraakmaken">
     <div id="calendarContainer">
         <form id="docentIdForm">

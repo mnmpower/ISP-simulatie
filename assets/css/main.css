@@ -252,6 +252,13 @@ body, header, footer {
     color: white;
 }
 
+.carousel-caption {
+    color: black;
+    position: relative;
+    left: auto;
+    right: auto;
+}
+
 #vakkenList {
     height: 270px;
 }

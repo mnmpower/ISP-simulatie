@@ -1,3 +1,10 @@
+<?php
+/**
+ * @file index.php
+ * View waarin de ingediende ISP's van de student wordt weergegeven
+ * Krijgt een $persoonobject binnen
+ */
+?>
 <div class="container70">
     <h1>
         <?php

@@ -240,13 +240,13 @@ function updateRooster() {
                 var roosterEvents = {events: []};
                 var i = 0;
                 var alerts = false;
-                $('.carousel-inner').empty();
-                $('.carousel-indicators').empty();
+                $('#carouselWarnings .carousel-inner').empty();
+                $('#carouselWarnings .carousel-indicators').empty();
                 rooster.map(function (item) {
                     if (item.vak.volgtijdelijkheidInfo != null) {
                         alerts = true;
                         i++;
-                        $('.carousel-inner').append(
+                        $('#carouselWarnings .carousel-inner').append(
                         '<div class="carousel-item">' +
                             '<div class="alert alert-warning alertPad" role="alert">' +
                             '<i class="fas fa-exclamation-triangle"></i>' +
@@ -254,9 +254,9 @@ function updateRooster() {
                         '</div>'
                         );
                         if (i == 1) {
-                            $('.carousel-item').addClass('active');
+                            $('#carouselWarnings .carousel-item').addClass('active');
                         }
-                        $('.carousel-indicators').append(
+                        $('#carouselWarnings .carousel-indicators').append(
                         '<li data-target="#carouselWarnings" data-slide-to="' + i + '"</li>'
                         )
                     }
@@ -299,14 +299,14 @@ $('.vakButton').click(function () {
 });
 
 function resetAlerts() {
-    $('.carousel-inner').empty().append(
+    $('#carouselWarnings .carousel-inner').empty().append(
         '<div id="#defaultAlert" class="carousel-item active">' +
         '<div class="alert alert-primary alertPad active" role="alert">' +
         '<i class="fas fa-info-circle"></i>' +
         'Geen fouten gedetecteerd.' +
         '</div>'
     );
-    $('.carousel-indicators').empty().append('<li data-target="#carouselWarnings" data-slide-to="0" class="active"></li>');
+    $('#carouselWarnings .carousel-indicators').empty().append('<li data-target="#carouselWarnings" data-slide-to="0" class="active"></li>');
 }
 
 

@@ -1,4 +1,49 @@
+<?php $cookie_name = "walkthrough"; ?>
+<script>
+
+    function toggleCookie() {
+        $.ajax({
+            url: site_url + "/Student/haalAjaxOp_ToggleCookie/"
+        });
+    }
+
+    function setLayoutButton() {
+        if ("<?php echo $_COOKIE[$cookie_name]; ?>" == "aan"){
+            $('#aanuit').html('Walkthrough ingeschakeld');
+            $('#aanuit').addClass('btn-success');
+        }
+        else{
+            $('#aanuit').html('Walkthrough uitgeschakeld');
+            $('#aanuit').addClass('btn-danger');
+        }
+    }
+
+    $(document).ready(function () {
+        setLayoutButton();
+
+        if ("<?php echo $_COOKIE[$cookie_name]; ?>" == "aan") {
+            $('.modal').modal('show');
+        }
+
+        $('#aanuit').click(function () {
+            if ($('#aanuit').html() == "Walkthrough uitgeschakeld"){
+                $('#aanuit').html('Walkthrough ingeschakeld');
+                $('#aanuit').removeClass('btn-danger');
+                $('#aanuit').addClass('btn-success');
+            }
+            else{
+                $('#aanuit').html('Walkthrough uitgeschakeld');
+                $('#aanuit').removeClass('btn-success');
+                $('#aanuit').addClass('btn-danger');
+            }
+            toggleCookie();
+        });
+    });
+
+</script>
 <div class="container container90 containerISP">
+    <button class="btn btn-default" data-toggle="modal" data-target=".bs-example-modal-lg">Open walkthrough</button>
+    <button id="aanuit" class="btn"></button>
     <div class="row">
         <div class="container col-2 flex-column d-flex containersISP">
             <div class="flex-grow-1" id="klassenContainer">
@@ -149,5 +194,87 @@
 <form id="gotoSemester2" action="ispSamenstellen2">
 <input type="hidden" value="null" id="ispString"/>
 </form>
+
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div id="carouselWalkthrough" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    <li data-target="#carouselWalkthrough" data-slide-to="0" class="active"></li>
+                    <li data-target="#carouselWalkthrough" data-slide-to="1"></li>
+                    <li data-target="#carouselWalkthrough" data-slide-to="2"></li>
+                    <li data-target="#carouselWalkthrough" data-slide-to="3"></li>
+                </ol>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <?php echo toonAfbeelding('assets/images/walkthrough/stap1.png', 'title="Stap 1" class="d-block w-100"');?>
+                        <div class="carousel-caption d-none d-md-block">
+                            <div class="row alert alert-primary infoAlert" role="alert">
+                                <div class="col-1 center">
+                                    <i class="fas fa-info-circle fa-2x"></i>
+                                </div>
+                                <div class="col">
+                                    <h5>Stap 1</h5>
+                                    <p>Selecteer 2 klassen uit het keuzemenu. De uurroosters van deze klassen zullen weergeven worden.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <?php echo toonAfbeelding('assets/images/walkthrough/stap2.png', 'title="Stap 2" class="d-block w-100"');?>
+                        <div class="carousel-caption d-none d-md-block">
+                            <div class="row alert alert-primary infoAlert" role="alert">
+                                <div class="col-1 center">
+                                    <i class="fas fa-info-circle fa-2x"></i>
+                                </div>
+                                <div class="col">
+                                    <h5>Stap 2</h5>
+                                    <p>Vergelijk de uurroosters van de klassen en beslis in welke klas je elk vak opneemt.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <?php echo toonAfbeelding('assets/images/walkthrough/stap3.png', 'title="Stap 3" class="d-block w-100"');?>
+                        <div class="carousel-caption d-none d-md-block">
+                            <div class="row alert alert-primary infoAlert" role="alert">
+                                <div class="col-1 center">
+                                    <i class="fas fa-info-circle fa-2x"></i>
+                                </div>
+                                <div class="col">
+                                    <h5>Stap 3</h5>
+                                    <p>Kies eventueel nog vakken uit andere fases/klassen die je wilt opnemen.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <?php echo toonAfbeelding('assets/images/walkthrough/stap4.png', 'title="Stap 4" class="d-block w-100"');?>
+                        <div class="carousel-caption d-none d-md-block">
+                            <div class="row alert alert-primary infoAlert" role="alert">
+                                <div class="col-1 center">
+                                    <i class="fas fa-info-circle fa-2x"></i>
+                                </div>
+                                <div class="col">
+                                    <h5>Stap 4</h5>
+                                    <p>Kijk nog een laatste keer na of je voldoet aan de volgtijdelijkheidsinfo en probeer overlappende vakken te vermijden. Vervolgens herhaal je de stappen voor semester 2. </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a class="carousel-control-prev" href="#carouselWalkthrough" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselWalkthrough" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script src='<?php echo base_url() ?>assets/js/ispSamenstellen.js'></script>
