@@ -389,7 +389,8 @@
             $cookie_name = "walkthrough";
             if(!isset($_COOKIE[$cookie_name])) {
                 $cookie_value = "aan";
-                setcookie($cookie_name, $cookie_value, time() + (86400 * 30));
+                setcookie($cookie_name, $cookie_value, time() + (86400 * 30), '/team22/index.php/Student');
+                header('Location: ' . $_SERVER['REQUEST_URI']);
             }
 
             $data['title'] = "ISP Samenstellen";
@@ -493,6 +494,6 @@
             else{
                 $cookie_value = "aan";
             }
-            setcookie($cookie_name, $cookie_value, time() + (86400 * 30));
+            setcookie($cookie_name, $cookie_value, time() + (86400 * 30), '/team22/index.php/Student');
         }
     }
