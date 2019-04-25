@@ -251,3 +251,51 @@ body, header, footer {
     background-color: #0069d9 !important;
     color: white;
 }
+
+.carousel-caption {
+    color: black;
+    position: relative;
+    left: auto;
+    right: auto;
+}
+
+#vakkenList {
+    height: 270px;
+}
+
+.faselist {
+    height: 270px;
+}
+
+#klassenLijstFaseContainer {
+    height: 270px;
+}
+
+#roosterConfirm {
+    margin: 20px -15px 20px -15px;
+}
+
+#roosterConfirm2 {
+    margin: 20px -15px 20px -15px;
+}
+
+.confirmButton {
+    background-color: #007bff;
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    color: white;
+    margin-bottom: 50px;
+}
+
+#confirmButtons > .col {
+    padding: 0;
+}
+
+#ispConfirm {
+    padding-left: 5px !important;
+}
+
+#ispCancel {
+    padding-right: 5px !important;
+}
