@@ -186,15 +186,15 @@ function ToggleVakOff() {
 
 function editISPAttr() {
     var id = $(this).attr('data-id');
-    var pos = isp.indexOf(id);
+    var pos = isp2.indexOf(id);
     if (pos != -1) {
-        isp.splice(pos, 1);
+        isp2.splice(pos, 1);
         checkButton(id, false);
     } else {
-        isp.push(id);
+        isp2.push(id);
         checkButton(id, true);
     }
-    console.log(isp);
+    console.log(isp2);
     updateRooster();
 }
 
@@ -309,7 +309,7 @@ function resetAlerts() {
 }
 
 function continueISP() {
-    sessionStorage.setItem("ISP2", JSON.stringify(isp2));
+    sessionStorage.setItem("isp2", JSON.stringify(isp2));
     $('#gotoIspConfirm').submit();
 }
 

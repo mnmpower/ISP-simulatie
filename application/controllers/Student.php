@@ -10,6 +10,7 @@
      * @property Template $template
      * @property Klas_model $klas_model
      * @property Persoon_model $persoon_model
+     * @property persoonLes_model $persoonLes_model
      * @property Afspraak_model $afspraak_model
      * @property Les_model $les_model
      * @property Vak_model $vak_model
@@ -477,5 +478,29 @@
 
             $data['rooster'] = $this->les_model->getAllWithVakAndKlasWhereLessen(json_decode($lessen));
             echo json_encode($data['rooster']);
+        }
+
+        public function ispSubmit() {
+            $student = $this->authex->getGebruikerInfo();
+            $isp1 = str_replace('"','', $this->input->get('isp1'));
+            $isp1 = str_replace('[','', $isp1);
+            $isp1 = str_replace(']','', $isp1);
+            $isp1array = array_map('intval',explode(',', $isp1));
+
+            $isp2 = str_replace('"','', $this->input->get('isp2'));
+            $isp2 = str_replace('[','', $isp2);
+            $isp2 = str_replace(']','', $isp2);
+            $isp2array = array_map('intval',explode(',', $isp2));
+            $this->load->model('persoonLes_model');
+
+            foreach ($isp1array as $les) {
+                $this->persoonLes_model->addPersoonLes($les, $student->id);
+            }
+
+            foreach ($isp2array as $les) {
+                $this->persoonLes_model->addPersoonLes($les, $student->id);
+            }
+
+            redirect('Student/home_student');
         }
     }

@@ -62,9 +62,21 @@ function updateRoosters(roosterNr, isp) {
         });
 }
 
-function continueISP() {
-    $('#gotoSemester2').submit();
+function deleteISP() {
+    sessionStorage.setItem("isp1", null);
+    sessionStorage.setItem("isp2", null);
+    $('#ispCancelForm').submit();
 }
 
-updateRoosters(1, sessionStorage.getItem("ISP1"));
-updateRoosters(2, sessionStorage.getItem("ISP2"));
+function submitISP() {
+    $('#isp1').val(sessionStorage.getItem("isp1"));
+    $('#isp2').val(sessionStorage.getItem("isp2"));
+    $('#ispConfirmForm').submit();
+}
+
+$("body")
+    .on("click", "#ispCancel", deleteISP)
+    .on("click", "#ispConfirm", submitISP);
+
+updateRoosters(1, sessionStorage.getItem("isp1"));
+updateRoosters(2, sessionStorage.getItem("isp2"));

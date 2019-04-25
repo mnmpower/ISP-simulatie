@@ -311,7 +311,7 @@ function resetAlerts() {
 
 
 function continueISP() {
-    sessionStorage.setItem("ISP1", JSON.stringify(isp));
+    sessionStorage.setItem("isp1", JSON.stringify(isp));
     $('#gotoSemester2').submit();
 }
 

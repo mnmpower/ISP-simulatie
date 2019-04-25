@@ -137,4 +137,13 @@
             $this->db->where('persoonIdStudent', $persoonIdStudent);
             $this->db->delete('persoonLes');
         }
+
+        function addPersoonLes($lesId, $persoonIdStudent) {
+            $data = array(
+                'lesId' => $lesId,
+                'persoonIdStudent' => $persoonIdStudent,
+            );
+
+            $this->db->insert('persoonLes', $data);
+        }
     }
