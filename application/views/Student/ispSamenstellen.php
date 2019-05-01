@@ -42,7 +42,7 @@
 
 </script>
 <div class="container container90 containerISP">
-    <button class="btn btn-default" data-toggle="modal" data-target=".bs-example-modal-lg">Open walkthrough</button>
+    <button id="openWalk" class="btn btn-default" data-toggle="modal" data-target=".bs-example-modal-lg">Open walkthrough</button>
     <button id="aanuit" class="btn"></button>
     <div class="row">
         <div class="container col-2 flex-column d-flex containersISP">
@@ -51,11 +51,14 @@
                 echo "<div class='form-check'>";
                 echo '<table class="table">';
                 echo '<tbody>';
+                $ignore = array('2 APP/BI A', '2 APP/BI B', '2 IOT', '2 CCS A', '2 CCS B');
                 foreach ($klassen as $klas) {
-                    echo '<tr class="list-group-item-action klasbutton" data-klas="' . $klas->id .'">';
-                    echo '<td>' . $klas->naam . '</td>';
-                    echo '<td><i class="fas fa-check invisible"></i></td>';
-                    echo '</tr>';
+                    if (in_array($klas->naam, $ignore) == false) {
+                        echo '<tr class="list-group-item-action klasbutton" data-klas="' . $klas->id . '">';
+                        echo '<td>' . $klas->naam . '</td>';
+                        echo '<td><i class="fas fa-check invisible"></i></td>';
+                        echo '</tr>';
+                    }
                 }
                 echo '</tbody>';
                 echo '</table>';
@@ -72,7 +75,7 @@
                     <div id="#defaultAlert" class="carousel-item active">
                         <div class="alert alert-primary alertPad active" role="alert">
                         <i class="fas fa-info-circle"></i>
-                        Geen fouten gedetecteerd.
+                        Geen meldingen
                     </div>
                 </div>
             </div>

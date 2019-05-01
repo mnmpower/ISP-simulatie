@@ -65,8 +65,9 @@ $('.klasbutton').click(function () {
 });
 
 function getKlasInfo(id, titel, tekst) {
-    $('#' + tekst).append("<div class=\"centered lds-ring\"><div></div><div></div><div></div><div></div></div>");
-    $('.lds-ring').toggle();
+    disableKlaslijst(true);
+    $('#' + tekst).append("<div id='klasRing' class=\"centered lds-ring\"><div></div><div></div><div></div><div></div></div>");
+    $('#klasRing').toggle();
     $.ajax({
         type: "GET",
         url: site_url + "/student/haalAjaxOp_UurroosterPerKlas/",
@@ -81,6 +82,7 @@ function getKlasInfo(id, titel, tekst) {
                 '<tbody>\n';
 
             $.each(JSONoutput, function (i, item) {
+                if (item.lesWithVak.vak.semester == 2 || item.lesWithVak.vak.semester == 3) {
                 isp2.push(item.id);
                 html +=
                     '<tr class="list-group-item-action klasVakbutton activeButton' +
@@ -97,28 +99,32 @@ function getKlasInfo(id, titel, tekst) {
                 }
 
                 html += '</tr>\n'
+            }
             });
             html +=
                 '</tbody>\n' +
                 '</table>';
-            $('.lds-ring').toggle();
+            $('#klasRing').toggle();
             $('#' + tekst).append(html);
             console.log(isp2);
             updateRooster();
+            disableKlaslijst(false);
         }
     });
 }
 
 function getVakInfo(id) {
+    console.log(id);
     $('#klassenLijstFaseContainer').text('');
-    $('#klassenLijstFaseContainer').append("<div class=\"centered lds-ring\"><div></div><div></div><div></div><div></div></div>");
-    $('.lds-ring').toggle();
+    $('#klassenLijstFaseContainer').append("<div id='vakRing' class=\"centered lds-ring\"><div></div><div></div><div></div><div></div></div>");
+    $('#vakRing').toggle();
     $.ajax({
         type: "GET",
         url: site_url + "/student/haalAjaxOp_lesPerVak/",
         data: {vakId: id},
         success: function (output) {
             JSONoutput = JSON.parse(output);
+            console.log(JSONoutput);
             var html = "";
             html +=
                 '<table class="table">\n' +
@@ -147,7 +153,7 @@ function getVakInfo(id) {
             html +=
                 '</tbody>\n' +
                 '</table>';
-            $('.lds-ring').toggle();
+            $('#vakRing').toggle();
             $('#klassenLijstFaseContainer').append(html);
         }
     });
@@ -235,20 +241,26 @@ function updateRooster() {
             data: {lessen: postData},
             success: function (data) {
                 var rooster = JSON.parse(data);
-                console.log(rooster);
+                var klas1 = rooster[0].klasId;
+                var klas2 = null;
+                var set = false;
                 var roosterEvents = {events: []};
                 var i = 0;
                 var alerts = false;
                 $('.carousel-inner').empty();
                 $('.carousel-indicators').empty();
                 rooster.map(function (item) {
+                    if (set != true && klas1 != item.klasId) {
+                        set = true;
+                        klas2 = item.klasId;
+                    }
                     if (item.vak.volgtijdelijkheidInfo != null) {
                         alerts = true;
                         i++;
                         $('.carousel-inner').append(
                         '<div class="carousel-item">' +
                             '<div class="alert alert-warning alertPad" role="alert">' +
-                            '<i class="fas fa-exclamation-triangle"></i>' +
+                            '<i class="fas fa-exclamation-triangle alertIcon"></i>' +
                             item.vak.naam + ': ' + item.vak.volgtijdelijkheidInfo +
                         '</div>'
                         );
@@ -259,12 +271,15 @@ function updateRooster() {
                         '<li data-target="#carouselWarnings" data-slide-to="' + i + '"</li>'
                         )
                     }
+                    if (item.klasId == klas1) {color = '#cce5ff'}
+                    else if (item.klasId == klas2) {color = '#6d96ff'}
+                    else {color = '#0041ea'};
                     roosterEvents.events.push(
                         {
                             'title': item.klas.naam + '\n' + item.vak.naam,
                             'start': item.datum + 'T' + item.startuur,
                             'end': item.datum + 'T' + item.einduur,
-                            'color': '#cce5ff'
+                            'color': color
                         });
                 });
                 $('#carouselWarnings').carousel(
@@ -293,7 +308,7 @@ $("body")
     .on("click", "#semesterkeuzeContainer", continueISP);
 
 $('.vakButton').click(function () {
-    var id = $(this).attr("data-id");
+    var id = $(this).attr("data-vakid");
     getVakInfo(id);
 });
 
@@ -301,8 +316,8 @@ function resetAlerts() {
     $('.carousel-inner').empty().append(
         '<div id="#defaultAlert" class="carousel-item active">' +
         '<div class="alert alert-primary alertPad active" role="alert">' +
-        '<i class="fas fa-info-circle"></i>' +
-        'Geen fouten gedetecteerd.' +
+        '<i class="fas fa-info-circle alertIcon"></i>' +
+        'Geen meldingen' +
         '</div>'
     );
     $('.carousel-indicators').empty().append('<li data-target="#carouselWarnings" data-slide-to="0" class="active"></li>');
@@ -324,3 +339,14 @@ function checkButton(id, checked) {
     });
 }
 
+function disableKlaslijst(disable) {
+    if(disable == true) {
+        $('.klasbutton').each(function () {
+            $(this).addClass('disabledKlas');
+        })
+    } else {
+        $('.klasbutton').each(function () {
+            $(this).removeClass('disabledKlas');
+        })
+    }
+}

@@ -215,7 +215,7 @@ body, header, footer {
 }
 
 .klasbutton > td {
-    padding: 2px;
+    padding: 5px;
 }
 
 .klasVakbutton {
@@ -298,4 +298,26 @@ body, header, footer {
 
 #ispCancel {
     padding-right: 5px !important;
+}
+
+.disabledKlas {
+    color: lightgrey;
+    pointer-events: none;
+}
+
+.alertIcon {
+    margin-right: 5px;
+}
+
+#openWalk {
+    margin: 10px 10px 5px 10px;
+}
+
+#aanuit {
+    margin-top: 5px;
+}
+
+#klasRing, #vakRing {
+    margin: auto;
+    top: 30%;
 }

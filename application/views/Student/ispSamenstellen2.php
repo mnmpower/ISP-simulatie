@@ -6,11 +6,14 @@
                 echo "<div class='form-check'>";
                 echo '<table class="table">';
                 echo '<tbody>';
+                $ignore = array('2ITF A', '2ITF B', '2ITF C', '2ITF D');
                 foreach ($klassen as $klas) {
-                    echo '<tr class="list-group-item-action klasbutton" data-klas="' . $klas->id .'">';
-                    echo '<td>' . $klas->naam . '</td>';
-                    echo '<td><i class="fas fa-check invisible"></i></td>';
-                    echo '</tr>';
+                    if (in_array($klas->naam, $ignore) == false) {
+                        echo '<tr class="list-group-item-action klasbutton" data-klas="' . $klas->id . '">';
+                        echo '<td>' . $klas->naam . '</td>';
+                        echo '<td><i class="fas fa-check invisible"></i></td>';
+                        echo '</tr>';
+                    }
                 }
                 echo '</tbody>';
                 echo '</table>';
@@ -28,7 +31,7 @@
                         <div class="alert alert-primary alertPad role=" alert
                         ">
                         <i class="fas fa-info-circle"></i>
-                        Geen fouten gedetecteerd.
+                        Geen meldingen
                     </div>
                 </div>
             </div>

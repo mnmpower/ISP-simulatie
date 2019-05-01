@@ -2,7 +2,6 @@ var id1 = 'a';
 var id2 = 'b';
 var isp = [];
 
-
 // Calendar settings
 $('#uurrooster').fullCalendar({
     schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
@@ -39,9 +38,9 @@ $('.carousel').carousel(
 
 // Klassen checkbox limit & AJAX Klas selection
 $('.klasbutton').click(function () {
+    console.log('test');
     var selected = $(this).attr('data-klas');
     var el = this;
-
 
     if (id1 == selected) {
         id1 = 'a';
@@ -62,10 +61,10 @@ $('.klasbutton').click(function () {
         toggleKlas(1, el);
         getKlasInfo(id2, 'klas2Titel', 'klas2Tekst');
     }
-
 });
 
 function getKlasInfo(id, titel, tekst) {
+    disableKlaslijst(true);
     $('#' + tekst).append("<div class=\"centered lds-ring\"><div></div><div></div><div></div><div></div></div>");
     $('.lds-ring').toggle();
     $.ajax({
@@ -82,22 +81,24 @@ function getKlasInfo(id, titel, tekst) {
                 '<tbody>\n';
 
             $.each(JSONoutput, function (i, item) {
+                if (item.lesWithVak.vak.semester == 1 || item.lesWithVak.vak.semester == 3) {
                 isp.push(item.id);
-                html +=
-                    '<tr class="list-group-item-action klasVakbutton activeButton' +
-                    '" data-id="' + item.id + '">\n' +
-                    '<td>' + item.lesWithVak.vak.naam + '</td>\n' +
-                    '<td>' + capitalizeFirstLetter(getDayName(item.datum)) + '</td>\n' +
-                    '<td>' + item.startuur.slice(0, -3) + '</td>\n' +
-                    '<td>' + item.einduur.slice(0, -3) + '</td>\n';
+                    html +=
+                        '<tr class="list-group-item-action klasVakbutton activeButton' +
+                        '" data-id="' + item.id + '">\n' +
+                        '<td>' + item.lesWithVak.vak.naam + '</td>\n' +
+                        '<td>' + capitalizeFirstLetter(getDayName(item.datum)) + '</td>\n' +
+                        '<td>' + item.startuur.slice(0, -3) + '</td>\n' +
+                        '<td>' + item.einduur.slice(0, -3) + '</td>\n';
 
-                if (isp.indexOf(item.id) != -1) {
-                    html += '<td><i class="fas fa-check"></i></td>';
-                } else {
-                    html += '<td><i class="fas fa-check invisible"></i></td>';
-                }
+                    if (isp.indexOf(item.id) != -1) {
+                        html += '<td><i class="fas fa-check"></i></td>';
+                    } else {
+                        html += '<td><i class="fas fa-check invisible"></i></td>';
+                    }
 
-                html += '</tr>\n'
+                    html += '</tr>\n'
+               }
             });
             html +=
                 '</tbody>\n' +
@@ -106,6 +107,7 @@ function getKlasInfo(id, titel, tekst) {
             $('#' + tekst).append(html);
             console.log(isp);
             updateRooster();
+            disableKlaslijst(false);
         }
     });
 }
@@ -235,21 +237,28 @@ function updateRooster() {
             url: site_url + "/student/haalAjaxOp_lesKlas/",
             data: {lessen: postData},
             success: function (data) {
+                var color = null;
                 var rooster = JSON.parse(data);
-                console.log(rooster);
+                var klas1 = rooster[0].klasId;
+                var klas2 = null;
+                var set = false;
                 var roosterEvents = {events: []};
                 var i = 0;
                 var alerts = false;
                 $('#carouselWarnings .carousel-inner').empty();
                 $('#carouselWarnings .carousel-indicators').empty();
                 rooster.map(function (item) {
+                    if (set != true && klas1 != item.klasId) {
+                        set = true;
+                        klas2 = item.klasId;
+                    }
                     if (item.vak.volgtijdelijkheidInfo != null) {
                         alerts = true;
                         i++;
                         $('#carouselWarnings .carousel-inner').append(
                         '<div class="carousel-item">' +
                             '<div class="alert alert-warning alertPad" role="alert">' +
-                            '<i class="fas fa-exclamation-triangle"></i>' +
+                            '<i class="fas fa-exclamation-triangle alertIcon"></i>' +
                             item.vak.naam + ': ' + item.vak.volgtijdelijkheidInfo +
                         '</div>'
                         );
@@ -260,13 +269,17 @@ function updateRooster() {
                         '<li data-target="#carouselWarnings" data-slide-to="' + i + '"</li>'
                         )
                     }
+                    if (item.klasId == klas1) {color = '#cce5ff'}
+                    else if (item.klasId == klas2) {color = '#6d96ff'}
+                    else {color = '#0041ea'};
                     roosterEvents.events.push(
                         {
                             'title': item.klas.naam + '\n' + item.vak.naam,
                             'start': item.datum + 'T' + item.startuur,
                             'end': item.datum + 'T' + item.einduur,
-                            'color': '#cce5ff'
+                            'color': color
                         });
+
                 });
                 $('#carouselWarnings').carousel(
                     {interval: 5000}
@@ -276,6 +289,7 @@ function updateRooster() {
                 if (alerts == false) {
                     resetAlerts();
                 }
+                console.log(klas1, klas2)
             }, error: function (e) {
                 console.log(e.message);
             }
@@ -302,8 +316,8 @@ function resetAlerts() {
     $('#carouselWarnings .carousel-inner').empty().append(
         '<div id="#defaultAlert" class="carousel-item active">' +
         '<div class="alert alert-primary alertPad active" role="alert">' +
-        '<i class="fas fa-info-circle"></i>' +
-        'Geen fouten gedetecteerd.' +
+        '<i class="fas fa-info-circle alertIcon"></i>' +
+        'Geen meldingen' +
         '</div>'
     );
     $('#carouselWarnings .carousel-indicators').empty().append('<li data-target="#carouselWarnings" data-slide-to="0" class="active"></li>');
@@ -324,4 +338,16 @@ function checkButton(id, checked) {
             $(this).removeClass('activeButton').find('.fa-check').addClass('invisible');
         }
     });
+}
+
+function disableKlaslijst(disable) {
+    if(disable == true) {
+        $('.klasbutton').each(function () {
+            $(this).addClass('disabledKlas');
+        })
+    } else {
+        $('.klasbutton').each(function () {
+            $(this).removeClass('disabledKlas');
+        })
+    }
 }

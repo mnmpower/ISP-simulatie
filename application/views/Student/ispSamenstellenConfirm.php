@@ -1,5 +1,7 @@
 <div class="container container90 containerISP">
+    <h1>Semester 1</h1>
     <div id="roosterConfirm"></div>
+    <h1>Semester 2</h1>
     <div id="roosterConfirm2"></div>
     <div class="row" id="confirmButtons">
         <form id="ispCancelForm" action="home_student" class="col">
