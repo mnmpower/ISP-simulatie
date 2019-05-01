@@ -65,8 +65,8 @@ $('.klasbutton').click(function () {
 
 function getKlasInfo(id, titel, tekst) {
     disableKlaslijst(true);
-    $('#' + tekst).append("<div class=\"centered lds-ring\"><div></div><div></div><div></div><div></div></div>");
-    $('.lds-ring').toggle();
+    $('#' + tekst).append("<div id='klasRing' class=\"centered lds-ring\"><div></div><div></div><div></div><div></div></div>");
+    $('#klasRing').toggle();
     $.ajax({
         type: "GET",
         url: site_url + "/student/haalAjaxOp_UurroosterPerKlas/",
@@ -103,7 +103,7 @@ function getKlasInfo(id, titel, tekst) {
             html +=
                 '</tbody>\n' +
                 '</table>';
-            $('.lds-ring').toggle();
+            $('#klasRing').toggle();
             $('#' + tekst).append(html);
             console.log(isp);
             updateRooster();
@@ -114,8 +114,8 @@ function getKlasInfo(id, titel, tekst) {
 
 function getVakInfo(id) {
     $('#klassenLijstFaseContainer').text('');
-    $('#klassenLijstFaseContainer').append("<div class=\"centered lds-ring\"><div></div><div></div><div></div><div></div></div>");
-    $('.lds-ring').toggle();
+    $('#klassenLijstFaseContainer').append("<div id='vakRing' class=\"centered lds-ring\"><div></div><div></div><div></div><div></div></div>");
+    $('#vakRing').toggle();
     $.ajax({
         type: "GET",
         url: site_url + "/student/haalAjaxOp_lesPerVak/",
@@ -150,7 +150,7 @@ function getVakInfo(id) {
             html +=
                 '</tbody>\n' +
                 '</table>';
-            $('.lds-ring').toggle();
+            $('#vakRing').toggle();
             $('#klassenLijstFaseContainer').append(html);
         }
     });
