@@ -7,12 +7,15 @@
      * @brief Controllerklasse voor de docent
      *
      * Controller-klasse met alle methodes die gebruikt worden in de pagina's voor de docent
-     * @property Template $template
-	 * @property Persoon_model $persoon_model
-	 * @property PersoonLes_model $persoonLes_model
+	 *
+	 * @property Authex $authex
+	 * @property Template $template
 	 * @property Les_model $les_model
-     * @property Klas_model $klas_model
+	 * @property Persoon_model $persoon_model
+	 * @property Afspraak_model $afspraak_model
+	 * @property PersoonLes_model $persoonLes_model
      */
+
     class Docent extends CI_Controller
     {
 
@@ -36,16 +39,9 @@
 			$this->load->helper('form');
 			$this->load->helper('cookie');
 			$this->load->helper('notation');
-			$this->load->helper('notation_helper');
             $this->load->helper('navbar_helper');
             $this->load->helper('plugin_helper');
-
-
-			$this->load->library('session');
-			$this->load->library('pagination');
-
-			$this->load->model('persoon_model');
-			$this->load->model('les_model');
+			$this->load->helper('notation_helper');
         }
 
         /**
@@ -59,8 +55,9 @@
          */
         public function index()
         {
+			$this->load->model('les_model');
+			$this->load->model('persoon_model');
 			$this->load->model('persoonLes_model');
-			$this->load->model('Les_model');
 
 			$data['title'] = "Overzicht van de ingediende ISP simulaties";
 
@@ -90,17 +87,17 @@
 
 			$data['ingediendeIspStudenten'] = $ingediendeIspStudenten;
 
-
 			$partials = array(  'hoofding' => 'main_header',
 				'inhoud' => 'Docent/index',
 				'footer' => 'main_footer');
 			$this->template->load('main_master', $partials, $data);
         }
 
+		/**
+		 * laad de kalender plugin en toont een kalender op de huidige week in de view overzichtAfspraken.php
+		 * @see overzichtAfspraken.php
+		 */
         public function showAfspraken() {
-            $this->load->model('persoon_model');
-            $this->load->model('persoonLes_model');
-            $this->load->model('Les_model');
 
             $data['title'] = "Overzicht van de ingediende ISP simulaties";
 
@@ -119,26 +116,38 @@
             $this->template->load('main_master', $partials, $data);
         }
 
+		/**
+		 * haalt alle afspraken op in een ajax call en laad deze in de view overzichtAfspraken.php
+		 * @see Authex:getGebruikerInfo()
+		 * @see Afspraak_model:getAfsprakenWherePersoonIdDocent($persoonId)
+		 */
         public function haalAjaxop_AfsprakenDocent() {
+
+			$this->load->model('afspraak_model');
+
             $persoonId = $this->authex->getGebruikerInfo();
 
-            $this->load->model('afspraak_model');
             $data['afspraken'] = $this->afspraak_model->getAfsprakenWherePersoonIdDocent($persoonId->id);
 
             echo json_encode($data['afspraken']);
         }
 
+		/**
+		 * Voegt een nieue vrije afspraak toe en herhaalt deze indien nodig
+		 * @see Authex:getGebruikerInfo()
+		 * @see Afspraak_model:addMoment($docentid, $startuur, $einduur, $datum, $plaats);
+		 */
         public function momentToevoegen() {
+			$this->load->model('afspraak_model');
+
             $plaats = $this->input->get('plaats');
             $datum = $this->input->get('datum');
             $startuur = $this->input->get('start');
             $einduur = $this->input->get('end');
             $herhaal = $this->input->get('herhaal') + 1;
 
-            $this->load->library('session');
             $docent = $this->authex->getGebruikerInfo();
 
-            $this->load->model('afspraak_model');
             for ($i = 1; $i <= $herhaal; $i++) {
                 $this->afspraak_model->addMoment($docent->id, $startuur, $einduur, $datum, $plaats);
                 $datum = strtotime($datum);
@@ -147,7 +156,14 @@
             }
         }
 
+		/**
+		 * past een afspraak aan
+		 * @see Afspraak_model:updateAfspraak($docentid, $startuur, $einduur, $datum, $plaats);
+		 */
         public function afspraakUpdate() {
+
+			$this->load->model('afspraak_model');
+
             $id = $this->input->get('id');
             $plaats = $this->input->get('plaats');
             $datum = $this->input->get('datum');
@@ -155,22 +171,31 @@
             $einduur = $this->input->get('end');
             $description = $this->input->get('description');
 
-            $this->load->model('afspraak_model');
             $this->afspraak_model->updateAfspraak($id, $startuur, $einduur, $datum, $plaats, $description);
         }
 
+		/**
+		 * Verwijderd een afspraak ongeacht of deze al bezet is of vrij is
+		 * @see Afspraak_model:delete($id);
+		 */
         public function afspraakVerwijder() {
+			$this->load->model('afspraak_model');
+
             $id = $this->input->get('id');
 
-            $this->load->model('afspraak_model');
             $this->afspraak_model->delete($id);
         }
 
+		/**
+		 * Maakt een bezette afspraak terug leeg en beschikbaar voor alle studenten
+		 * @see Afspraak_model:updateAfspraakBeschikbaarheid($id, $beschikbaar);
+		 */
         public function afspraakEmpty() {
+			$this->load->model('afspraak_model');
+
             $id = $this->input->get('id');
             $beschikbaar = 1;
 
-            $this->load->model('afspraak_model');
             $this->afspraak_model->updateAfspraakBeschikbaarheid($id, $beschikbaar);
         }
     }
