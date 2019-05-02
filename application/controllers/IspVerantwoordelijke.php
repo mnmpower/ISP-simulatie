@@ -8,7 +8,12 @@
      *
      * Controller-klasse met alle methodes die gebruikt worden in de pagina's voor de ispverantwoordelijke
      * @property Template $template
-	 * @property Persoon_model $persoon_model
+     * @property Persoon_model $persoon_model
+     * @property Klas_model $klas_model
+     * @property Vak_model $vak_model
+     * @property PersoonLes_model $persoonLes_model
+     * @property Les_model les_model
+     * @property  Excel $excel
      */
     class IspVerantwoordelijke extends CI_Controller
     {
@@ -40,11 +45,6 @@
 
 			$this->load->library('session');
 			$this->load->library('pagination');
-
-			$this->load->model('persoon_model');
-			$this->load->model('persoonLes_model');
-			$this->load->model('vak_model');
-			$this->load->model('les_model');
         }
 
         /**
@@ -60,7 +60,7 @@
         {
 			$this->load->model('persoon_model');
 			$this->load->model('persoonLes_model');
-			$this->load->model('Les_model');
+			$this->load->model('les_model');
 			$this->load->helper('plugin_helper');
 
 			$data['title'] = "Overzicht van de ingediende ISP simulaties";
@@ -132,18 +132,20 @@
          * en toont het resulterende object in de view ajax_klaslijsten
          * Deze view wordt via een ajax-call in klaslijsten.php geplaatst
          * @see Persoon_model::getAllWhereKlas()
+         * @see Klas_model::get()
          * @see ajax_klaslijsten.php
          * @see klaslijsten.php
          */
         public function haalAjaxOp_Klassen() {
             $klasId = $this->input->get('klasId');
 
+            $this->load->model('persoon_model');
             $this->load->model('klas_model');
+
             $personen = $this->persoon_model->getAllWhereKlas($klasId);
             $data['personen'] = $personen;
             $klas = $this->klas_model->get($klasId);
             $data['klas'] = $klas;
-
 
             $this->load->view('IspVerantwoordelijke/ajax_klaslijsten', $data);
         }
@@ -161,6 +163,11 @@
         public function documentExporteren() {
             $data['roles'] = getRoles('geen','geen','geen','Ontwikkelaar');
             $this->load->library('excel');
+
+            $this->load->model('vak_model');
+            $this->load->model('persoon_model');
+            $this->load->model('persoonLes_model');
+            $this->load->model('les_model');
 
             // Variabelen
             $vakken = $this->vak_model->getAll();
@@ -242,9 +249,22 @@
             $objWriter->save('php://output');
         }
 
+        /**
+         * Haalt een persoon-record waar het id overeenkomt via Persoon_model
+         * Haalt alle persoonLes-records waar het persoonId overeenkomt en voegt lessen, klassen en vakken aan.
+         * Haalt alle studiepunten op waar het id overeenkomt via Persoon_model.
+         * Laad een ISP pagina van een student met details
+         * @see Persoon_model::get()
+         * @see PersoonLes_model::getAllWithLesAndVakAndKlas()
+         * @see PersoonLes_model::getStudiepunten()
+         * @see ISPDetails.php
+         */
         public function toonISPDetails($studentid){
 
             $data['title'] = "Details ISP";
+
+            $this->load->model('persoon_model');
+            $this->load->model('persoonLes_model');
 
             $student = $this->persoon_model->get($studentid);
             $student->persoonLessen = $this->persoonLes_model->getAllWithLesAndVakAndKlas($student->id);
@@ -267,8 +287,14 @@
                 'footer' => 'main_footer');
             $this->template->load('main_master', $partials, $data);
         }
-
+        /**
+         * Haalt de post student en bijhorend advies op uit de pagina en update deze in Persoon_model.
+         * User wordt teruggestuurd naar index.
+         * @see Persoon_model::update()
+         * @see ispVerantwoordelijke/index.php
+         */
         public function adviesOpslaan(){
+            $this->load->model('persoon_model');
 
             if(isset($_POST['opslaan'])){
                 $student = json_decode($this->input->post('student'));
@@ -279,6 +305,11 @@
             redirect('ISPVerantwoordelijke/index');
         }
 
+        /**
+         * AJAX call voor een uurrooster van een combi-student op te halen.
+         * @see ajax_uurroosterCombiSemester1.php
+         * @see ajax_uurroosterCombiSemester2.php
+         */
         public function haalAjaxOp_UurroosterCombi() {
             $semesterId = $this->input->get('semesterId');
             $data['studentId'] = $this->input->get('studentId');
@@ -290,7 +321,11 @@
                 $this->load->view('IspVerantwoordelijke/ajax_uurroosterCombiSemester2', $data);
             }
         }
-
+        /**
+         * AJAX call voor lessen op te halen van een combi-student.
+         * @see Les_model::getAllWhereStudentId()
+         * @see Vak_model::get()
+         */
         public function haalJsonOp_lessenPerStudent($studentId){
             $this->load->model('les_model');
             $this->load->model('vak_model');
