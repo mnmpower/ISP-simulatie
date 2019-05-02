@@ -9,7 +9,6 @@
      * Controller-klasse met alle methodes die gebruikt worden in de homepagina
      *
      * @property Template $template
-	 * @property Persoon_model $persoon_model
      * @property Mail_model $mail_model
      * @property Authex $authex
      *
@@ -44,8 +43,6 @@
 
 			$this->load->library('session');
 			$this->load->library('pagination');
-
-			$this->load->model('persoon_model');
         }
 
 
