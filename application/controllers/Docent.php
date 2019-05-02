@@ -118,8 +118,8 @@
 
 		/**
 		 * haalt alle afspraken op in een ajax call en laad deze in de view overzichtAfspraken.php
-		 * @see Authex:getGebruikerInfo()
-		 * @see Afspraak_model:getAfsprakenWherePersoonIdDocent($persoonId)
+		 * @see Authex::getGebruikerInfo()
+		 * @see Afspraak_model::getAfsprakenWherePersoonIdDocent($persoonId)
 		 */
         public function haalAjaxop_AfsprakenDocent() {
 
@@ -134,8 +134,8 @@
 
 		/**
 		 * Voegt een nieue vrije afspraak toe en herhaalt deze indien nodig
-		 * @see Authex:getGebruikerInfo()
-		 * @see Afspraak_model:addMoment($docentid, $startuur, $einduur, $datum, $plaats);
+		 * @see Authex::getGebruikerInfo()
+		 * @see Afspraak_model::addMoment($docentid, $startuur, $einduur, $datum, $plaats);
 		 */
         public function momentToevoegen() {
 			$this->load->model('afspraak_model');
@@ -158,7 +158,7 @@
 
 		/**
 		 * past een afspraak aan
-		 * @see Afspraak_model:updateAfspraak($docentid, $startuur, $einduur, $datum, $plaats);
+		 * @see Afspraak_model::updateAfspraak($docentid, $startuur, $einduur, $datum, $plaats);
 		 */
         public function afspraakUpdate() {
 
@@ -176,7 +176,7 @@
 
 		/**
 		 * Verwijderd een afspraak ongeacht of deze al bezet is of vrij is
-		 * @see Afspraak_model:delete($id);
+		 * @see Afspraak_model::delete($id);
 		 */
         public function afspraakVerwijder() {
 			$this->load->model('afspraak_model');
@@ -188,7 +188,7 @@
 
 		/**
 		 * Maakt een bezette afspraak terug leeg en beschikbaar voor alle studenten
-		 * @see Afspraak_model:updateAfspraakBeschikbaarheid($id, $beschikbaar);
+		 * @see Afspraak_model::updateAfspraakBeschikbaarheid($id, $beschikbaar);
 		 */
         public function afspraakEmpty() {
 			$this->load->model('afspraak_model');
