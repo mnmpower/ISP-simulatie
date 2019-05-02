@@ -10,10 +10,12 @@
      * @property Template $template
      * @property Klas_model $klas_model
      * @property Persoon_model $persoon_model
-     * @property persoonLes_model $persoonLes_model
+     * @property PersoonLes_model $persoonLes_model
      * @property Afspraak_model $afspraak_model
      * @property Les_model $les_model
      * @property Vak_model $vak_model
+     * @property Keuzerichting_model $keuzerichting_model
+     * @property KeuzerichtingVak_model $keuzerichtingVak_model
      * @property Authex $authex
      */
     class Student extends CI_Controller
@@ -42,12 +44,6 @@
 			$this->load->helper('notation_helper');
             $this->load->helper('navbar_helper');
             $this->load->helper('plugin_helper');
-
-
-			$this->load->library('session');
-			$this->load->library('pagination');
-
-			$this->load->model('persoon_model');
         }
 
         /**
@@ -59,7 +55,7 @@
             $data['title'] = "Student";
 
             // Defines roles for this page (You can also use "geen" or leave roles empty!).
-            $data['roles'] = getRoles('geen','Ontwikkelaar','geen','geen');
+            $data['roles'] = getRoles('geen','Ontwikkelaar','Tester','geen');
 
             // Gets buttons for navbar);
             $data['buttons'] = getNavbar('student');
@@ -76,7 +72,8 @@
         /**
          * Stopt het gekozen type student in een sessie
          */
-        public function setType(){
+        public function setType()
+        {
 			$this->load->library('session');
 
 			if(isset($_POST['model']) == "Model-student"){
@@ -97,13 +94,14 @@
         public function home_student()
         {
 			$this->load->library('session');
+
             $inhoud = '';
             $data['title'] = "Student";
 //
             $typeStudent = $this->session->userdata("type");
 
             // Defines roles for this page (You can also use "geen" or leave roles empty!).
-            $data['roles'] = getRoles('geen','Ontwikkelaar','geen','geen');
+            $data['roles'] = getRoles('geen','Ontwikkelaar','Tester','geen');
 
             // Gets buttons for navbar);
             $data['buttons'] = getNavbar('student');
@@ -159,10 +157,12 @@
          * @see Klas_model::get($id)
          * @see uurroosterWeergeven.php
          */
-
-        public function uurroosterWeergeven(){
+        public function uurroosterWeergeven()
+        {
         	$this->load->model("klas_model");
+
 			$data['title'] = "Uurrooster weergeven";
+
 			// Defines roles for this page (You can also use "geen" or leave roles empty!).
 			$data['roles'] = getRoles('Ontwikkelaar','geen','geen','Tester');
 
@@ -183,12 +183,18 @@
 			$this->template->load('main_master', $partials, $data);
 		}
 
-		public function haalJsonOp_lessenPerKlas($klasId){
-//			$klasId= $this->input->get('klasid');
+
+        /**
+         * Haalt alle les-records met klasId=$klasId op via Les_model
+         * en de bijhorende vak-records met id=$klasId op via Les_model
+         * @see Les_model::getAllLesWhere($klasid)
+         * @see Vak_model::get($les->vakId)
+         */
+		public function haalJsonOp_lessenPerKlas($klasId)
+        {
         	$this->load->model('les_model');
         	$this->load->model('vak_model');
 
-//			$data['lessen']= $this->les_model->getAllLesWhere($kladId);
 			$lessen = $this->les_model->getAllLesWhere($klasId);
 
 			foreach ($lessen as $les){
@@ -204,7 +210,7 @@
         /**
          * Haalt alle klas-records op via Klas_model
          * en toont het resulterende object in de view klasvoorkeur.php
-         * @see Klas_model::getAllKlassen()
+         * @see Klas_model::getAllKlassenOrderByNaam()
          * @see klasvoorkeur.php
          */
         public function klasvoorkeur()
@@ -237,7 +243,10 @@
          * @see Authex::getGebruikerInfo()
          * @see Persoon_model::update($persoon)
          */
-        public function voorkeurBevestigen(){
+        public function voorkeurBevestigen()
+        {
+            $this->load->model('persoon_model');
+            $this->load->library('session');
 
             $data['title'] = "Student";
 
@@ -270,11 +279,13 @@
          * @see ajax_uurroosterSemester2.php
          * @see klasvoorkeur.php
          */
-        public function haalAjaxOp_Uurrooster() {
+        public function haalAjaxOp_Uurrooster()
+        {
+            $this->load->model('klas_model');
+
             $klasId = $this->input->get('klasId');
             $semesterId = $this->input->get('semesterId');
 
-            $this->load->model('klas_model');
             $klas = $this->klas_model->get($klasId);
 
             $data['klas'] = $klas;
@@ -295,10 +306,12 @@
          */
         public function toonJaarvakken()
         {
+            $this->load->model('keuzerichting_model');
+
             $data['title'] = "Jaarvakken";
 
             // Defines roles for this page (You can also use "geen" or leave roles empty!).
-            $data['roles'] = getRoles('geen','geen','geen','Ontwikkelaar');
+            $data['roles'] = getRoles('geen','geen','Tester','Ontwikkelaar');
 
             // Gets buttons for navbar);
             $data['buttons'] = getNavbar('student');
@@ -306,7 +319,6 @@
             // Gets plugins if required
             $data['plugins'] = getPlugin('geen');
 
-            $this->load->model('keuzerichting_model');
             $data['keuzerichtingen'] = $this->keuzerichting_model->getAll();
 
             $partials = array(  'hoofding' => 'main_header',
@@ -323,10 +335,12 @@
          * @see ajax_jaarvakken.php
          * @see jaarvakken_raadplegen.php
          */
-        public function haalAjaxOp_Vakken() {
+        public function haalAjaxOp_Vakken()
+        {
+            $this->load->model('keuzerichtingVak_model');
+
             $keuzerichtingId = $this->input->get('keuzerichtingId');
 
-            $this->load->model('keuzerichtingVak_model');
             $data['vakken'] = $this->keuzerichtingVak_model->getAllWithVakWhereKeuzerichting($keuzerichtingId);
 
             $this->load->view('Student/ajax_jaarvakken', $data);
@@ -338,7 +352,8 @@
          * @see Persoon_model::getDocentWhereTypeid($typeId, $typeId2)
          * @see afspraakMaken.php
          */
-        public function showAfspraakmaken() {
+        public function showAfspraakmaken()
+        {
             $this->load->model('persoon_model');
 
             $data['title'] = "Afspraak maken";
@@ -361,27 +376,41 @@
             $this->template->load('main_master', $partials, $data);
         }
 
-        public function haalAjaxop_Afspraken() {
+        /**
+         * Haalt het afspraak-records met persoonIdDocent=$persoonId op via Afspraak_model en geeft deze door aan Student_afspraakMaken.js
+         * @see Afspraak_model::getAfsprakenWherePersoonIdDocent($persoonId)
+         * @see afspraakMaken.php
+         */
+        public function haalAjaxop_Afspraken()
+        {
+            $this->load->model('afspraak_model');
+
             $persoonId = $this->input->get('persoonId');
 
-            $this->load->model('afspraak_model');
             $data['afspraken'] = $this->afspraak_model->getAfsprakenWherePersoonIdDocent($persoonId);
 
             echo json_encode($data['afspraken']);
         }
 
-        public function afspraakToevoegen() {
+        public function afspraakToevoegen()
+        {
             $this->load->library('session');
+            $this->load->model('afspraak_model');
+
             $description = $this->input->get('description');
 
             $id = $this->input->get('id');
             $student = $this->authex->getGebruikerInfo();
 
-            $this->load->model('afspraak_model');
             $this->afspraak_model->updateAfspraakReserveer($description, $student->id, $id);
         }
 
-        public function ispSamenstellen(){
+        public function ispSamenstellen()
+        {
+            $this->load->library('session');
+            $this->load->model("klas_model");
+            $this->load->model("vak_model");
+
             $isp1 = array();
             $isp2 = array();
             $_SESSION['isp1'] = $isp1;
@@ -404,10 +433,7 @@
             // Gets plugins if required
             $data['plugins'] = getPlugin('fullCalendar');
 
-            $this->load->model("klas_model");
             $data['klassen'] = $this->klas_model->getAllKlassen();
-
-            $this->load->model("vak_model");
             $data['vakken'] = $this->vak_model->getAllWhereSemester(1, true);
 
             $partials = array(  'hoofding' => 'main_header',
@@ -416,7 +442,11 @@
             $this->template->load('main_master', $partials, $data);
         }
 
-        public function ispSamenstellen2(){
+        public function ispSamenstellen2()
+        {
+            $this->load->model("klas_model");
+            $this->load->model("vak_model");
+
             $data['title'] = "ISP Samenstellen";
             // Defines roles for this page (You can also use "geen" or leave roles empty!).
             $data['roles'] = getRoles('geen','geen','Ontwikkelaar','geen');
@@ -427,10 +457,7 @@
             // Gets plugins if required
             $data['plugins'] = getPlugin('fullCalendar');
 
-            $this->load->model("klas_model");
             $data['klassen'] = $this->klas_model->getAllKlassen();
-
-            $this->load->model("vak_model");
             $data['vakken'] = $this->vak_model->getAllWhereSemester(2, true);
 
             $partials = array(  'hoofding' => 'main_header',
@@ -456,31 +483,38 @@
             $this->template->load('main_master', $partials, $data);
         }
 
-        public function haalAjaxOp_UurroosterPerKlas() {
+        public function haalAjaxOp_UurroosterPerKlas()
+        {
+            $this->load->model('les_model');
+
             $klasId = $this->input->get('klasId');
 
-            $this->load->model('les_model');
             $data['vakken'] = $this->les_model->getAllWithVakAndKlasWhereKlas($klasId);
             echo json_encode($data['vakken']);
         }
 
-        public function haalAjaxOp_lesPerVak() {
+        public function haalAjaxOp_lesPerVak()
+        {
+            $this->load->model('les_model');
+
             $vakId = $this->input->get('vakId');
 
-            $this->load->model('les_model');
             $data['lessen'] = $this->les_model->getAllWithKlasWhereKlas($vakId);
             echo json_encode($data['lessen']);
         }
 
-        public function haalAjaxOp_lesKlas() {
-            $lessen = $this->input->get('lessen');
+        public function haalAjaxOp_lesKlas()
+        {
             $this->load->model('les_model');
+
+            $lessen = $this->input->get('lessen');
 
             $data['rooster'] = $this->les_model->getAllWithVakAndKlasWhereLessen(json_decode($lessen));
             echo json_encode($data['rooster']);
         }
 
-        public function sessions_lesKlas($lessen) {
+        public function sessions_lesKlas($lessen)
+        {
             $this->load->model('les_model');
 
             $data['rooster'] = $this->les_model->getAllWithVakAndKlasWhereLessen(json_decode($lessen));
@@ -489,6 +523,8 @@
 
         public function ispSubmit()
         {
+            $this->load->model('persoonLes_model');
+
             $student = $this->authex->getGebruikerInfo();
             $isp1 = str_replace('"', '', $this->input->get('isp1'));
             $isp1 = str_replace('[', '', $isp1);
@@ -499,7 +535,6 @@
             $isp2 = str_replace('[', '', $isp2);
             $isp2 = str_replace(']', '', $isp2);
             $isp2array = array_map('intval', explode(',', $isp2));
-            $this->load->model('persoonLes_model');
 
             foreach ($isp1array as $les) {
                 $this->persoonLes_model->addPersoonLes($les, $student->id);
