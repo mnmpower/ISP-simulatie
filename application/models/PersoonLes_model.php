@@ -5,6 +5,7 @@
      * Model-klasse die alle methodes bevat om te intrageren met de database-tabel team22_persoonLes
      * @property Persoon_model $persoon_model
 	 * @property Les_model $les_model
+	 * @property Klas_model $klas_model
      */
     class PersoonLes_model extends CI_Model
     {
@@ -49,6 +50,11 @@
             return  $query->result();
         }
 
+		/**
+		 * Retourneert alle records met lesId=$lesId uit de tabel team22_persoonLes
+		 * @param $lesId de id van de les waarvan de records opgevraagd worden
+		 * @return Array met alle opgevraagde records
+		 */
 		function getAllWhereLesId($lesId){
 			$this->db->where('lesId',$lesId);
 			$query =$this->db->get('persoonLes');
@@ -106,12 +112,20 @@
             return $persoonLessen;
         }
 
+		/**
+		 * Verwijdert het record met PersoonlesId=$id uit de tabel team22_persoonLes
+		 * @param $id de PersoonLesID van het record dat verwijderd wordt
+		 */
 		function delete($id)
 		{
 			$this->db->where('id', $id);
 			$this->db->delete('persoonLes');
 		}
 
+		/**
+		 * Verwijdert alle record met lesId=$id uit de tabel team22_persoonLes
+		 * @param $lesId de lesID van alle persoonlesrecords die verwijderd worden.
+		 */
 		function deleteAllWhereLesID($lesId)
 		{
 			$this->db->where('lesId', $lesId);
@@ -137,7 +151,11 @@
             $this->db->where('persoonIdStudent', $persoonIdStudent);
             $this->db->delete('persoonLes');
         }
-
+		/**
+		 * voegt een nieuw persoonles toe
+		 * @param $persoonIdStudent de persoonID van de student die de les gaat opnemen
+		 * @param $lesId de lesID van de les die opgenomen wordt
+		 */
         function addPersoonLes($lesId, $persoonIdStudent) {
             $data = array(
                 'lesId' => $lesId,
