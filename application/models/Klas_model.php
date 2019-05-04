@@ -28,7 +28,7 @@
         /**
          * Retourneert het record met id=$id uit de tabel team22_klas
          * @param $id de id van het record  dat opgevraagd wordt
-         * @return Het opgevraagde record
+         * @return Het opgevraagde klas record
          */
 		function get($id)
 		{
@@ -37,6 +37,11 @@
 			return $query->row();
 		}
 
+		/**
+		 * Voegt het record $klas toe aan de tabel team22_Klas
+		 * @param $klas het record dat toegevoegd wordt
+		 * @return int id
+		 */
 		function insert($klas)
 		{
 			$this->db->insert('klas', $klas);
@@ -44,8 +49,8 @@
 		}
 
 		/**
-		 * Update het record $mail uit de tabel team22_mail
-		 * @param $mail het record dat geüpdatet wordt
+		 * Update het record $klas uit de tabel team22_Klas
+		 * @param $klas het record dat geüpdatet wordt
 		 */
 		function update($klas)
 		{
@@ -54,8 +59,8 @@
 		}
 
         /**
-         * Retourneert alle records uit de tabel team22_keuzerichtingVak
-         * @return Alle records
+         * Retourneert alle klas records uit de tabel team22_Klas
+         * @return array met alle klas records geordend op naam
          */
 		function getAllKlassenOrderByNaam(){
 			$this->db->order_by('naam');
@@ -64,12 +69,20 @@
             return $query->result();
         }
 
+		/**
+		 * Retourneert alle klas records uit de tabel team22_Klas
+		 * @return array met alle klas records
+		 */
         function getAllKlassen(){
             $query = $this->db->get('klas');
 
             return $query->result();
         }
 
+		/**
+		 * Delete een klasrecord met $id = klasID uit de tabel team22_Klas
+		 * @param $id de id van het record dat verwijderd wordt
+		 */
 		function delete($id)
 		{
 			$this->db->where('id', $id);
