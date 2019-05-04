@@ -468,7 +468,7 @@
             $vakId = $this->input->get('vakId');
 
             $this->load->model('les_model');
-            $data['lessen'] = $this->les_model->getAllWithKlasWhereKlas($vakId);
+            $data['lessen'] = $this->les_model->getAllWithKlasWhereVak($vakId);
             echo json_encode($data['lessen']);
         }
 
