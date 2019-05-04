@@ -40,7 +40,7 @@
 
         /**
          * Retourneert alle records uit de tabel team22_keuzerichtingVak
-         * @return Alle records
+         * @return array met alle keuzerichtingVak records
          */
 		function getAll()
         {
@@ -51,7 +51,7 @@
         /**
          * Retourneert alle records op met vakId=$vakId uit de tabel team22_keuzerichtingVak
          * @param $vakId de vakId van het record  dat opgevraagd wordt
-         * @return Array met alle opgevraagde records
+         * @return array met alle opgevraagde keuzerichtingVak records
          */
         function getAllWhereVak($vakId)
         {
@@ -61,10 +61,10 @@
         }
 
         /**
-         * Haalt alle records op met keuzerichtingId=$keuzerichtingId uit de tabel team22_keuzerichtingVak
+         * Haalt alle records op met keuzerichtingId=$keuzerichtingId uit de tabel team22_keuzerichtingVak waar de vakken aan zijn toegevoegd uitteam22_Vak
          * Retourneert alle records met id=$vak->vakId uit de tabel team22_vak
          * @param $keuzerichtingId de keuzerichtingId van het record  dat opgevraagd wordt
-         * @return Array met alle opgevraagde records
+         * @return array met alle opgevraagde keuzerichtingVak records met bijhorende vakken
          */
         function getAllWithVakWhereKeuzerichting($keuzerichtingId)
         {
@@ -84,7 +84,7 @@
         }
 
         /**
-         * Voegt het record $keuzerichtingVak toe aan de tabel team22_keuzerichtingVak
+         * Insert het record $keuzerichtingVak toe aan de tabel team22_keuzerichtingVak
          * @param $keuzerichtingVak het record dat toegevoegd wordt
          * @return int id
          */
@@ -114,6 +114,10 @@
 			$this->db->delete('keuzerichtingVak');
 		}
 
+		/**
+		 * Verwijdert alle records met keuzerichtingId=$keuzerichtingId uit de tabel team22_keuzerichtingVak
+		 * @param $keuzerichtingId de id van de keuzerichting waarvan alle vakken verwijderd worden
+		 */
 		function deleteAllWhereKeuzerichtingID($keuzerichtingId)
 		{
 			$this->db->where('keuzerichtingId', $keuzerichtingId);
