@@ -105,7 +105,7 @@
 
 
 		echo "<div class='row'><div id=\"uurrooster\" class='mt-4 mb-3 col-sm-12 col-md-9'></div>";
-		echo "<div id=\"resultaat\"  class='col-sm-12 col-md-3'></div></div>";
+		echo "<div id=\"resultaat\"  class='col-sm-12 col-md-3' style=' margin-top: 15px'></div></div>";
 
 		echo form_close();
 	?>
