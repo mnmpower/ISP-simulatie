@@ -30,7 +30,7 @@
         /**
          * Retourneert het record met id=$id uit de tabel team22_vak
          * @param $id de id van het record  dat opgevraagd wordt
-         * @return Het opgevraagde record
+         * @return Het opgevraagde vak
          */
 		function get($id)
 		{
@@ -61,6 +61,7 @@
             $this->load->model('keuzerichtingVak_model');
 
             $vakken = $this->keuzerichtingVak_model->getAllWithVakWhereKeuzerichting($keuzerichtingId);
+
             $this->db->where('fase', $faseId);
             $id_array = array();
             foreach ($vakken as $vak){
@@ -102,6 +103,12 @@
             $this->db->delete('vak');
         }
 
+		/**
+		 * Retourneert alle records van de vakken van het opgevraagde semester.
+		 * @param $semester is het semester waarin het vak gegeven moet worden.
+		 * @param $both een boolean om te kijken of jaarvakken ook worden weergegeven of niet.
+		 * @return de opgevraagde vakken van een semester
+		 */
         function getAllWhereSemester($semester, $both)
         {
             $this->db->where('semester', $semester);
