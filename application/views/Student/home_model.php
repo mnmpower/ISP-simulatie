@@ -17,7 +17,7 @@
     $vakattributen = array('name' => 'vakken', "id" => "vakken", 'class' => 'form-control');
     echo form_submit('vakken', 'Vakken per fase bekijken', $vakattributen);
     $uurroosterattributen = array('name' => 'uurrooster', "id" => "uurrooster", 'class' => 'form-control');
-    echo form_submit('uurrooster', 'Uurrooster weergeven', $uurroosterattributen);
+    echo form_submit('uurrooster', 'Mijn uurrooster ', $uurroosterattributen);
     echo form_close();
     ?>
 </div>
