@@ -37,10 +37,10 @@
     $semesterOpties = array('Semester 1', 'Semester 2');
 ?>
 <div class="container">
-    <h1>Uurrooster <?php if($klas != null ) { echo $klas->naam; }?></h1>
+    <h1 class=" mt-4 mb-3">Uurrooster <?php if($klas != null ) { echo $klas->naam; }?></h1>
     <?php
         $semesterattributes = array('id' => 'semesterkeuze', 'class' => 'form-control');
         echo form_dropdown('semester', $semesterOpties, '0', $semesterattributes);
     ?>
-    <div id="uurrooster"></div>
+    <div id="uurrooster" class=" mt-4 mb-3"></div>
 </div>
