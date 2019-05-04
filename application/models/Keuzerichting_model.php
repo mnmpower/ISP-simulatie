@@ -37,19 +37,31 @@
 			return $query->row();
 		}
 
+		/**
+		 * Voegt het record $keuzerichting toe aan de tabel team22_keuzerichting
+		 * @param $keuzerichting het record dat toegevoegd wordt
+		 * @return int id
+		 */
 		function insert($keuzerichting)
 		{
 			$this->db->insert('keuzerichting', $keuzerichting);
 			return $this->db->insert_id();
 		}
 
-
+		/**
+		 * Update het record $keuzerichting uit de tabel team22_keuzerichting
+		 * @param $keuzerichting het record dat geüpdatet wordt
+		 */
 		function update($keuzerichting)
 		{
 			$this->db->where('id', $keuzerichting->id);
 			$this->db->update('keuzerichting', $keuzerichting);
 		}
 
+		/**
+		 * Delete een keuzerichting met $id = id uit de tabel team22_keuzerichting
+		 * @param $id de id van het record dat verwijderd wordt
+		 */
 		function delete($id)
 		{
 			$this->db->where('id', $id);
@@ -58,7 +70,7 @@
 
         /**
          * Retourneert alle records uit de tabel team22_keuzerichting
-         * @return Alle records
+         * @return array met alle records
          */
 		function getAll()
         {
