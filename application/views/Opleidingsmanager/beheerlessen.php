@@ -303,6 +303,7 @@
 
             <div class="modal-body">
                 <p>Er zijn <span id="aantalExcel"></span> lessen succesvol toegevoegd.</p>
+                <p>Zijn niet alle lessen toegevoegd? Controlleer of de vakken al in ons systeem staan.</p>
             </div>
             <div class="modal-footer">
                 <?php echo form_button(array('content' => "Sluiten", 'id' => 'knopNee', 'class' => 'btn', 'data-dismiss' => 'modal')); ?>

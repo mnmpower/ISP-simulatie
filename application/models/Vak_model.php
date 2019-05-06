@@ -118,4 +118,25 @@
             $query = $this->db->get('vak');
             return $query->result();
         }
+
+        /**
+         * Retourneert het record met naam=$naam uit de tabel team22_vak
+         * @param $naam de naam van het record  dat opgevraagd wordt
+         * @return Het opgevraagde record
+         */
+        function getIdWhereNaam($naam)
+        {
+            $vakId = 0;
+            $vakken = $this->getAll();
+            foreach ($vakken as $vak) {
+                $vak->naam = strtolower($vak->naam);
+                $vak->naam = str_replace(' ', '', $vak->naam);
+
+                if($vak->naam == $naam) {
+                    $vakId = $vak->id;
+                }
+            }
+
+            return $vakId;
+        }
     }

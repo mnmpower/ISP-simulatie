@@ -88,4 +88,22 @@
 			$this->db->where('id', $id);
 			$this->db->delete('klas');
 		}
+
+        /**
+         * Retourneert het record met naam=$naam uit de tabel team22_klas
+         * @param $naam de naam van het record dat opgevraagd wordt
+         * @return Het opgevraagde record
+         */
+        function getWhereNaam($naam)
+        {
+            $klassen = $this->getAllKlassen();
+            foreach ($klassen as $klas) {
+                $klasnaam = preg_replace("/[^A-Za-z0-9 ]/", '', $klas->naam);
+                $klasnaam = str_replace(' ', '', $klasnaam);
+
+                if(strtolower($klasnaam) == strtolower($naam)) {
+                    return $klas;
+                }
+            }
+        }
     }

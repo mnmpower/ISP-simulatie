@@ -258,4 +258,18 @@
             return $result;
         }
 
+        /**
+         * Retourneert het record met klasId=$les->klasId, vakId=$les->vakId en datum=$vak->datum uit de tabel team22_les
+         * @param $les het object met de les van het record  dat opgevraagd wordt
+         * @return Het opgevraagde record
+         */
+        function getWhereKlasIdAndVakIdAndDatum($les)
+        {
+            $whereConditions = array('klasId' => $les->klasId, 'vakId' => $les->vakId, 'datum' => $les->datum);
+
+            $this->db->where($whereConditions);
+            $query = $this->db->get('les');
+            //var_dump($query->num_rows);
+            return $query->row();
+        }
     }
