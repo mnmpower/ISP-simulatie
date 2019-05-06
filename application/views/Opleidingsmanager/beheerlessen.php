@@ -32,6 +32,22 @@
         });
     }
 
+    function controleerPersoonLessen() {
+        $.ajax({
+            type: "GET",
+            url: site_url + "/Opleidingsmanager/haalJsonOp_PersoonLessen",
+            success: function (lessen) {
+                var aantalPersoonLessen = lessen.length;
+                if(aantalPersoonLessen <= 0) {
+                    $('#verwijderLessen').remove();
+                }
+            },
+            error: function (xhr, status, error) {
+                alert("-- ERROR IN AJAX (haalPersoonLessenOp) --\n\n" + xhr.responseText);
+            }
+        });
+    }
+
     function haalLesOp(lesId) {
         $.ajax({
             type: "GET",
@@ -104,6 +120,7 @@
 
         haalLessenOp();
         controleerFoutmelding();
+        controleerPersoonLessen();
 
         $("#voegtoe").click(function () {
             $("#lesId").val(0);
@@ -277,7 +294,7 @@
                                 'accept' => ".xlsx,.xls"
                             )); ?></td>
                     </tr>
-                    <tr>
+                    <tr id="verwijderLessen">
                         <td colspan="2"><?php echo form_checkbox('deleteLessenExcel', true, false, array('id' => 'deleteLessenExcel'
                             )); ?>
                             <?php echo form_label("Verwijder alle lessen", "deleteLessenExcel"); ?></td>
@@ -289,7 +306,7 @@
                 $annuleerButton = array('class' => 'btn btn-secundary annuleren', 'data-dismiss' => 'modal');
                 echo form_button("knopAnnuleer", ' Annuleren', $annuleerButton);
                 $opslaanButton = array('class' => 'btn btn-primary opslaan', 'id' => 'knopExcel');
-                echo form_submit("knopOpslaan", ' Uploaden', $opslaanButton);
+                echo form_submit("knopExcel", ' Uploaden', $opslaanButton);
                 ?>
             </div>
             <?php echo form_close(); ?>

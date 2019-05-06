@@ -497,6 +497,15 @@
             $this->load->view('opleidingsmanager/ajax_lessen', $data);
         }
 
+        public function haalJsonOp_PersoonLessen()
+        {
+            $this->load->model('persoonLes_model');
+            $object = $this->persoonLes_model->getAll();
+
+            $this->output->set_content_type("application/json");
+            echo json_encode($object);
+        }
+
         public function haalJsonOp_Les()
         {
             $id = $this->input->get('lesId');

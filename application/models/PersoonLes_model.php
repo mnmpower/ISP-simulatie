@@ -40,6 +40,15 @@
         }
 
         /**
+         * Retourneert alle records uit de tabel team22_persoonLes
+         * @return Array met alle opgevraagde records
+         */
+        function getAll(){
+            $query = $this->db->get('persoonLes');
+            return $query->result();
+        }
+
+        /**
          * Retourneert alle records met persoonIdStudent=$persoonIdStudent uit de tabel team22_persoonLes
          * @param $persoonIdStudent de id van de persoon waarvan de records opgevraagd worden
          * @return Array met alle opgevraagde records
