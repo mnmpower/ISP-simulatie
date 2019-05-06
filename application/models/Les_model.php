@@ -75,6 +75,14 @@
         }
 
         /**
+         * Verwijdert alle records uit de tabel team22_les
+         */
+        function deleteAll()
+        {
+            $this->db->empty_table('les');
+        }
+
+        /**
          * Retourneert het record met id=$id uit de tabel team22_les en bijhorend record uit de tabel team22_vak
          * @param $id de id van het record  dat opgevraagd wordt
          * @return Het opgevraagde en bijhorende record

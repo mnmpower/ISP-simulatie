@@ -277,6 +277,11 @@
                                 'accept' => ".xlsx,.xls"
                             )); ?></td>
                     </tr>
+                    <tr>
+                        <td colspan="2"><?php echo form_checkbox('deleteLessenExcel', true, false, array('id' => 'deleteLessenExcel'
+                            )); ?>
+                            <?php echo form_label("Verwijder alle lessen", "deleteLessenExcel"); ?></td>
+                    </tr>
                 </table>
             </div>
             <div class="modal-footer">

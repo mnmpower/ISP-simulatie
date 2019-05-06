@@ -570,6 +570,12 @@
             }
             else
             {
+                // Alle lessen verwijderen indien aangeduid
+                $deleteLessen = $this->input->post('deleteLessenExcel');
+                if($deleteLessen == true) {
+                    $this->les_model->deleteAll();
+                }
+
                 $upload_data = $this->upload->data();
                 $fileName = $upload_data['file_name'];
                 $newName = 'lessen.xls';
