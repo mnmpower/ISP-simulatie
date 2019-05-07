@@ -1,3 +1,9 @@
+<?php
+/**
+ * @file ajax_vakBeheer.php
+ * Ajaxpagina waarin de CRUD voor het beheren van de vakken wordt weergeven
+ */
+?>
 <table class="table table-striped">
     <tablebody>
         <tr>

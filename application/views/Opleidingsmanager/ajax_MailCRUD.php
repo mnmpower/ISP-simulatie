@@ -1,3 +1,9 @@
+<?php
+/**
+ * @file ajax_MailgCRUD.php
+ * Ajaxpagina waarin de CRUD voor het beheren van de mails wordt weergeven
+ */
+?>
 <table class="table table-striped">
 	<thead>
 	<tr>

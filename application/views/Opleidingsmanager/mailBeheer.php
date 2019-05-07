@@ -1,3 +1,9 @@
+<?php
+/**
+ * @file mailBeheer.php
+ * View waarin de admin aan de hand van een CRUD de mails kan wijzigen
+ */
+?>
 <script>
 	$(document).ready(function () {
 		haalMailsOp();

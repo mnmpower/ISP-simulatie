@@ -1,3 +1,9 @@
+<?php
+/**
+ * @file ajax_mailBewerken.php
+ * Ajaxpagina waarin het formulier voor de mail te bewerken wordt weergeven
+ */
+?>
 <div class="col-12">
 	<?php echo form_open("#"); ?>
 	<div>

@@ -1,3 +1,9 @@
+<?php
+/**
+ * @file ispSamenstellen.php
+ * Pagina waarin de combistudent zijn ISP voor semester 1 kan samenstellen
+ */
+?>
 <?php $cookie_name = "walkthrough"; ?>
 <script>
 

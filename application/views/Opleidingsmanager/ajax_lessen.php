@@ -1,3 +1,9 @@
+<?php
+/**
+ * @file ajax_lessen.php
+ * Ajaxpagina waarin de CRUD voor het beheren van de lessen wordt weergeven
+ */
+?>
 <table class="table table-striped">
     <thead>
         <tr>

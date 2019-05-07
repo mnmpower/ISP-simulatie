@@ -1,3 +1,9 @@
+<?php
+/**
+ * @file ajax_jaarvakken.php
+ * Ajaxpagina waarin de jaarvakken per keuzerichting en fase worden weergeven
+ */
+?>
 <h2>Fase 1</h2>
 <div class="row">
     <div class="col-6">

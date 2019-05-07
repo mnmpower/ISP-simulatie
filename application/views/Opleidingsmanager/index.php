@@ -1,3 +1,9 @@
+<?php
+/**
+ * @file index.php
+ * View waarin de ingediende ISP's van de student wordt weergegeven
+ */
+?>
 <div class="container70"><h1>
 		<?php
 			echo $title

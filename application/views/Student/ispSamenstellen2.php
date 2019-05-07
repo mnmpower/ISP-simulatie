@@ -1,3 +1,9 @@
+<?php
+/**
+ * @file ispSamenstellen2.php
+ * Pagina waarin de combistudent zijn ISP voor semester 2 kan samenstellen
+ */
+?>
 <div class="container container90 containerISP">
     <div class="row">
         <div class="container col-2 flex-column d-flex containersISP">
