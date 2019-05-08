@@ -61,6 +61,7 @@
          * @see PersoonLes_model::getAllWithLesAndVakAndKlas()
          * @see Les_model::getAllWithVakAndKlasWhereKlas()
          * @see Persoon_model::getStudiepunten()
+         * @see Klas_model::get()
          * @see index.php
          */
         public function index()
@@ -68,6 +69,7 @@
 			$this->load->model('persoon_model');
 			$this->load->model('persoonLes_model');
 			$this->load->model('Les_model');
+			$this->load->model('Klas_model');
 			$this->load->helper('plugin_helper');
 
 			$data['title'] = "Overzicht van de ingediende ISP simulaties";
@@ -91,7 +93,8 @@
                 } else {
                     // Persoon zit wel in een klas -> lessen van de klas ophalen
                     $persoon->persoonLessen = $this->les_model->getAllWithVakAndKlasWhereKlas($persoon->klasId);
-                }
+					$persoon->klas = $this->klas_model->get($persoon->klasId);
+				}
 
 				$persoon->studiepunten = $this->persoon_model->getStudiepunten($persoon);
 			}
@@ -1035,7 +1038,7 @@
                         break;
                     case 4:
                         $les->startuur = '14:15:00';
-                        $les->einduur = '16:45:00';
+                        $les->einduur = '15:45:00';
                         break;
                     case 5:
                         $les->startuur = '16:00:00';

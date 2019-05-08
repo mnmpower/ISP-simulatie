@@ -246,24 +246,16 @@
         public function voorkeurBevestigen()
         {
             $this->load->model('persoon_model');
+            $this->load->model('persoonLes_model');
             $this->load->library('session');
-
-            $data['title'] = "Student";
-
-            // Defines roles for this page (You can also use "geen" or leave roles empty!).
-            $data['roles'] = getRoles('Tester','Ontwikkelaar','geen','geen');
-
-            // Gets buttons for navbar);
-            $data['buttons'] = getNavbar('student');
-
-            // Gets plugins if required
-            $data['plugins'] = getPlugin('geen');
 
             $persoon = $this->authex->getGebruikerInfo();
 
-            $klasId = $this->input->post('klas');
-            $persoon->klasId = $klasId;
+            $persoon->klasId = $this->input->post('klas');
+            $persoon->ispIngediend = 1;
+            $this->persoonLes_model->deletePersoonLesWherePersoonId($persoon->id);
             $this->persoon_model->update($persoon);
+            $this->persoonLes_model->addPersoonLesWhereKlas($persoon);
 
 			$this->session->set_userdata('type','model');
 
@@ -593,6 +585,11 @@
                     $this->persoonLes_model->addPersoonLes($les, $student->id);
                 }
             }
+			$student->klasId = null;
+            $student->klas = null;
+			$student->advies = "";
+
+			$this->persoon_model->update($student);
 
             redirect('Student/home_student');
         }
@@ -610,5 +607,35 @@
             }
             setcookie($cookie_name, $cookie_value, time() + (86400 * 30), '/team22/index.php/Student');
 
+        }
+
+        /**
+         * Haalt de persoon-records met klasId=$klasId op via Persoon_model
+         * en toont het resulterende object in de view ajax_klaslijsten
+         * Deze view wordt via een ajax-call in klasvoorkeur.php geplaatst
+         * @see Persoon_model::getAllWhereKlas()
+         * @see Klas_model::get()
+         * @see ajax_klaslijsten.php
+         * @see klasvoorkeur.php
+         */
+        public function haalAjaxOp_Klassen()
+        {
+            $this->load->model('persoon_model');
+            $this->load->model('klas_model');
+
+            $klasId = $this->input->get('klasId');
+            $klasOpties = array();
+
+            $personen = $this->persoon_model->getAllWhereKlas($klasId);
+            $data['personen'] = $personen;
+            $klas = $this->klas_model->get($klasId);
+            $data['klas'] = $klas;
+            $klassen = $this->klas_model->getAllKlassen();
+            foreach ($klassen as $klasOptie) {
+                array_push($klasOpties, $klasOptie->naam);
+            }
+            $data['klassen'] = $klasOpties;
+
+            $this->load->view('Student/ajax_klaslijsten', $data);
         }
     }
