@@ -96,6 +96,7 @@ function afspraakUpdate(id) {
         },
         success: function () {
             getAfsprakenByDocent();
+            alert('Mail naar student verzonden.');
             $('#CalendarModal').modal('hide');
             $('#calendarModalPlaatsDocent').val('');
             $('#calendarModalDateDocent').val('');
@@ -147,6 +148,7 @@ function afspraakVerwijder(id) {
             $('#calendarModalTimeStartDocent').val('');
             $('#calendarModalTimeStopDocent').val('');
             $('#calendarModalDescriptionDocent').val('');
+            alert('Mail naar student verzonden.');
         },
         error: function (xhr, status, error) {
             alert("-- ERROR IN AJAX --\n\n" + xhr.responseText);
