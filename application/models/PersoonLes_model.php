@@ -173,4 +173,12 @@
 
             $this->db->insert('persoonLes', $data);
         }
+        /**
+         * verwijderd alle persoonlessen van een student
+         * @param $persoonIdStudent de persoonID van de student die de les gaat opnemen
+         */
+        function deletePersoonLesWherePersoonId($id) {
+            $this->db->where('persoonIdStudent', $id);
+            $this->db->delete('persoonLes');
+        }
     }
