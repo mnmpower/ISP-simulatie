@@ -177,7 +177,7 @@
             $this->excel->setActiveSheetIndex(0);
             $this->excel->getActiveSheet()->setTitle('ISP Export');
             $this->excel->getActiveSheet()->freezePane('C5');
-            $bestandsnaam = 'isp2-export-' . date('d-m-Y') . '.xlsx';
+            $bestandsnaam = 'isp-export-' . date('d-m-Y') . '.xlsx';
 
             // Opvullen van het bestand: HEADER
             $this->excel->getActiveSheet()->setCellValue('A1', 'ISP Export');
