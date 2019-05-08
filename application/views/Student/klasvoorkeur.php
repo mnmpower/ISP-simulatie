@@ -10,7 +10,7 @@
 	function haalKlassenOp(klasId, semester) {
 		$.ajax({
 			type: "GET",
-			url: site_url + "/IspVerantwoordelijke/haalAjaxOp_Klassen/",
+			url: site_url + "/Student/haalAjaxOp_Klassen/",
 			data: {klasId: klasId, semester: semester},
 			success: function (output) {
 				$('#resultaat').html(output);

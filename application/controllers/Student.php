@@ -608,4 +608,34 @@
             setcookie($cookie_name, $cookie_value, time() + (86400 * 30), '/team22/index.php/Student');
 
         }
+
+        /**
+         * Haalt de persoon-records met klasId=$klasId op via Persoon_model
+         * en toont het resulterende object in de view ajax_klaslijsten
+         * Deze view wordt via een ajax-call in klasvoorkeur.php geplaatst
+         * @see Persoon_model::getAllWhereKlas()
+         * @see Klas_model::get()
+         * @see ajax_klaslijsten.php
+         * @see klasvoorkeur.php
+         */
+        public function haalAjaxOp_Klassen()
+        {
+            $this->load->model('persoon_model');
+            $this->load->model('klas_model');
+
+            $klasId = $this->input->get('klasId');
+            $klasOpties = array();
+
+            $personen = $this->persoon_model->getAllWhereKlas($klasId);
+            $data['personen'] = $personen;
+            $klas = $this->klas_model->get($klasId);
+            $data['klas'] = $klas;
+            $klassen = $this->klas_model->getAllKlassen();
+            foreach ($klassen as $klasOptie) {
+                array_push($klasOpties, $klasOptie->naam);
+            }
+            $data['klassen'] = $klasOpties;
+
+            $this->load->view('Student/ajax_klaslijsten', $data);
+        }
     }
