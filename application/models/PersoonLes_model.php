@@ -173,15 +173,15 @@
 
             $this->db->insert('persoonLes', $data);
         }
-<<<<<<< HEAD
 
         /**
          * Verwijdert alle records uit de tabel team22_persoonLes
          */
         function deleteAll()
-        {
-            $this->db->empty_table('persoonLes');
-=======
+		{
+			$this->db->empty_table('persoonLes');
+		}
+
         /**
          * verwijderd alle persoonlessen van een student
          * @param $persoonIdStudent de persoonID van de student die de les gaat opnemen
@@ -189,6 +189,5 @@
         function deletePersoonLesWherePersoonId($id) {
             $this->db->where('persoonIdStudent', $id);
             $this->db->delete('persoonLes');
->>>>>>> 607b25629209383107eda25676662759494c2b92
         }
     }
