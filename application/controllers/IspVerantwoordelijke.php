@@ -11,6 +11,7 @@
      * @property Persoon_model $persoon_model
      * @property Klas_model $klas_model
      * @property Vak_model $vak_model
+     * @property Afspraak_model $afspraak_model
      * @property PersoonLes_model $persoonLes_model
      * @property Les_model les_model
      * @property  Excel $excel
@@ -54,6 +55,7 @@
          * @see PersoonLes_model::getAllWithLesAndVakAndKlas()
          * @see Les_model::getAllWithVakAndKlasWhereKlas()
          * @see Persoon_model::getStudiepunten()
+         * @see Klas_model::get()
          * @see index.php
          */
         public function index()
@@ -61,6 +63,7 @@
 			$this->load->model('persoon_model');
 			$this->load->model('persoonLes_model');
 			$this->load->model('les_model');
+			$this->load->model('klas_model');
 			$this->load->helper('plugin_helper');
 
 			$data['title'] = "Overzicht van de ingediende ISP simulaties";
@@ -84,6 +87,7 @@
                 } else {
                     // Persoon zit wel in een klas -> lessen van de klas ophalen
                     $persoon->persoonLessen = $this->les_model->getAllWithVakAndKlasWhereKlas($persoon->klasId);
+                    $persoon->klas = $this->klas_model->get($persoon->klasId);
                 }
 
 				$persoon->studiepunten = $this->persoon_model->getStudiepunten($persoon);
