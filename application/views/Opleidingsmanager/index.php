@@ -14,6 +14,7 @@
 		<tr>
 			<th data-sortable="true" class="text-capitalize">Studentennummer</th>
 			<th data-sortable="true" class="text-capitalize">Naam</th>
+			<th data-sortable="true" class="text-capitalize">Klas</th>
 			<th data-sortable="true" class="text-capitalize">Aantal studiepunten</th>
 			<th data-sortable="true" class="">Advies</th>
 		</tr>
@@ -24,6 +25,12 @@
 			foreach ($ingediendeIspStudenten as $student) {
 				echo "<tr><td>$student->nummer</td>";
 				echo "<td>$student->naam</td>";
+				echo "<td>";
+				if ($student->klas!= null){
+					echo $student->klas->naam;
+
+				}
+				echo "</td>";
 				echo "<td>$student->studiepunten</td>";
 				echo "<td>$student->advies</td></tr>";
 			}
