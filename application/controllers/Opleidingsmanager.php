@@ -1038,7 +1038,7 @@
                         break;
                     case 4:
                         $les->startuur = '14:15:00';
-                        $les->einduur = '16:45:00';
+                        $les->einduur = '15:45:00';
                         break;
                     case 5:
                         $les->startuur = '16:00:00';
