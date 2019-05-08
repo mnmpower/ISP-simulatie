@@ -42,5 +42,15 @@
         $semesterattributes = array('id' => 'semesterkeuze', 'class' => 'form-control');
         echo form_dropdown('semester', $semesterOpties, '0', $semesterattributes);
     ?>
+	<?php
+		$terugattributes = array(
+			'class' => 'form-control mt-4 mb-3',
+			'id' => 'terugButoon'
+		);
+		echo form_open_multipart("student/setType");
+		echo form_submit("terug", "Terug naar menu",$terugattributes );
+		echo form_close();
+	?>
+
     <div id="uurrooster" class=" mt-4 mb-3"></div>
 </div>

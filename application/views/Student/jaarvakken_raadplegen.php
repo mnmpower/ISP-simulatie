@@ -49,7 +49,17 @@
         $dropdownAttributes = array('id' => 'richting', 'class' => "form-control");
         echo form_dropdown('richting', $keuzerichtingenNieuw, '0', $dropdownAttributes);
         echo form_close();
-    ?><br>
+    ?>
+	<?php
+		$terugattributes = array(
+			'class' => 'form-control mt-4 mb-3',
+			'id' => 'terugButoon'
+		);
+		echo form_open_multipart("student/setType");
+		echo form_submit("terug", "Terug naar menu",$terugattributes );
+		echo form_close();
+	?>
+	<br>
     <div id="resultaat" class="container">
 
     </div>
