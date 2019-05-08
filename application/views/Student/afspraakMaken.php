@@ -55,7 +55,7 @@
                         </div>
                         <div class="form-group row">
                             <?php
-                            echo form_label('Tijd:', 'calendarModalDescription', array('class' => 'col-sm-2 col-form-label'));
+                            echo form_label('Tijd:', 'calendarModalTime', array('class' => 'col-sm-2 col-form-label'));
                             echo form_input(array('type' => 'text', 'readonly' => 'true', 'class' => 'col-sm-10 form-control-plaintext', 'id' => 'calendarModalTime'));
                             ?>
                         </div>

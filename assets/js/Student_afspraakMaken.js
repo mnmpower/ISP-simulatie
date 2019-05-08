@@ -14,8 +14,7 @@ $('#calendar').fullCalendar({
             var startdate = new Date(calEvent.start);
             var enddate = new Date(calEvent.end);
             $("#calendarModalDate").val(startdate.getDate() + '/' + startdate.getUTCMonth() + '/' + startdate.getFullYear());
-            $("#calendarModalTimeStart").val(startdate.getUTCHours() + ':' + (startdate.getMinutes() < 10 ? '0' : '') + startdate.getMinutes() + ' tot ' + enddate.getUTCHours() + ':' + (enddate.getMinutes() < 10 ? '0' : '') + enddate.getMinutes());
-            $("#calendarModalTimeStart").val(startdate.getUTCHours() + ':' + (startdate.getMinutes() < 10 ? '0' : '') + startdate.getMinutes() + ' tot ' + enddate.getUTCHours() + ':' + (enddate.getMinutes() < 10 ? '0' : '') + enddate.getMinutes());
+            $("#calendarModalTime").val(startdate.getUTCHours() + ':' + (startdate.getMinutes() < 10 ? '0' : '') + startdate.getMinutes() + ' tot ' + enddate.getUTCHours() + ':' + (enddate.getMinutes() < 10 ? '0' : '') + enddate.getMinutes());
             $("#calendarModalPlaats").val(calEvent.plaats);
             $('#CalendarModal').modal();
             $('#calendarModalConfirm').click(function () {
