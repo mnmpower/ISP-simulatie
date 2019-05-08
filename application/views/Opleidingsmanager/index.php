@@ -26,9 +26,11 @@
 				echo "<tr><td>$student->nummer</td>";
 				echo "<td>$student->naam</td>";
 				echo "<td>";
-				if ($student->klas!= null){
+				if ($student->klasId!= null){
 					echo $student->klas->naam;
-
+				}
+				else{
+					echo "Combi";
 				}
 				echo "</td>";
 				echo "<td>$student->studiepunten</td>";

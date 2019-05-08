@@ -585,6 +585,11 @@
                     $this->persoonLes_model->addPersoonLes($les, $student->id);
                 }
             }
+			$student->klasId = null;
+            $student->klas = null;
+			$student->advies = "";
+
+			$this->persoon_model->update($student);
 
             redirect('Student/home_student');
         }
