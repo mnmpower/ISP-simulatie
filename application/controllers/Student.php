@@ -239,7 +239,7 @@
 
         /**
          * Haalt het persoon-record op via Authex
-         * Update $persoon->klasId=$klasid via Persoon_model
+         * en update klasId=$klasid via Persoon_model
          * @see Authex::getGebruikerInfo()
          * @see Persoon_model::update($persoon)
          */
@@ -377,9 +377,8 @@
         }
 
         /**
-         * Haalt het afspraak-records met persoonIdDocent=$persoonId op via Afspraak_model en geeft deze door aan Student_afspraakMaken.js
+         * Haalt alle afspraak-records met persoonIdDocent=$persoonId op via Afspraak_model en geeft deze door aan Student_afspraakMaken.js
          * @see Afspraak_model::getAfsprakenWherePersoonIdDocent($persoonId)
-         * @see afspraakMaken.php
          */
         public function haalAjaxop_Afspraken()
         {
@@ -392,6 +391,11 @@
             echo json_encode($data['afspraken']);
         }
 
+        /**
+         * Reserveert een afspraak voor de ingelogde student
+         * @see Authex::getGebruikerInfo()
+         * @see Afspraak_model::updateAfspraakReserveer()
+         */
         public function afspraakToevoegen()
         {
             $this->load->library('session');
@@ -405,6 +409,13 @@
             $this->afspraak_model->updateAfspraakReserveer($description, $student->id, $id);
         }
 
+        /**
+         * Haalt alle klas-records op via Klas_model en alle vakrecords met semester=1 of semester=3 op via Vak_model
+         * en toont het resulterende object in de view ispSamenstellen.php
+         * @see Klas_model::getAllKlassen()
+         * @see Vak_model::getAllWhereSemester(1, true)
+         * @see ispSamenstellen.php
+         */
         public function ispSamenstellen()
         {
             $this->load->library('session');
@@ -442,6 +453,13 @@
             $this->template->load('main_master', $partials, $data);
         }
 
+        /**
+         * Haalt alle klas-records op via Klas_model en alle vakrecords met semester=2 of semester=3 op via Vak_model
+         * en toont het resulterende object in de view ispSamenstellen.php
+         * @see Klas_model::getAllKlassen()
+         * @see Vak_model::getAllWhereSemester(2, true)
+         * @see ispSamenstellen.php
+         */
         public function ispSamenstellen2()
         {
             $this->load->model("klas_model");
@@ -466,6 +484,10 @@
             $this->template->load('main_master', $partials, $data);
         }
 
+        /**
+         * Toont de vooraf samengestelde uurroosters in de view ispSamenstellenConfirm.php
+         * @see ispSamenstellenConfirm.php
+         */
         public function ispSamenstellenConfirm(){
             $data['title'] = "ISP Samenstellen";
             // Defines roles for this page (You can also use "geen" or leave roles empty!).
@@ -483,6 +505,10 @@
             $this->template->load('main_master', $partials, $data);
         }
 
+        /**
+         * Haalt alle les-records met klasId=$klasId met bijhorend vak- en klas-record op via Les_model en geeft deze door aan ispSamenstellen.js
+         * @see Les_model::getAllWithVakAndKlasWhereKlas($klasId)
+         */
         public function haalAjaxOp_UurroosterPerKlas()
         {
             $this->load->model('les_model');
@@ -493,6 +519,10 @@
             echo json_encode($data['vakken']);
         }
 
+        /**
+         * Haalt alle les-records met vakId=$vakId met bijhorend klas-record op via Les_model en geeft deze door aan ispSamenstellen.js
+         * @see Les_model::getAllWithKlasWhereKlas($vakId)
+         */
         public function haalAjaxOp_lesPerVak()
         {
             $this->load->model('les_model');
@@ -503,6 +533,10 @@
             echo json_encode($data['lessen']);
         }
 
+        /**
+         * Haalt alle les-records van de meegegeven lessen met bijhorend vak- en klas-record op via Les_model en geeft deze door aan ispSamenstellen.js
+         * @see Les_model::getAllWithVakAndKlasWhereLessen($lessen)
+         */
         public function haalAjaxOp_lesKlas()
         {
             $this->load->model('les_model');
@@ -513,6 +547,10 @@
             echo json_encode($data['rooster']);
         }
 
+        /**
+         * Haalt alle les-records van de meegegeven lessen met bijhorend vak- en klas-record op via Les_model
+         * @see Les_model::getAllWithVakAndKlasWhereLessen($lessen)
+         */
         public function sessions_lesKlas($lessen)
         {
             $this->load->model('les_model');
@@ -521,6 +559,11 @@
             echo json_encode($data['rooster']);
         }
 
+        /**
+         * Voegt alle persoonlessen van de ingevulde ISP toe aan de database via PersoonLes_model
+         * @see Authex::getGebruikerInfo()
+         * @see PersoonLes_model::addPersoonLes()
+         */
         public function ispSubmit()
         {
             $this->load->model('persoonLes_model');
@@ -547,6 +590,9 @@
             redirect('Student/home_student');
         }
 
+        /**
+         * Wijzigt de cookie-waarde om de walkthrough aan of af te zetten
+         */
         public function haalAjaxOp_ToggleCookie() {
             $cookie_name = "walkthrough";
             if ($_COOKIE[$cookie_name] == "aan"){
