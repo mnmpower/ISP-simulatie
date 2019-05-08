@@ -140,16 +140,23 @@
          * @see ajax_klaslijsten.php
          * @see klaslijsten.php
          */
-        public function haalAjaxOp_Klassen() {
-            $klasId = $this->input->get('klasId');
-
+        public function haalAjaxOp_Klassen()
+        {
             $this->load->model('persoon_model');
             $this->load->model('klas_model');
+
+            $klasId = $this->input->get('klasId');
+            $klasOpties = array();
 
             $personen = $this->persoon_model->getAllWhereKlas($klasId);
             $data['personen'] = $personen;
             $klas = $this->klas_model->get($klasId);
             $data['klas'] = $klas;
+            $klassen = $this->klas_model->getAllKlassen();
+            foreach ($klassen as $klasOptie) {
+                array_push($klasOpties, $klasOptie->naam);
+            }
+            $data['klassen'] = $klasOpties;
 
             $this->load->view('IspVerantwoordelijke/ajax_klaslijsten', $data);
         }
@@ -444,12 +451,25 @@
          * Maakt een bezette afspraak terug leeg en beschikbaar voor alle studenten
          * @see Afspraak_model::updateAfspraakBeschikbaarheid($id, $beschikbaar);
          */
-        public function afspraakEmpty() {
+        public function afspraakEmpty()
+        {
             $this->load->model('afspraak_model');
 
             $id = $this->input->get('id');
             $beschikbaar = 1;
 
             $this->afspraak_model->updateAfspraakBeschikbaarheid($id, $beschikbaar);
+        }
+
+        public function haalAjaxOp_WijzigKlas()
+        {
+            $this->load->model('persoon_model');
+
+            $persoonId = $this->input->get('persoonId');
+            $klasId = $this->input->get('klasId');
+
+            $persoon = $this->persoon_model->get($persoonId);
+            $persoon->klasId = $klasId;
+            $this->persoon_model->update($persoon);
         }
     }

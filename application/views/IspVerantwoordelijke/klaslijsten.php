@@ -23,6 +23,7 @@
     }
 
     $(document).ready(function () {
+        $("#klaskeuze option:first").attr('disabled', 'disabled');
         $("#klaskeuze").change(function () {
             var klasId = $('#klaskeuze').val();
             if(klasId == '') {
