@@ -88,6 +88,7 @@
                     // Persoon zit wel in een klas -> lessen van de klas ophalen
                     $persoon->persoonLessen = $this->les_model->getAllWithVakAndKlasWhereKlas($persoon->klasId);
                     $persoon->klas = $this->klas_model->get($persoon->klasId);
+
                 }
 
 				$persoon->studiepunten = $this->persoon_model->getStudiepunten($persoon);
