@@ -37,6 +37,7 @@
 
 	$(document).ready(function () {
 		$('#ButtonSubmitKlas').attr("disabled", "disabled");
+        $("#klaskeuze option:first").attr('disabled', 'disabled');
 		$('#semesterkeuze').hide();
 
 		$("#klaskeuze").change(function () {
