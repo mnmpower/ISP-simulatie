@@ -343,4 +343,109 @@
             $this->output->set_content_type("application/json");
             echo json_encode($lessen);
         }
+
+        /**
+         * laad de kalender plugin en toont een kalender op de huidige week in de view overzichtAfspraken.php
+         * @see overzichtAfspraken.php
+         */
+        public function afspraken(){
+            $data['title'] = "Afspraken";
+
+            // Defines roles for this page (You can also use "geen" or leave roles empty!).
+            $data['roles'] = getRoles('geen','geen','Ontwikkelaar','geen');
+
+            // Gets buttons for navbar;
+            $data['buttons'] = getNavbar('ispverantwoordelijke');
+
+            // Gets plugins if required
+            $data['plugins'] = getPlugin('fullCalendar');
+
+            $partials = array(  'hoofding' => 'main_header',
+                'inhoud' => 'IspVerantwoordelijke/overzichtAfspraken',
+                'footer' => 'main_footer');
+            $this->template->load('main_master', $partials, $data);
+        }
+
+        /**
+         * haalt alle afspraken op in een ajax call en laad deze in de view overzichtAfspraken.php
+         * @see Authex::getGebruikerInfo()
+         * @see Afspraak_model::getAfsprakenWherePersoonIdDocent($persoonId)
+         */
+        public function haalAjaxop_AfsprakenDocent() {
+
+            $this->load->model('afspraak_model');
+
+            $persoonId = $this->authex->getGebruikerInfo();
+
+            $data['afspraken'] = $this->afspraak_model->getAfsprakenWherePersoonIdDocent($persoonId->id);
+
+            echo json_encode($data['afspraken']);
+        }
+
+        /**
+         * Voegt een nieue vrije afspraak toe en herhaalt deze indien nodig
+         * @see Authex::getGebruikerInfo()
+         * @see Afspraak_model::addMoment($docentid, $startuur, $einduur, $datum, $plaats);
+         */
+        public function momentToevoegen() {
+            $this->load->model('afspraak_model');
+
+            $plaats = $this->input->get('plaats');
+            $datum = $this->input->get('datum');
+            $startuur = $this->input->get('start');
+            $einduur = $this->input->get('end');
+            $herhaal = $this->input->get('herhaal') + 1;
+
+            $docent = $this->authex->getGebruikerInfo();
+
+            for ($i = 1; $i <= $herhaal; $i++) {
+                $this->afspraak_model->addMoment($docent->id, $startuur, $einduur, $datum, $plaats);
+                $datum = strtotime($datum);
+                $datum = strtotime("+7 day", $datum);
+                $datum = date('Y-m-d', $datum);
+            }
+        }
+
+        /**
+         * past een afspraak aan
+         * @see Afspraak_model::updateAfspraak($docentid, $startuur, $einduur, $datum, $plaats);
+         */
+        public function afspraakUpdate() {
+
+            $this->load->model('afspraak_model');
+
+            $id = $this->input->get('id');
+            $plaats = $this->input->get('plaats');
+            $datum = $this->input->get('datum');
+            $startuur = $this->input->get('start');
+            $einduur = $this->input->get('end');
+            $description = $this->input->get('description');
+
+            $this->afspraak_model->updateAfspraak($id, $startuur, $einduur, $datum, $plaats, $description);
+        }
+
+        /**
+         * Verwijderd een afspraak ongeacht of deze al bezet is of vrij is
+         * @see Afspraak_model::delete($id);
+         */
+        public function afspraakVerwijder() {
+            $this->load->model('afspraak_model');
+
+            $id = $this->input->get('id');
+
+            $this->afspraak_model->delete($id);
+        }
+
+        /**
+         * Maakt een bezette afspraak terug leeg en beschikbaar voor alle studenten
+         * @see Afspraak_model::updateAfspraakBeschikbaarheid($id, $beschikbaar);
+         */
+        public function afspraakEmpty() {
+            $this->load->model('afspraak_model');
+
+            $id = $this->input->get('id');
+            $beschikbaar = 1;
+
+            $this->afspraak_model->updateAfspraakBeschikbaarheid($id, $beschikbaar);
+        }
     }

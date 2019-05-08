@@ -50,7 +50,7 @@
          */
         public function index()
         {
-            $data['title'] = "Overzicht van de ingediende ISP simulaties";
+            $data['title'] = "Afspraken";
 
             // Defines roles for this page (You can also use "geen" or leave roles empty!).
             $data['roles'] = getRoles('geen','geen','Ontwikkelaar','geen');
