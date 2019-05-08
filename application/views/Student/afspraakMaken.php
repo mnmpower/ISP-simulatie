@@ -17,6 +17,15 @@
                 </select>
             </div>
         </form>
+		<?php
+			$terugattributes = array(
+				'class' => 'form-control mt-4 mb-3',
+				'id' => 'terugButoon'
+			);
+			echo form_open_multipart("student/setType");
+			echo form_submit("terug", "Terug naar menu",$terugattributes );
+			echo form_close();
+		?>
 
         <div id="calendar">
 

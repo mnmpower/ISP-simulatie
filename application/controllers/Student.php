@@ -568,8 +568,10 @@
         public function ispSubmit()
         {
             $this->load->model('persoonLes_model');
-
             $student = $this->authex->getGebruikerInfo();
+
+            $this->persoonLes_model->deletePersoonLesWherePersoonId($student->id);
+
             $isp1 = str_replace('"', '', $this->input->get('isp1'));
             $isp1 = str_replace('[', '', $isp1);
             $isp1 = str_replace(']', '', $isp1);
@@ -580,12 +582,16 @@
             $isp2 = str_replace(']', '', $isp2);
             $isp2array = array_map('intval', explode(',', $isp2));
 
-            foreach ($isp1array as $les) {
-                $this->persoonLes_model->addPersoonLes($les, $student->id);
+            if (!empty($isp1)) {
+                foreach ($isp1array as $les) {
+                    $this->persoonLes_model->addPersoonLes($les, $student->id);
+                }
             }
 
-            foreach ($isp2array as $les) {
-                $this->persoonLes_model->addPersoonLes($les, $student->id);
+            if (!empty($isp2)) {
+                foreach ($isp2array as $les) {
+                    $this->persoonLes_model->addPersoonLes($les, $student->id);
+                }
             }
 
             redirect('Student/home_student');
