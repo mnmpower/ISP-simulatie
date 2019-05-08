@@ -473,7 +473,7 @@
             $data['buttons'] = getNavbar('opleidingsmanager');
 
             // Gets plugins if required
-            $data['plugins'] = getPlugin('geen');
+            $data['plugins'] = getPlugin('table');
 
             // Gets foutmelding from parameter
             $data['foutmelding'] = $foutmelding;
@@ -491,6 +491,9 @@
 
         public function haalAjaxOp_Lessen()
         {
+			// Gets plugins if required
+			$data['plugins'] = getPlugin('table');
+
             $this->load->model('les_model');
             $data['lessen'] = $this->les_model->getAllWithVakAndKlas();
 

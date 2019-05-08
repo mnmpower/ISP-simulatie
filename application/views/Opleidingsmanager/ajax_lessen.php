@@ -4,11 +4,21 @@
  * Ajaxpagina waarin de CRUD voor het beheren van de lessen wordt weergeven
  */
 ?>
-<table class="table table-striped">
+<!-- Bootstrap CSS -->
+<?php echo pasStylesheetAan("bootstrap.css"); ?>
+<?php echo haalJavascriptOp("jquery-3.3.1.js"); ?>
+<?php echo haalJavascriptOp("bootstrap.bundle.js"); ?>
+
+<!-- Plugins -->
+<?php if ($plugins != null) {
+	foreach ($plugins as $line) {
+		echo $line;
+	}} ?>
+<table data-toggle="table" class="table-striped table-borderless table-hover ">
     <thead>
         <tr>
-            <th width="30%">Vak</th>
-            <th width="20%">Klas</th>
+            <th data-sortable="true" width="30%">Vak</th>
+            <th data-sortable="true" width="20%">Klas</th>
             <th width="30%">Moment</th>
             <th width="10%"></th>
             <th width="10%"></th>

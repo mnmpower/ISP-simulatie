@@ -72,7 +72,7 @@
 			$data['buttons'] = getNavbar('ispverantwoordelijke');
 
 			// Gets plugins if required
-			$data['plugins'] = getPlugin('geen');
+			$data['plugins'] = getPlugin('table');
 
 			$ingediendeIspStudenten = $this->persoon_model->getAllWhereIspIngediend();
 

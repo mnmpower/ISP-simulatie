@@ -12,10 +12,10 @@
 	<table data-toggle="table" class="table-striped table-borderless table-hover ">
 		<thead>
 		<tr>
-			<th data-sortable="true" class="text-uppercase">Studentennummer</th>
-			<th data-sortable="true" class="text-uppercase">Naam</th>
-			<th data-sortable="true" class="text-uppercase">Aantal studiepunten</th>
-			<th data-sortable="true" class="text-uppercase">Advies</th>
+			<th data-sortable="true" class="text-capitalize">Studentennummer</th>
+			<th data-sortable="true" class="text-capitalize">Naam</th>
+			<th data-sortable="true" class="text-capitalize">Aantal studiepunten</th>
+			<th data-sortable="true" class="">Advies</th>
 		</tr>
 		</thead>
 		<tbody>
