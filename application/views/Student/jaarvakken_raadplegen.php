@@ -1,4 +1,11 @@
 <?php
+/**
+ * @file jaarvakken_raadplegen.php
+ * Pagina waarop de student de vakken per keuzerichting en fase kan opvragen
+ * Gebruikt ajax-call om de vakken per fase per keuzerichting op te halen
+ */
+?>
+<?php
     $keuzerichtingenNieuw[0] = 'Kies een keuzerichting..';
     foreach ($keuzerichtingen as $keuzerichting) {
         $keuzerichtingenNieuw[$keuzerichting->id] = $keuzerichting->naam;

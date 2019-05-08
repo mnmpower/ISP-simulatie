@@ -4,7 +4,9 @@
      * @brief Model-klasse voor de personen
      * Model-klasse die alle methodes bevat om te intrageren met de database-tabel team22_persoon
      * @property Persoon_model $persoon_model
+     * @property Afspraak_model $afspraak_model
 	 * @property PersoonLes_model $persoonLes_model
+	 * @property PersoonType_model $persoonType_model
      */
     class Persoon_model extends CI_Model
     {
@@ -29,7 +31,7 @@
         /**
          * Retourneert het record met id=$id uit de tabel team22_persoon
          * @param $id de id van het record  dat opgevraagd wordt
-         * @return Het opgevraagde record
+         * @return Het opgevraagde Persoon record
          */
         function get($id)
         {
@@ -38,11 +40,11 @@
             return $query->row();
         }
 
-      /**
-     * Voegt het record $persoon toe aan de tabel team22_persoon
-     * @param $persoon het record dat toegevoegd wordt
-     * @return int id
-     */
+		  /**
+		 * Voegt het record $persoon toe aan de tabel team22_persoon
+		 * @param $persoon het record dat toegevoegd wordt
+		 * @return int id
+		 */
         function insert($persoon)
         {
             $this->db->insert('persoon', $persoon);
@@ -224,12 +226,22 @@
             return $personen;
         }
 
+		/**
+		 * Retourneert de persoonrecords met keuzerichtignID=$keuzerichtingId uit de tabel team22_persoon
+		 * @param $keuzerichtingId de keuzerichtingId van de records die opgevraagd worden
+		 * @return de opgevraagde personen van een bepaalde keuzerichting
+		 */
 		function getPersoonWhereKeuzerichtingId($keuzerichtingId) {
 			$this->db->where('keuzerichtingId', $keuzerichtingId);
 			$query = $this->db->get('persoon');
 			return $query->result();
 		}
 
+		/**
+		 * Retourneert de persoonrecords met KlasId=$klasId uit de tabel team22_persoon
+		 * @param $klasId de klasId van de records die opgevraagd worden
+		 * @return de opgevraagde personen van een bepaalde klas
+		 */
 		function getPersoonWhereKlasId($klasId) {
 			$this->db->where('klasId', $klasId);
 			$query = $this->db->get('persoon');

@@ -1,3 +1,10 @@
+<?php
+/**
+ * @file uurroosterWeergeven.php
+ * View waarin de student zijn/haar klasvoorkeur kan doorgeven
+ * Gebruikt ajax-call om de uurroosters van de klassen op te halen
+ */
+?>
 <script>
 	klasId = "<?php echo $klas->id; ?>";
 

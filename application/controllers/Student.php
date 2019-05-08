@@ -97,7 +97,7 @@
 
             $inhoud = '';
             $data['title'] = "Student";
-//
+
             $typeStudent = $this->session->userdata("type");
 
             // Defines roles for this page (You can also use "geen" or leave roles empty!).
@@ -530,6 +530,7 @@
             $vakId = $this->input->get('vakId');
 
             $data['lessen'] = $this->les_model->getAllWithKlasWhereKlas($vakId);
+
             echo json_encode($data['lessen']);
         }
 

@@ -1,3 +1,9 @@
+<?php
+/**
+ * @file ispSamenstellenConfirm.php
+ * Pagina waarin de combistudent zijn ISP moet bevestigen na het samenstellen
+ */
+?>
 <div class="container container90 containerISP">
     <h1>Semester 1</h1>
     <div id="roosterConfirm"></div>

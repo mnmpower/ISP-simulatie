@@ -60,6 +60,10 @@ class Mail_model extends CI_Model
         $this->db->delete('mail');
     }
 
+	/**
+	 * Retourneert alle records uit de tabel team22_mail
+	 * @return array met alle mails
+	 */
     function getAllMail(){
 		$query = $this->db->get('mail');
 		return $query->result();

@@ -497,6 +497,15 @@
             $this->load->view('opleidingsmanager/ajax_lessen', $data);
         }
 
+        public function haalJsonOp_PersoonLessen()
+        {
+            $this->load->model('persoonLes_model');
+            $object = $this->persoonLes_model->getAll();
+
+            $this->output->set_content_type("application/json");
+            echo json_encode($object);
+        }
+
         public function haalJsonOp_Les()
         {
             $id = $this->input->get('lesId');
@@ -554,6 +563,494 @@
             }
 
             redirect('Opleidingsmanager/lesBeheer');
+        }
+
+        public function uploadLessenExcel() {
+            $this->load->model('les_model');
+            $this->load->model('klas_model');
+
+            $config['upload_path'] = './uploads/';
+            $config['allowed_types'] = 'xlsx|xls';
+            $this->load->library('upload', $config);
+
+            if (!$this->upload->do_upload('excelFile'))
+            {
+                redirect('Opleidingsmanager/lesBeheer/fout');
+            }
+            else
+            {
+                // Alle lessen verwijderen indien aangeduid
+                $deleteLessen = $this->input->post('deleteLessenExcel');
+                if($deleteLessen == true) {
+                    $this->les_model->deleteAll();
+                }
+
+                $upload_data = $this->upload->data();
+                $fileName = $upload_data['file_name'];
+                $newName = 'lessen.xls';
+                if(substr($fileName, -4) == "xlsx") {
+                    $newName = "lessen.xlsx";
+                }
+                rename('./uploads/' . $fileName, './uploads/' . $newName);
+
+                // Excel file koppelen
+                $this->load->library('excel');
+                $file = './uploads/' . $newName;
+                $excelFile = PHPExcel_IOFactory::load($file);
+
+                // Semester 1 inlezen
+                $semester = $excelFile->getSheet(0)->getCell('A2')->getValue();
+                $semester = str_replace(' ', '', $semester);
+                if(strtolower($semester) == "semester1") {
+                    // Teller init
+                    $toegevoegd = 0;
+                    $totaal = 0;
+
+                    // Bestand inlezen
+                    $row = 3;
+                    $lastColumn = $excelFile->getSheet(0)->getHighestColumn();
+                    $lastColumn++;
+                    for ($column = 'A'; $column != $lastColumn; $column++) {
+                        $cell_value = $excelFile->getSheet(0)->getCell($column.$row)->getValue();
+                        if($cell_value != null) {
+                            $klasnaam = preg_replace("/[^A-Za-z0-9 ]/", '', $cell_value);
+                            $klasnaam = str_replace(' ', '', $klasnaam);
+
+                            $lessen = new stdClass();
+                            $klas = $this->klas_model->getWhereNaam($klasnaam);
+                            $lessen->klas = $klas;
+
+                            // Maandag
+                            for($i = 4; $i <= 8; $i++) {
+                                $blok = 'MA' . $excelFile->getSheet(0)->getCell('B' . $i)->getValue();
+                                $lessen->$blok = $excelFile->getSheet(0)->getCell($column.$i)->getValue();
+
+                                if ($excelFile->getSheet(0)->getCell($column.$i)->isInMergeRange()) {
+                                    // Deel van een merged cell
+                                    $mergeRange = $excelFile->getSheet(0)->getCell($column.$i)->getMergeRange();
+                                    $masterCell = substr($mergeRange, 0, strpos($mergeRange, ':'));
+                                    $lessen->$blok = $excelFile->getSheet(0)->getCell($masterCell)->getValue();;
+                                }
+
+                                $pos = strpos($lessen->$blok, ' of ');
+                                if ($pos != false) {
+                                    $origineel = $lessen->$blok;
+                                    $lessen->$blok = substr($origineel, 0, $pos);
+                                    $blokDubbel = $this->renameForDB(substr($origineel, $pos + 4, strlen($origineel)));
+                                    if($this->addInDB($blokDubbel, 'maandag', 1, $blok, $lessen->klas)) {
+                                        $toegevoegd++;
+                                    }
+                                    $totaal++;
+                                }
+
+                                if($lessen->$blok != null) {
+                                    if($this->addInDB($this->renameForDB($lessen->$blok), 'maandag', 1, $blok, $lessen->klas)) {
+                                        $toegevoegd++;
+                                    }
+                                    $totaal++;
+                                }
+                            }
+                            // Dinsdag
+                            for($i = 10; $i <= 14; $i++) {
+                                $blok = 'DI' . $excelFile->getSheet(0)->getCell('B' . $i)->getValue();
+                                $lessen->$blok = $excelFile->getSheet(0)->getCell($column.$i)->getValue();
+
+                                if ($excelFile->getSheet(0)->getCell($column.$i)->isInMergeRange()) {
+                                    // Deel van een merged cell
+                                    $mergeRange = $excelFile->getSheet(0)->getCell($column.$i)->getMergeRange();
+                                    $masterCell = substr($mergeRange, 0, strpos($mergeRange, ':'));
+                                    $lessen->$blok = $excelFile->getSheet(0)->getCell($masterCell)->getValue();;
+                                }
+
+                                $pos = strpos($lessen->$blok, ' of ');
+                                if ($pos != false) {
+                                    $origineel = $lessen->$blok;
+                                    $lessen->$blok = substr($origineel, 0, $pos);
+                                    $blokDubbel = $this->renameForDB(substr($origineel, $pos + 4, strlen($origineel)));
+                                    if($this->addInDB($blokDubbel, 'dinsdag', 1, $blok, $lessen->klas)) {
+                                        $toegevoegd++;
+                                    }
+                                    $totaal++;
+                                }
+
+                                if($lessen->$blok != null) {
+                                    if($this->addInDB($this->renameForDB($lessen->$blok), 'dinsdag', 1, $blok, $lessen->klas)) {
+                                        $toegevoegd++;
+                                    }
+                                    $totaal++;
+                                }
+                            }
+                            // Woensdag
+                            for($i = 16; $i <= 20; $i++) {
+                                $blok = 'WO' . $excelFile->getSheet(0)->getCell('B' . $i)->getValue();
+                                $lessen->$blok = $excelFile->getSheet(0)->getCell($column.$i)->getValue();
+
+                                if ($excelFile->getSheet(0)->getCell($column.$i)->isInMergeRange()) {
+                                    // Deel van een merged cell
+                                    $mergeRange = $excelFile->getSheet(0)->getCell($column.$i)->getMergeRange();
+                                    $masterCell = substr($mergeRange, 0, strpos($mergeRange, ':'));
+                                    $lessen->$blok = $excelFile->getSheet(0)->getCell($masterCell)->getValue();;
+                                }
+
+                                $pos = strpos($lessen->$blok, ' of ');
+                                if ($pos != false) {
+                                    $origineel = $lessen->$blok;
+                                    $lessen->$blok = substr($origineel, 0, $pos);
+                                    $blokDubbel = $this->renameForDB(substr($origineel, $pos + 4, strlen($origineel)));
+                                    if($this->addInDB($blokDubbel, 'woensdag', 1, $blok, $lessen->klas)) {
+                                        $toegevoegd++;
+                                    }
+                                    $totaal++;
+                                }
+
+                                if($lessen->$blok != null) {
+                                    if($this->addInDB($this->renameForDB($lessen->$blok), 'woensdag', 1, $blok, $lessen->klas)) {
+                                        $toegevoegd++;
+                                    }
+                                    $totaal++;
+                                }
+                            }
+                            // Donderdag
+                            for($i = 22; $i <= 26; $i++) {
+                                $blok = 'DO' . $excelFile->getSheet(0)->getCell('B' . $i)->getValue();
+                                $lessen->$blok = $excelFile->getSheet(0)->getCell($column.$i)->getValue();
+
+                                if ($excelFile->getSheet(0)->getCell($column.$i)->isInMergeRange()) {
+                                    // Deel van een merged cell
+                                    $mergeRange = $excelFile->getSheet(0)->getCell($column.$i)->getMergeRange();
+                                    $masterCell = substr($mergeRange, 0, strpos($mergeRange, ':'));
+                                    $lessen->$blok = $excelFile->getSheet(0)->getCell($masterCell)->getValue();;
+                                }
+
+                                $pos = strpos($lessen->$blok, ' of ');
+                                if ($pos != false) {
+                                    $origineel = $lessen->$blok;
+                                    $lessen->$blok = substr($origineel, 0, $pos);
+                                    $blokDubbel = $this->renameForDB(substr($origineel, $pos + 4, strlen($origineel)));
+                                    if($this->addInDB($blokDubbel, 'donderdag', 1, $blok, $lessen->klas)) {
+                                        $toegevoegd++;
+                                    }
+                                    $totaal++;
+                                }
+
+                                if($lessen->$blok != null) {
+                                    if($this->addInDB($this->renameForDB($lessen->$blok), 'donderdag', 1, $blok, $lessen->klas)) {
+                                        $toegevoegd++;
+                                    }
+                                    $totaal++;
+                                }
+                            }
+                            // Vrijdag
+                            for($i = 28; $i <= 32; $i++) {
+                                $blok = 'VR' . $excelFile->getSheet(0)->getCell('B' . $i)->getValue();
+                                $lessen->$blok = $excelFile->getSheet(0)->getCell($column.$i)->getValue();
+
+                                if ($excelFile->getSheet(0)->getCell($column.$i)->isInMergeRange()) {
+                                    // Deel van een merged cell
+                                    $mergeRange = $excelFile->getSheet(0)->getCell($column.$i)->getMergeRange();
+                                    $masterCell = substr($mergeRange, 0, strpos($mergeRange, ':'));
+                                    $lessen->$blok = $excelFile->getSheet(0)->getCell($masterCell)->getValue();;
+                                }
+
+                                $pos = strpos($lessen->$blok, ' of ');
+                                if ($pos != false) {
+                                    $origineel = $lessen->$blok;
+                                    $lessen->$blok = substr($origineel, 0, $pos);
+                                    $blokDubbel = $this->renameForDB(substr($origineel, $pos + 4, strlen($origineel)));
+                                    if($this->addInDB($blokDubbel, 'vrijdag', 1, $blok, $lessen->klas)) {
+                                        $toegevoegd++;
+                                    }
+                                    $totaal++;
+                                }
+
+                                if($lessen->$blok != null) {
+                                    if($this->addInDB($this->renameForDB($lessen->$blok), 'vrijdag', 1, $blok, $lessen->klas)) {
+                                        $toegevoegd++;
+                                    }
+                                    $totaal++;
+                                }
+                            }
+                        }
+                    }
+
+                    // Semester 2 inlezen
+                    $semester = $excelFile->getSheet(1)->getCell('A1')->getValue();
+                    $semester = str_replace(' ', '', $semester);
+                    if(strtolower($semester) == "semester2") {
+                        // Bestand inlezen
+                        $row = 2;
+                        $lastColumn = $excelFile->getSheet(1)->getHighestColumn();
+                        $lastColumn++;
+                        for ($column = 'A'; $column != $lastColumn; $column++) {
+                            $cell_value = $excelFile->getSheet(1)->getCell($column.$row)->getValue();
+                            if($cell_value != null) {
+                                $klasnaam = preg_replace("/[^A-Za-z0-9 ]/", '', $cell_value);
+                                $klasnaam = str_replace(' ', '', $klasnaam);
+
+                                $lessen = new stdClass();
+                                $klas = $this->klas_model->getWhereNaam($klasnaam);
+                                $lessen->klas = $klas;
+
+                                // Maandag
+                                for($i = 3; $i <= 7; $i++) {
+                                    $blok = 'MA' . $excelFile->getSheet(1)->getCell('B' . $i)->getValue();
+                                    $lessen->$blok = $excelFile->getSheet(1)->getCell($column.$i)->getValue();
+
+                                    if ($excelFile->getSheet(1)->getCell($column.$i)->isInMergeRange()) {
+                                        // Deel van een merged cell
+                                        $mergeRange = $excelFile->getSheet(1)->getCell($column.$i)->getMergeRange();
+                                        $masterCell = substr($mergeRange, 0, strpos($mergeRange, ':'));
+                                        $lessen->$blok = $excelFile->getSheet(1)->getCell($masterCell)->getValue();;
+                                    }
+
+                                    $pos = strpos($lessen->$blok, ' of ');
+                                    if ($pos != false) {
+                                        $origineel = $lessen->$blok;
+                                        $lessen->$blok = substr($origineel, 0, $pos);
+                                        $blokDubbel = $this->renameForDB(substr($origineel, $pos + 4, strlen($origineel)));
+                                        if($this->addInDB($blokDubbel, 'maandag', 1, $blok, $lessen->klas)) {
+                                            $toegevoegd++;
+                                        }
+                                        $totaal++;
+                                    }
+
+                                    if($lessen->$blok != null) {
+                                        if($this->addInDB($this->renameForDB($lessen->$blok), 'maandag', 1, $blok, $lessen->klas)) {
+                                            $toegevoegd++;
+                                        }
+                                        $totaal++;
+                                    }
+                                }
+                                // Dinsdag
+                                for($i = 9; $i <= 13; $i++) {
+                                    $blok = 'DI' . $excelFile->getSheet(1)->getCell('B' . $i)->getValue();
+                                    $lessen->$blok = $excelFile->getSheet(1)->getCell($column.$i)->getValue();
+
+                                    if ($excelFile->getSheet(1)->getCell($column.$i)->isInMergeRange()) {
+                                        // Deel van een merged cell
+                                        $mergeRange = $excelFile->getSheet(1)->getCell($column.$i)->getMergeRange();
+                                        $masterCell = substr($mergeRange, 0, strpos($mergeRange, ':'));
+                                        $lessen->$blok = $excelFile->getSheet(1)->getCell($masterCell)->getValue();;
+                                    }
+
+                                    $pos = strpos($lessen->$blok, ' of ');
+                                    if ($pos != false) {
+                                        $origineel = $lessen->$blok;
+                                        $lessen->$blok = substr($origineel, 0, $pos);
+                                        $blokDubbel = $this->renameForDB(substr($origineel, $pos + 4, strlen($origineel)));
+                                        if($this->addInDB($blokDubbel, 'dinsdag', 1, $blok, $lessen->klas)) {
+                                            $toegevoegd++;
+                                        }
+                                        $totaal++;
+                                    }
+
+                                    if($lessen->$blok != null) {
+                                        if($this->addInDB($this->renameForDB($lessen->$blok), 'dinsdag', 1, $blok, $lessen->klas)) {
+                                            $toegevoegd++;
+                                        }
+                                        $totaal++;
+                                    }
+                                }
+                                // Woensdag
+                                for($i = 15; $i <= 19; $i++) {
+                                    $blok = 'WO' . $excelFile->getSheet(1)->getCell('B' . $i)->getValue();
+                                    $lessen->$blok = $excelFile->getSheet(1)->getCell($column.$i)->getValue();
+
+                                    if ($excelFile->getSheet(1)->getCell($column.$i)->isInMergeRange()) {
+                                        // Deel van een merged cell
+                                        $mergeRange = $excelFile->getSheet(1)->getCell($column.$i)->getMergeRange();
+                                        $masterCell = substr($mergeRange, 0, strpos($mergeRange, ':'));
+                                        $lessen->$blok = $excelFile->getSheet(1)->getCell($masterCell)->getValue();;
+                                    }
+
+                                    $pos = strpos($lessen->$blok, ' of ');
+                                    if ($pos != false) {
+                                        $origineel = $lessen->$blok;
+                                        $lessen->$blok = substr($origineel, 0, $pos);
+                                        $blokDubbel = $this->renameForDB(substr($origineel, $pos + 4, strlen($origineel)));
+                                        if($this->addInDB($blokDubbel, 'woensdag', 1, $blok, $lessen->klas)) {
+                                            $toegevoegd++;
+                                        }
+                                        $totaal++;
+                                    }
+
+                                    if($lessen->$blok != null) {
+                                        if($this->addInDB($this->renameForDB($lessen->$blok), 'woensdag', 1, $blok, $lessen->klas)) {
+                                            $toegevoegd++;
+                                        }
+                                        $totaal++;
+                                    }
+                                }
+                                // Donderdag
+                                for($i = 21; $i <= 25; $i++) {
+                                    $blok = 'DO' . $excelFile->getSheet(1)->getCell('B' . $i)->getValue();
+                                    $lessen->$blok = $excelFile->getSheet(1)->getCell($column.$i)->getValue();
+
+                                    if ($excelFile->getSheet(1)->getCell($column.$i)->isInMergeRange()) {
+                                        // Deel van een merged cell
+                                        $mergeRange = $excelFile->getSheet(1)->getCell($column.$i)->getMergeRange();
+                                        $masterCell = substr($mergeRange, 0, strpos($mergeRange, ':'));
+                                        $lessen->$blok = $excelFile->getSheet(1)->getCell($masterCell)->getValue();;
+                                    }
+
+                                    $pos = strpos($lessen->$blok, ' of ');
+                                    if ($pos != false) {
+                                        $origineel = $lessen->$blok;
+                                        $lessen->$blok = substr($origineel, 0, $pos);
+                                        $blokDubbel = $this->renameForDB(substr($origineel, $pos + 4, strlen($origineel)));
+                                        if($this->addInDB($blokDubbel, 'donderdag', 1, $blok, $lessen->klas)) {
+                                            $toegevoegd++;
+                                        }
+                                        $totaal++;
+                                    }
+
+                                    if($lessen->$blok != null) {
+                                        if($this->addInDB($this->renameForDB($lessen->$blok), 'donderdag', 1, $blok, $lessen->klas)) {
+                                            $toegevoegd++;
+                                        }
+                                        $totaal++;
+                                    }
+                                }
+                                // Vrijdag
+                                for($i = 27; $i <= 31; $i++) {
+                                    $blok = 'VR' . $excelFile->getSheet(1)->getCell('B' . $i)->getValue();
+                                    $lessen->$blok = $excelFile->getSheet(1)->getCell($column.$i)->getValue();
+
+                                    if ($excelFile->getSheet(1)->getCell($column.$i)->isInMergeRange()) {
+                                        // Deel van een merged cell
+                                        $mergeRange = $excelFile->getSheet(1)->getCell($column.$i)->getMergeRange();
+                                        $masterCell = substr($mergeRange, 0, strpos($mergeRange, ':'));
+                                        $lessen->$blok = $excelFile->getSheet(1)->getCell($masterCell)->getValue();;
+                                    }
+
+                                    $pos = strpos($lessen->$blok, ' of ');
+                                    if ($pos != false) {
+                                        $origineel = $lessen->$blok;
+                                        $lessen->$blok = substr($origineel, 0, $pos);
+                                        $blokDubbel = $this->renameForDB(substr($origineel, $pos + 4, strlen($origineel)));
+                                        if($this->addInDB($blokDubbel, 'vrijdag', 1, $blok, $lessen->klas)) {
+                                            $toegevoegd++;
+                                        }
+                                        $totaal++;
+                                    }
+
+                                    if($lessen->$blok != null) {
+                                        if($this->addInDB($this->renameForDB($lessen->$blok), 'vrijdag', 1, $blok, $lessen->klas)) {
+                                            $toegevoegd++;
+                                        }
+                                        $totaal++;
+                                    }
+                                }
+                            }
+                        }
+
+                        // Redirect naar overzicht gebruikers
+                        redirect('Opleidingsmanager/lesBeheer/' . $toegevoegd . ' van de ' . $totaal);
+                    } else {
+                        redirect('Opleidingsmanager/lesBeheer/fout');
+                    }
+                } else {
+                    redirect('Opleidingsmanager/lesBeheer/fout');
+                }
+            }
+        }
+
+        public function renameForDB($string) {
+            $vakAfkortingen = array(
+                "po1" => "professioneleontwikkeling1",
+                "po2" => "professioneleontwikkeling2",
+                "po3" => "professioneleontwikkeling3"
+            );
+
+            $string = strtolower($string);
+            $string = str_replace(' ', '', $string);
+            $string = str_replace('evenweken', '', $string);
+            $string = str_replace('onevenweken', '', $string);
+
+            $pos = strpos($string, 'groep');
+            if ($pos != false) {
+                $string = substr($string, 0, $pos);
+            }
+
+            if(preg_match("/w+[1-99]+-/", $string, $matches, PREG_OFFSET_CAPTURE)) {
+                $pos = $matches[0][1];
+                $string = substr($string, 0, $pos);
+            }
+
+            if(isset($vakAfkortingen[$string])) {
+                $string = $vakAfkortingen[$string];
+            }
+
+            return $string;
+        }
+
+        public function addInDB($vak, $dag, $aantalBlokken, $startBlok, $klas) {
+            $this->load->model('vak_model');
+            $vakId = $this->vak_model->getIdWhereNaam($vak);
+
+            if($vakId > 0) {
+                $startBlok = substr($startBlok, 2, 1);
+                $les = new stdClass();
+                $les->klasId = $klas->id;
+                $les->vakId = $vakId;
+                switch ($dag){
+                    case 'maandag':
+                        $les->datum = '2019-09-16';
+                        break;
+                    case 'dinsdag':
+                        $les->datum = '2019-09-17';
+                        break;
+                    case 'woensdag':
+                        $les->datum = '2019-09-18';
+                        break;
+                    case 'donderdag':
+                        $les->datum = '2019-09-19';
+                        break;
+                    case 'vrijdag':
+                        $les->datum = '2019-09-20';
+                        break;
+                }
+                switch ($startBlok){
+                    case 1:
+                        $les->startuur = '08:30:00';
+                        $les->einduur = '10:00:00';
+                        break;
+                    case 2:
+                        $les->startuur = '10:15:00';
+                        $les->einduur = '11:45:00';
+                        break;
+                    case 3:
+                        $les->startuur = '12:30:00';
+                        $les->einduur = '14:00:00';
+                        break;
+                    case 4:
+                        $les->startuur = '14:15:00';
+                        $les->einduur = '16:45:00';
+                        break;
+                    case 5:
+                        $les->startuur = '16:00:00';
+                        $les->einduur = '17:30:00';
+                        break;
+                }
+
+                $dubbelCheck = new stdClass();
+                $dubbelCheck = $this->les_model->getWhereKlasIdAndVakIdAndDatum($les);
+                if($dubbelCheck == null) {
+                    $this->les_model->insert($les);
+                } else {
+                    if($dubbelCheck->klasId == $les->klasId && $dubbelCheck->vakId == $les->vakId && $dubbelCheck->datum == $les->datum) {
+                        $les->id = $dubbelCheck->id;
+                        $les->startuur = $dubbelCheck->startuur;
+
+                        $this->les_model->update($les);
+                    } else {
+                        $this->les_model->insert($les);
+                    }
+                }
+                return true;
+            } else {
+                return false;
+            }
         }
 
 		public function mailBeheer()

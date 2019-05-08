@@ -287,6 +287,7 @@
                 'footer' => 'main_footer');
             $this->template->load('main_master', $partials, $data);
         }
+
         /**
          * Haalt de post student en bijhorend advies op uit de pagina en update deze in Persoon_model.
          * User wordt teruggestuurd naar index.
@@ -321,6 +322,7 @@
                 $this->load->view('IspVerantwoordelijke/ajax_uurroosterCombiSemester2', $data);
             }
         }
+
         /**
          * AJAX call voor lessen op te halen van een combi-student.
          * @see Les_model::getAllWhereStudentId()

@@ -18,9 +18,9 @@
         echo form_open('Student/setType', $attributen);
         echo "<h3>Gelieve een keuze te maken</h3>";
         $modelattributen = array('name' => 'model', "id" => "model", 'class' => 'form-control');
-        echo form_submit('model', 'Model-student', $modelattributen);
+        echo form_submit('model', 'Modelstudent', $modelattributen);
         $combiattributen = array('name' => 'combi', "id" => "combi", 'class' => 'form-control');
-        echo form_submit('combi', 'Combi-student', $combiattributen);
+        echo form_submit('combi', 'Combistudent', $combiattributen);
         echo form_close();
     ?>
 </div>

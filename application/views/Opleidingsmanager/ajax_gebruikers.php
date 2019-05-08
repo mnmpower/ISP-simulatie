@@ -1,3 +1,9 @@
+<?php
+/**
+ * @file ajax_gebruikers.php
+ * Ajaxpagina waarin de CRUD voor het beheren van de gebruikers wordt weergeven
+ */
+?>
 <table class="table table-striped">
     <thead>
         <tr>

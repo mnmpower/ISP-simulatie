@@ -1,3 +1,9 @@
+<?php
+/**
+ * @file ajax_KlasCRUD.php
+ * Ajaxpagina waarin de CRUD voor het beheren van de klassen wordt weergeven
+ */
+?>
 <table class="table table-striped">
 	<thead>
 	<tr>

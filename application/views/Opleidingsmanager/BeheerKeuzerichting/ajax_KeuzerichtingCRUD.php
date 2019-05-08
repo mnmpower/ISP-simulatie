@@ -1,3 +1,9 @@
+<?php
+/**
+ * @file ajax_KeuzerichtingCRUD.php
+ * Ajaxpagina waarin de CRUD voor het beheren van de keuzerichting wordt weergeven
+ */
+?>
 <table class="table table-striped">
 	<thead>
 	<tr>

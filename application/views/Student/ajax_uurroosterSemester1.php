@@ -1,3 +1,9 @@
+<?php
+/**
+ * @file ajax_uurroosterSemester1.php
+ * Ajaxpagina waarin de uurrooster (semester 1) van een klas wordt weergeven
+ */
+?>
 <script>
     var klasid = "<?php
         echo $klas->id;

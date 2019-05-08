@@ -3,9 +3,10 @@
      * @class Les_model
      * @brief Model-klasse voor de lessen
      * Model-klasse die alle methodes bevat om te intrageren met de database-tabel team22_les
+	 * @property Vak_model $vak_model
+	 * @property Klas_model $klas_model
 	 * @property Persoon_model $persoon_model
      * @property PersoonLes_model $persoonLes_model
-	 * @property Vak_model $vak_model
      */
     class Les_model extends CI_Model
     {
@@ -61,8 +62,8 @@
         }
 
         /**
-         * Verwijdert het record met id=$id uit de tabel team22_les en het bijhoorde record in de tabel team22_persoonLes
-         * @param $id de id van het record dat verwijderd wordt
+         * Verwijdert het record met id=$id uit de tabel team22_les en het bijhoorde records in de tabel team22_persoonLes
+         * @param $id de LesID van het record dat verwijderd wordt
          */
         function deleteWithPersoonLes($id)
         {
@@ -71,6 +72,14 @@
             $this->persoonLes_model->deleteWhereLes($id);
             $this->db->where('id', $id);
             $this->db->delete('les');
+        }
+
+        /**
+         * Verwijdert alle records uit de tabel team22_les
+         */
+        function deleteAll()
+        {
+            $this->db->empty_table('les');
         }
 
         /**
@@ -91,7 +100,7 @@
 		/**
 		 * Retourneert het record met id=$id uit de tabel team22_les en bijhorend record uit de tabel team22_vak
 		 * @param $klasId is het id van de klas waar we alle lessen van willen opvragen
-		 * @return alle less van een opgegeven klas
+		 * @return array van lessen van een opgegeven klas
 		 */
 		function getAllLesWhere($klasId)
 		{
@@ -103,7 +112,7 @@
         /**
          * Retourneert alle records met klasId=$klasId uit de tabel team22_les en bijhorende records uit de tabel team22_vak en team22_klas
          * @param $klasId de klasId van de records  die opgevraagd worden
-         * @return Array met alle opgevraagde records en bijhorende records
+         * @return array met lessen, waar de bijhorende vakken en klassen zijn bijgevoegd.
          */
         function getAllWithVakAndKlasWhereKlas($klasId){
             $this->db->where('klasId',$klasId);
@@ -120,20 +129,29 @@
             return $persoonLessen;
         }
 
+		/**
+		 * Delete het record $les uit de tabel team22_les
+		 * @param $id de id van de les die verwijderd wordt
+		 */
 		function delete($id)
 		{
 			$this->db->where('id', $id);
 			$this->db->delete('les');
 		}
 
+		/**
+		 * Delete alle lessen waarvan de  klasID =$klasId  uit de tabel team22_les
+		 * @param $klasId de id van de klas waarvan een les moet zijn
+		 */
 		function deleteAllWhereKlasID($klasId)
 		{
 			$this->db->where('klasId', $klasId);
 			$this->db->delete('les');
 		}
+		
         /**
          * Retourneert alle records  uit de tabel team22_les en bijhorende records uit de tabel team22_vak en team22_klas
-         * @return Array met alle opgevraagde records en de bijhorende records
+         * @return array met alle lessen waar ook de vakken en klassen bij inzitten
          */
         function getAllWithVakAndKlas(){
             $query = $this->db->get('les');
@@ -150,9 +168,9 @@
         }
 
         /**
-         * Retourneert het record met id=$id uit de tabel team22_les en bijhorende records uit de tabel team22_vak en team22_klas
-         * @param $id de id van het record  dat opgevraagd wordt
-         * @return Het opgevraagde record en de bijhorende records
+         * Retourneert een les met id=$id uit de tabel team22_les en bijhorende records uit de tabel team22_vak en team22_klas
+         * @param $id de id van de opgevraagde les
+         * @return een les met bijhorend vak en een omgezette dag.
          */
         function getWithVakAndKlasAndDag($id)
         {
@@ -189,6 +207,11 @@
             return $les;
         }
 
+		/**
+		 * Retourneert een array met lessen waarvan het vakID =$vakId it de tabel team22_vak en de bijhorende records uit team22_klas en team22_Vak
+		 * @param $vakId de id van het vak waarvan alle lessen worden opgevraagd
+		 * @return array met lessen met bijhorend vak en klas
+		 */
         function getAllWithKlasWhereKlas($vakId){
             $this->db->where('vakId',$vakId);
             $this->db->order_by("klasId", "asc");
@@ -203,7 +226,11 @@
             return $lessen;
         }
 
-
+		/**
+		 * Retourneert alle lessen met hun vak en hun klas van een opgegeven array met lessen.
+		 * @param $lessen is een array met lessen waar we extra informatie aan willen toevoegen
+		 * @return array van lessen van een student waar een vak en een klas aan is toegevoegd
+		 */
         function getAllWithVakAndKlasWhereLessen($lessen){
             $this->db->where_in('id', $lessen);
             $query = $this->db->get('les');
@@ -219,6 +246,11 @@
             return $rooster;
         }
 
+		/**
+		 * Retourneert alle lessen van een persoon met ID=$studentId uit de tabel team22_les en bijhorend record uit de tabel team22_Les
+		 * @param $studentId is het id van de persoon waar we alle lessen van willen opvragen
+		 * @return array van lessen van een student
+		 */
         function getAllWhereStudentId($studentId)
         {
             $result = array();
@@ -234,4 +266,18 @@
             return $result;
         }
 
+        /**
+         * Retourneert het record met klasId=$les->klasId, vakId=$les->vakId en datum=$vak->datum uit de tabel team22_les
+         * @param $les het object met de les van het record  dat opgevraagd wordt
+         * @return Het opgevraagde record
+         */
+        function getWhereKlasIdAndVakIdAndDatum($les)
+        {
+            $whereConditions = array('klasId' => $les->klasId, 'vakId' => $les->vakId, 'datum' => $les->datum);
+
+            $this->db->where($whereConditions);
+            $query = $this->db->get('les');
+            //var_dump($query->num_rows);
+            return $query->row();
+        }
     }
