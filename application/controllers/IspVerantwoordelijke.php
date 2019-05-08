@@ -84,6 +84,7 @@
                 if($persoon->klasId == null) {
                     // Persoon zit niet in een klas -> persoonLessen ophalen
                     $persoon->persoonLessen = $this->persoonLes_model->getAllWithLesAndVakAndKlas($persoon->id);
+					$persoon->klas = "Combi";
                 } else {
                     // Persoon zit wel in een klas -> lessen van de klas ophalen
                     $persoon->persoonLessen = $this->les_model->getAllWithVakAndKlasWhereKlas($persoon->klasId);
