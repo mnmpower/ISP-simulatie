@@ -200,7 +200,7 @@
             $lessen = $this->les_model->getAll();
 
             foreach ($lessen as $les) {
-                if($les->klasId = $persoon->klasId) {
+                if($les->klasId == $persoon->klasId) {
                     $this->addPersoonLes($les->id, $persoon->id);
                 }
             }

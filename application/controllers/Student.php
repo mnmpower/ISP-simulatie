@@ -251,8 +251,9 @@
 
             $persoon = $this->authex->getGebruikerInfo();
 
-            $klasId = $this->input->post('klas');
-            $persoon->klasId = $klasId;
+            $persoon->klasId = $this->input->post('klas');
+            $persoon->ispIngediend = 1;
+            $this->persoonLes_model->deletePersoonLesWherePersoonId($persoon->id);
             $this->persoon_model->update($persoon);
             $this->persoonLes_model->addPersoonLesWhereKlas($persoon);
 
