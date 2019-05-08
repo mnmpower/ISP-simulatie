@@ -324,4 +324,13 @@
             //var_dump($query->num_rows);
             return $query->row();
         }
+
+        /**
+         * Retourneert alle records  uit de tabel team22_les
+         * @return array met alle lessen
+         */
+        function getAll(){
+            $query = $this->db->get('les');
+            return $query->result();
+        }
     }

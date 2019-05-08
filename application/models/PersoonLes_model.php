@@ -190,4 +190,19 @@
             $this->db->where('persoonIdStudent', $id);
             $this->db->delete('persoonLes');
         }
+
+        /**
+         * voegt een nieuw persoonles toe aan de hand van de functie 'addPersoonLes'
+         * @param $persoon het persoon-object van de student die de les gaat opnemen
+         */
+        function addPersoonLesWhereKlas($persoon) {
+            $this->load->model('les_model');
+            $lessen = $this->les_model->getAll();
+
+            foreach ($lessen as $les) {
+                if($les->klasId = $persoon->klasId) {
+                    $this->addPersoonLes($les->id, $persoon->id);
+                }
+            }
+        }
     }

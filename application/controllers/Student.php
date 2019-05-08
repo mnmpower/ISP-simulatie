@@ -246,24 +246,15 @@
         public function voorkeurBevestigen()
         {
             $this->load->model('persoon_model');
+            $this->load->model('persoonLes_model');
             $this->load->library('session');
-
-            $data['title'] = "Student";
-
-            // Defines roles for this page (You can also use "geen" or leave roles empty!).
-            $data['roles'] = getRoles('Tester','Ontwikkelaar','geen','geen');
-
-            // Gets buttons for navbar);
-            $data['buttons'] = getNavbar('student');
-
-            // Gets plugins if required
-            $data['plugins'] = getPlugin('geen');
 
             $persoon = $this->authex->getGebruikerInfo();
 
             $klasId = $this->input->post('klas');
             $persoon->klasId = $klasId;
             $this->persoon_model->update($persoon);
+            $this->persoonLes_model->addPersoonLesWhereKlas($persoon);
 
 			$this->session->set_userdata('type','model');
 
