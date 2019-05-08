@@ -567,6 +567,7 @@
 
         public function uploadLessenExcel() {
             $this->load->model('les_model');
+            $this->load->model('persoonLes_model');
             $this->load->model('klas_model');
 
             $config['upload_path'] = './uploads/';
@@ -579,6 +580,12 @@
             }
             else
             {
+                // Alle lessen verwijderen indien aangeduid
+                $deletePersoonLessen = $this->input->post('deletePersoonLessenExcel');
+                if($deletePersoonLessen == true) {
+                    $this->persoonLes_model->deleteAll();
+                }
+
                 // Alle lessen verwijderen indien aangeduid
                 $deleteLessen = $this->input->post('deleteLessenExcel');
                 if($deleteLessen == true) {

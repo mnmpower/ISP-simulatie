@@ -39,7 +39,9 @@
             success: function (lessen) {
                 var aantalPersoonLessen = lessen.length;
                 if(aantalPersoonLessen <= 0) {
-                    $('#verwijderLessen').remove();
+                    $('#verwijderPersoonLessen').hide();
+                    $('#verwijderLessen').show();
+                    $('#deletePersoonLessenExcel').prop('checked', true);
                 }
             },
             error: function (xhr, status, error) {
@@ -122,6 +124,14 @@
         controleerFoutmelding();
         controleerPersoonLessen();
 
+        if($('#deletePersoonLessenExcel').is(":checked")) {
+            $('#verwijderLessen').show();
+        } else {
+            $('#verwijderLessen').hide();
+            $('#deleteLessenExcel').prop('checked', false);
+
+        }
+
         $("#voegtoe").click(function () {
             $("#lesId").val(0);
             $("#lesVak").val("");
@@ -164,6 +174,15 @@
             $("#formExcel").checkValidity();
             if($("#excelFile").val() == null || $("#lesTypeExcel").val() == "") {
                 e.preventDefault();
+            }
+        });
+
+        $('#deletePersoonLessenExcel').change(function() {
+            if($(this).is(":checked")) {
+                $('#verwijderLessen').show();
+            } else {
+                $('#verwijderLessen').hide();
+                $('#deleteLessenExcel').prop('checked', false);
             }
         });
     });
@@ -293,6 +312,11 @@
                                 'required' => 'required',
                                 'accept' => ".xlsx,.xls"
                             )); ?></td>
+                    </tr>
+                    <tr id="verwijderPersoonLessen">
+                        <td colspan="2"><?php echo form_checkbox('deletePersoonLessenExcel', true, false, array('id' => 'deletePersoonLessenExcel'
+                            )); ?>
+                            <?php echo form_label("Verwijder alle opgenomen lessen van alle studenten", "deletePersoonLessenExcel"); ?></td>
                     </tr>
                     <tr id="verwijderLessen">
                         <td colspan="2"><?php echo form_checkbox('deleteLessenExcel', true, false, array('id' => 'deleteLessenExcel'

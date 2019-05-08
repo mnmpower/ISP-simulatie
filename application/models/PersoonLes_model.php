@@ -173,4 +173,12 @@
 
             $this->db->insert('persoonLes', $data);
         }
+
+        /**
+         * Verwijdert alle records uit de tabel team22_persoonLes
+         */
+        function deleteAll()
+        {
+            $this->db->empty_table('persoonLes');
+        }
     }
