@@ -560,6 +560,8 @@
         public function ispSubmit()
         {
             $this->load->model('persoonLes_model');
+
+			$student = new stdClass();
             $student = $this->authex->getGebruikerInfo();
 
             $this->persoonLes_model->deletePersoonLesWherePersoonId($student->id);
@@ -586,7 +588,6 @@
                 }
             }
 			$student->klasId = null;
-            $student->klas = null;
 			$student->advies = "";
 
 			$this->persoon_model->update($student);

@@ -1,7 +1,3 @@
-#showAfspraakmaken > #calendarContainer  {
-    padding: 80px;
-}
-
 .timeTot {
     margin-left: 5px;
     margin-right: 5px;
@@ -10,6 +6,8 @@
 .container70{
     width: 70%;
     margin: auto;
+    padding-top: 20px;
+    padding-bottom: 50px;
 
 }
 body, header, footer {
@@ -18,7 +16,9 @@ body, header, footer {
 
 .container90{
     width: 90%;
-    margin: auto;
+    padding-top: 10px;
+    padding-bottom: 50px;
+    margin: auto
 }
 
 .containersISP {
@@ -320,4 +320,44 @@ body, header, footer {
 #klasRing, #vakRing {
     margin: auto;
     top: 30%;
+}
+
+.backButton {
+    display: inline-block;
+    max-width: 200px;
+    margin-top: 10px;
+}
+
+#docentIdForm {
+    margin-bottom: 50px;
+    margin-top: 10px;
+
+}
+
+#resultaat > .row > .col-6:nth-child(1) {
+    padding-right: 30px;
+}
+
+#resultaat > .row > .col-6:nth-child(2) {
+    padding-left: 30px;
+}
+
+#resultaat > .row {
+    margin-bottom: 20px;
+}
+
+#resultaat > h3 {
+    background-color: #007bff;
+    color: white;
+    padding: 7px;
+    margin-bottom: 15px;
+}
+
+.menuButton {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.formMenu {
+    text-align: center;
 }

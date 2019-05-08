@@ -4,7 +4,7 @@
 	 * Ajaxpagina waarin de jaarvakken per keuzerichting en fase worden weergeven
 	 */
 ?>
-<h2>Fase 1</h2>
+<h3>Fase 1</h3>
 <div class="row">
 	<div class="col-6">
 		<h3>Semester 1</h3>
@@ -58,7 +58,7 @@
 		</table>
 	</div>
 </div>
-<h2>Fase 2</h2>
+<h3>Fase 2</h3>
 <div class="row">
 	<div class="col-6">
 		<h3>Semester 1</h3>
@@ -111,7 +111,7 @@
 		</table>
 	</div>
 </div>
-<h2>Fase 3</h2>
+<h3>Fase 3</h3>
 <div class="row">
 	<div class="col-6">
 		<h3>Semester 1</h3>

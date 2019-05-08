@@ -20,20 +20,20 @@
     }
 
     $(document).ready(function () {
+        var id;
+
         $('.openModal').click(function () {
-            var id = $(this).data('id');
+            id = $(this).data('id');
             var naam = $(this).data('persoon');
-            $("#persoonId").val(id);
             $("#exampleModalLongTitle").html("Klas wijzigen: " + naam);
         });
 
         $('#klaswijzig').click(function () {
-            var persoonId = $("#persoonId").val();
-            var klasId = $("#klaskeuze").val();
+            var persoonId = id;
+            var klasId = $("#klaskeuze2").val();
             klasId++;
-            console.log(persoonId);
-            console.log(klasId);
-            wijzigKlas(persoonId, klasId)
+            wijzigKlas(persoonId, klasId);
+            location.reload();
         });
     });
 </script>
@@ -60,9 +60,8 @@
             <div class="modal-body">
                 <?php
                     echo form_open();
-                    form_input(array('name' => 'persoonId', 'type'=>'hidden', 'id' =>'persoonId'));
-                    $dropdownattributes = array('id' => 'klaskeuze', 'class' => 'form-control');
-                    echo form_dropdown('klaskeuze', $klassen, $klas->id - 1, $dropdownattributes);
+                    $dropdownattributes = array('id' => 'klaskeuze2', 'class' => 'form-control');
+                    echo form_dropdown('klaskeuze2', $klassen, $klas->id - 1, $dropdownattributes);
                     echo form_close()
                 ?>
             </div>
