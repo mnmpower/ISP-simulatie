@@ -6,10 +6,10 @@
  */
 ?>
 <?php
-    $keuzerichtingenNieuw[0] = 'Kies een keuzerichting..';
-    foreach ($keuzerichtingen as $keuzerichting) {
-        $keuzerichtingenNieuw[$keuzerichting->id] = $keuzerichting->naam;
-    }
+$keuzerichtingenNieuw[0] = 'Kies een keuzerichting..';
+foreach ($keuzerichtingen as $keuzerichting) {
+    $keuzerichtingenNieuw[$keuzerichting->id] = $keuzerichting->naam;
+}
 ?>
 
 <script>
@@ -19,7 +19,7 @@
             type: "GET",
             url: site_url + "/student/haalAjaxOp_Vakken/",
             data: {keuzerichtingId: keuzerichtingId},
-            success: function(output) {
+            success: function (output) {
                 $('#resultaat').html(output);
             },
             error: function (xhr, status, error) {
@@ -31,7 +31,7 @@
     $(document).ready(function () {
         $("#richting").change(function () {
             keuzerchtingId = $('#richting').val();
-            if(keuzerchtingId == 0) {
+            if (keuzerchtingId == 0) {
                 $('#resultaat').html("");
             } else {
                 haalVakkenOp(keuzerchtingId);
@@ -41,26 +41,25 @@
 
 </script>
 
-<div class="container">
-    <h1>Vakken per fase</h1>
+<div class="container70 ">
+    <div class="row">
+    <h1 class="col-sm">Vakken per fase</h1>
+    <?php $backButtonAttributes = array('class' => 'backButton col-sm');
+    echo form_open_multipart("student/setType", $backButtonAttributes); ?>
+    <button class="form-control btn-primary text-white btn">
+        <i class="fas fa-chevron-left"></i> Terug naar menu
+    </button>
+    <?php echo form_close(); ?>
+    </div>
     <?php
-        $attributes = array('name' => 'mijnFormulier');
-        echo form_open('url', $attributes);
-        $dropdownAttributes = array('id' => 'richting', 'class' => "form-control");
-        echo form_dropdown('richting', $keuzerichtingenNieuw, '0', $dropdownAttributes);
-        echo form_close();
-    ?>
-	<?php
-		$terugattributes = array(
-			'class' => 'form-control mt-4 mb-3',
-			'id' => 'terugButoon'
-		);
-		echo form_open_multipart("student/setType");
-		echo form_submit("terug", "Terug naar menu",$terugattributes );
-		echo form_close();
-	?>
-	<br>
-    <div id="resultaat" class="container">
+    $attributes = array('name' => 'mijnFormulier');
+    echo form_open('url', $attributes);
+    $dropdownAttributes = array('id' => 'richting', 'class' => "form-control");
+    echo form_dropdown('richting', $keuzerichtingenNieuw, '0', $dropdownAttributes);
+    echo form_close(); ?>
+
+    <br>
+    <div id="resultaat">
 
     </div>
 </div>

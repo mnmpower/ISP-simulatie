@@ -5,8 +5,17 @@
  * Krijgt een array van $persoonobjecten binnen
  */
 ?>
-<div id="showAfspraakmaken">
+<div id="showAfspraakmaken" class="container70">
     <div id="calendarContainer">
+        <div class="row">
+            <h1 class="col-sm">Afspraak maken</h1>
+            <?php $backButtonAttributes = array('class' => 'backButton col-sm');
+            echo form_open_multipart("student/setType", $backButtonAttributes); ?>
+            <button class="form-control btn-primary text-white btn">
+                <i class="fas fa-chevron-left"></i> Terug naar menu
+            </button>
+            <?php echo form_close(); ?>
+        </div>
         <form id="docentIdForm">
             <div class="form-group">
                 <select class="form-control" id="docentId">
@@ -17,16 +26,6 @@
                 </select>
             </div>
         </form>
-		<?php
-			$terugattributes = array(
-				'class' => 'form-control mt-4 mb-3',
-				'id' => 'terugButoon'
-			);
-			echo form_open_multipart("student/setType");
-			echo form_submit("terug", "Terug naar menu",$terugattributes );
-			echo form_close();
-		?>
-
         <div id="calendar">
 
         </div>
@@ -44,34 +43,34 @@
                 </div>
                 <div class="modal-body">
                     <?php echo form_open(); ?>
-                        <div class="form-group row">
-                            <?php
-                            echo form_label('Docent:', 'calendarModalDocent', array('class' => 'col-sm-2 col-form-label'));
-                            echo form_input(array('type' => 'text', 'readonly' => 'true', 'class' => 'col-sm-10 form-control-plaintext', 'id' => 'calendarModalDocent'));
-                            ?>
-                        </div>
-                        <div class="form-group row">
-                            <?php
-                            echo form_label('Locatie:', 'calendarModalPlaats', array('class' => 'col-sm-2 col-form-label'));
-                            echo form_input(array('type' => 'text', 'readonly' => 'true', 'class' => 'col-sm-10 form-control-plaintext', 'id' => 'calendarModalPlaats'));
-                            ?>
-                        </div>
-                        <div class="form-group row">
-                            <?php
-                            echo form_label('Datum:', 'calendarModalDate', array('class' => 'col-sm-2 col-form-label'));
-                            echo form_input(array('type' => 'text', 'readonly' => 'true', 'class' => 'col-sm-10 form-control-plaintext', 'id' => 'calendarModalDate'));
-                            ?>
-                        </div>
-                        <div class="form-group row">
-                            <?php
-                            echo form_label('Tijd:', 'calendarModalTime', array('class' => 'col-sm-2 col-form-label'));
-                            echo form_input(array('type' => 'text', 'readonly' => 'true', 'class' => 'col-sm-10 form-control-plaintext', 'id' => 'calendarModalTime'));
-                            ?>
-                        </div>
+                    <div class="form-group row">
                         <?php
-                        echo form_label('Extra opmerkingen:', 'calendarModalDescription');
-                        echo form_textarea(array('class' => 'form-control', 'id' => 'calendarModalDescription', 'rows' => '3'));
+                        echo form_label('Docent:', 'calendarModalDocent', array('class' => 'col-sm-2 col-form-label'));
+                        echo form_input(array('type' => 'text', 'readonly' => 'true', 'class' => 'col-sm-10 form-control-plaintext', 'id' => 'calendarModalDocent'));
                         ?>
+                    </div>
+                    <div class="form-group row">
+                        <?php
+                        echo form_label('Locatie:', 'calendarModalPlaats', array('class' => 'col-sm-2 col-form-label'));
+                        echo form_input(array('type' => 'text', 'readonly' => 'true', 'class' => 'col-sm-10 form-control-plaintext', 'id' => 'calendarModalPlaats'));
+                        ?>
+                    </div>
+                    <div class="form-group row">
+                        <?php
+                        echo form_label('Datum:', 'calendarModalDate', array('class' => 'col-sm-2 col-form-label'));
+                        echo form_input(array('type' => 'text', 'readonly' => 'true', 'class' => 'col-sm-10 form-control-plaintext', 'id' => 'calendarModalDate'));
+                        ?>
+                    </div>
+                    <div class="form-group row">
+                        <?php
+                        echo form_label('Tijd:', 'calendarModalTime', array('class' => 'col-sm-2 col-form-label'));
+                        echo form_input(array('type' => 'text', 'readonly' => 'true', 'class' => 'col-sm-10 form-control-plaintext', 'id' => 'calendarModalTime'));
+                        ?>
+                    </div>
+                    <?php
+                    echo form_label('Extra opmerkingen:', 'calendarModalDescription');
+                    echo form_textarea(array('class' => 'form-control', 'id' => 'calendarModalDescription', 'rows' => '3'));
+                    ?>
                     <?php echo form_close() ?>
                 </div>
                 <div class="modal-footer">
