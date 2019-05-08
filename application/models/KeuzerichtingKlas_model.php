@@ -59,4 +59,37 @@
 			$this->db->where('klasId', $klasId);
 			$this->db->delete('keuzerichtingKlas');
 		}
+
+        /**
+         * Retourneert een keuzerichtingKlas uit de tabel team22_keuzerichtingKlas
+         * @param $klasId de id van het de klas waarvan het record opgehaald wordt
+         * @return een keuzerichtingKlas object
+         */
+        function getWhereKlas($klasId)
+        {
+            $this->db->where('klasId', $klasId);
+            $query = $this->db->get('keuzerichtingKlas');
+            return $query->row();
+        }
+
+        /**
+         * Voegt het record $keuzerichtingKlas toe aan de tabel team22_keuzerichtingKlas
+         * @param $keuzerichtingKlas het record dat toegevoegd wordt
+         * @return int id
+         */
+        function insert($keuzerichtingKlas)
+        {
+            $this->db->insert('keuzerichtingKlas', $keuzerichtingKlas);
+            return $this->db->insert_id();
+        }
+
+        /**
+         * Update het record $keuzerichtingKlas uit de tabel team22_keuzerichtingKlas
+         * @param $keuzerichtingKlas het record dat geüpdatet wordt
+         */
+        function update($keuzerichtingKlas)
+        {
+            $this->db->where('keuzerichtingKlasId', $keuzerichtingKlas->keuzerichtingKlasId);
+            $this->db->update('keuzerichtingKlas', $keuzerichtingKlas);
+        }
     }

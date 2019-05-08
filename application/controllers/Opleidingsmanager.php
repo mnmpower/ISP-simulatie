@@ -1126,6 +1126,9 @@
 
 			$data['title'] = "Klassen beheren";
 
+            $this->load->model('keuzerichting_model');
+            $data['keuzerichtingen'] = $this->keuzerichting_model->getAll();
+
 			$partials = array(  'hoofding' => 'main_header',
 				'inhoud' => 'opleidingsmanager/BeheerKlas/KlasBeheer',
 				'footer' => 'main_footer');
@@ -1197,6 +1200,7 @@
 
 		public function voegKlasToe(){
 			$this->load->model('klas_model');
+			$this->load->model('keuzerichtingKlas_model');
 
 			$klas = new stdClass();
 			$klas->id = $this->input->post('klasId');
@@ -1204,12 +1208,21 @@
 			$klas->maximumAantal = htmlspecialchars($this->input->post("aantalLeerlingen"));
 			$klas->maximumAantalModel = htmlspecialchars($this->input->post("aantalModel"));
 
+            $keuzerichtingKlas = new stdClass();
+            $keuzerichtingKlas->keuzerichtingKlasId = htmlspecialchars($this->input->post("keuzerichtingKlasId"));
+            $keuzerichtingKlas->keuzerichtingId = htmlspecialchars($this->input->post("keuzerichting"));
+            $keuzerichtingKlas->klasId = $klas->id;
+
 			if ($klas->id == 0) {
+                $klas->id = null;
 				//nieuw record
-				$this->klas_model->insert($klas);
+				$klasId = $this->klas_model->insert($klas);
+                $keuzerichtingKlas->klasId = $klasId;
+				$this->keuzerichtingKlas_model->insert($keuzerichtingKlas);
 			} else {
 				//bestaand record
 				$this->klas_model->update($klas);
+				$this->keuzerichtingKlas_model->update($keuzerichtingKlas);
 			}
 			redirect('Opleidingsmanager/klasBeheer');
 		}
@@ -1320,7 +1333,11 @@
 			$id = $this->input->get('klasId');
 
 			$this->load->model('klas_model');
+			$this->load->model('keuzerichtingKlas_model');
+			$this->load->model('keuzerichting_model');
 			$klas = $this->klas_model->get($id);
+			$klas->keuzerichtingKlas = $this->keuzerichtingKlas_model->getWhereKlas($id);
+			$klas->keuzerichting = $this->keuzerichting_model->get($klas->keuzerichtingKlas->keuzerichtingId);
 
 			$this->output->set_content_type("application/json");
 			echo json_encode($klas);

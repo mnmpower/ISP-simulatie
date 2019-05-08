@@ -1,3 +1,14 @@
+<?php
+/**
+ * @file KlasBeheer.php
+ * View waarin de admin aan de hand van een CRUD de klassen kan wijzigen
+ */
+$keuzerichtingenDropdown = Array(0 => "-- Kies een type --");
+foreach ($keuzerichtingen as $keuzerichting) {
+    $keuzerichtingenDropdown[$keuzerichting->id] = $keuzerichting->naam;
+}
+ksort($keuzerichtingenDropdown);
+?>
 <script>
 	$(document).ready(function () {
 		haalKlassenOp();
@@ -8,6 +19,7 @@
 			$("#aantalLeerlingen").val(0);
 			$("#aantalModel").val(0);
 			$("#klasId").val(0);
+			$("#keuzerichting").val(0);
 			$('#modal').modal();
 		});
 
@@ -48,7 +60,8 @@
 				$("#klasId").val(klas.id);
 				$("#aantalLeerlingen").val(klas.maximumAantal);
 				$("#aantalModel").val(klas.maximumAantalModel);
-
+                $("#keuzerichting").val(klas.keuzerichting.id);
+                $("#keuzerichtingKlasId").val(klas.keuzerichtingKlas.keuzerichtingKlasId);
 			},
 			error: function (xhr, status, error) {
 				alert("-- ERROR IN AJAX ((FOUT IN OPHAALFUNCTIE) --\n\n" + xhr.responseText);
@@ -109,7 +122,8 @@
 									'placeholder' => 'Vul naam in',
 									'required' => 'required',
 								));
-							echo form_input(array('type' => 'hidden', 'id' => 'klasId', 'name' => 'klasId')); ?>
+							echo form_input(array('type' => 'hidden', 'id' => 'klasId', 'name' => 'klasId'));
+							echo form_input(array('type' => 'hidden', 'id' => 'keuzerichtingKlasId', 'name' => 'keuzerichtingKlasId')); ?>
 							</td>
 						</tr>
 						<tr>
@@ -136,6 +150,13 @@
 								?>
 							</td>
 						</tr>
+                        <tr>
+                            <td><?php echo form_label("Keuzerichting:", "keuzerichting"); ?></td>
+                            <td><?php echo form_dropdown('keuzerichting', $keuzerichtingenDropdown, "", array('id' => 'keuzerichting',
+                                    'class' => 'form-control',
+                                    'required' => 'required'
+                                )); ?></td>
+                        </tr>
 					</table>
 				</div>
 				<div class="modal-footer">
