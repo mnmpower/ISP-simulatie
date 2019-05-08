@@ -7,8 +7,9 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <th width="40%">Vak</th>
-            <th width="40%">Klas</th>
+            <th width="30%">Vak</th>
+            <th width="20%">Klas</th>
+            <th width="30%">Moment</th>
             <th width="10%"></th>
             <th width="10%"></th>
         </tr>
@@ -19,6 +20,7 @@
                 echo "<tr>\n";
                 echo "<td>" . $les->vak->naam . "</td>";
                 echo "<td>" . $les->klas->naam . "</td>";
+                echo "<td>" . $les->dag . ' (Blok ' . $les->blok . ')' . "</td>";
 
                 echo "<td>";
                 $extraButton = array('class' => 'btn btn-success wijzig', 'data-lesid' => $les->id, 'data-toggle' => 'tooltip',

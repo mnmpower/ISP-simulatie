@@ -163,6 +163,50 @@
             foreach ($lessen as $les){
                 $les->vak = $this->vak_model->get($les->vakId);
                 $les->klas = $this->klas_model->get($les->klasId);
+                switch ($les->datum) {
+                    case '2019-09-16':
+                        $dag = 'Maadag';
+                        break;
+                    case '2019-09-17':
+                        $dag = 'Dinsdag';
+                        break;
+                    case '2019-09-18':
+                        $dag = 'Woensdag';
+                        break;
+                    case '2019-09-19':
+                        $dag = 'Donderdag';
+                        break;
+                    case '2019-09-20':
+                        $dag = 'Vrijdag';
+                        break;
+                }
+                $les->dag = $dag;
+                switch ($les->startuur) {
+                    case '08:30:00':
+                        if($les->einduur == '10:00:00') {
+                            $blok = '1';
+                        } else {
+                            $blok = '1 & 2';
+                        }
+                        break;
+                    case '10:15:00':
+                        $blok = '2';
+                        break;
+                    case '12:30:00':
+                        if($les->einduur == '14:00:00') {
+                            $blok = '3';
+                        } else {
+                            $blok = '3 & 4';
+                        }
+                        break;
+                    case '14:15:00':
+                        $blok = '4';
+                        break;
+                    case '16:00:00':
+                        $blok = '5';
+                        break;
+                }
+                $les->blok = $blok;
             }
             return $lessen;
         }
