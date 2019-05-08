@@ -15,6 +15,7 @@
 	 * @property KeuzerichtingKlas_model $keuzerichtingKlas_model
 	 * @property Mail_model $mail_model
      * @property Vak_model $vak_model
+     * @property PersoonType_model $persoonType_model
 	 * @property Klas_model $klas_model
 	 * @property Les_model $les_model
      */
@@ -108,6 +109,10 @@
 			$this->template->load('main_master', $partials, $data);
         }
 
+		/**
+		 * Haalt alle gegevens op vor het beheermenu van de Opleidingsmanager
+		 * @see beheermenu.php
+		 */
         public function beheer()
         {
             $data['title'] = "Opleidingsmanager";
@@ -127,6 +132,14 @@
             $this->template->load('main_master', $partials, $data);
         }
 
+		/**
+		 * Redirect door naar de justie pagina na het keizen van een beheerknop
+		 * @see gebruikerBeheer.php
+		 * @see klasBeheer.php
+		 * @see lesBeheer.php
+		 * @see mailBeheer.php
+		 * @see keuzerichtingBeheer.php
+		 */
         public function keuzeBeheer()
         {
             if(isset($_POST['vakken']))
@@ -206,6 +219,15 @@
             $this->load->view('Opleidingsmanager/ajax_vakBeheer', $data);
         }
 
+		/**
+		 * Een volle vak CRUD die mee keuzerichtign vakken verwijderd en toevoegt
+		 * @see Vak_model::insert
+		 * @see Vak_model::update
+		 * @see keuzerichtingVak_model::getAllWhereVak
+		 * @see keuzerichtingVak_model::delete
+		 * @see keuzerichtingVak_model::insert
+		 * @see vakBeheer.php
+		 */
         public function voegVakToe(){
 
             $this->load->model("vak_model");
@@ -250,6 +272,12 @@
             redirect('Opleidingsmanager/vakBeheer');
         }
 
+		/**
+		 * Delete een vak met bijhorend keuzerichtingvak
+		 * @see keuzerichtingVak_model::getAllWhereVak
+		 * @see Vak_model::update
+		 * @see vak_model::delete
+		 */
         public function schrapAjax_Vak() {
             $this->load->model("vak_model");
             $this->load->model("keuzerichtingVak_model");
@@ -261,10 +289,13 @@
                 $this->keuzerichtingVak_model->delete($keuzerichtingVak->keuzerichtingVakId);
             }
             $this->vak_model->delete($vakId);
-
         }
 
-
+		/**
+		 * Haalt een array met vakken van alle vakken met het zelfde keuzerichtingID
+		 * @see vak_model::get
+		 * @see keuzerichtingVak_model::getAllWhereVak
+		 */
         public function haalJsonOp_Vak(){
             $vakId = $this->input->get('vakId');
 
@@ -284,6 +315,11 @@
             echo json_encode($vak);
         }
 
+		/**
+		 * laad de pagina voor gebruikers te beheren
+		 * @see persoonType_model::getAll
+		 * @see beheergebruikers.php
+		 */
 		public function gebruikerBeheer($foutmelding = NULL)
 		{
             $data['title'] = "Gebruikers beheren";
@@ -309,6 +345,11 @@
             $this->template->load('main_master', $partials, $data);
 		}
 
+		/**
+		 * Haalt de gebruikers op voor een Ajax call toont niet de gebruiker met ID8, dit is een admin en mag niet verwijderd worden daarom dat deze niet mee wordt opgehaald
+		 * @see persoon_model::getAllWithType
+		 * @see ajax_gebruikers.php
+		 */
         public function haalAjaxOp_Gebruikers()
         {
             $this->load->model('persoon_model');
@@ -323,6 +364,10 @@
             $this->load->view('opleidingsmanager/ajax_gebruikers', $data);
         }
 
+		/**
+		 * Haalt een gebruiker op voor een Ajax call met json en stuurt dit door
+		 * @see persoon_model::get
+		 */
         public function haalJsonOp_Gebruiker()
         {
             $id = $this->input->get('gebruikerId');
@@ -334,6 +379,10 @@
             echo json_encode($object);
         }
 
+		/**
+		 * Schrapt een gebruiker
+		 * @see persoon_model::delete
+		 */
         public function schrapAjax_Gebruiker()
         {
             $gebruikerId = $this->input->get('gebruikerId');
@@ -342,6 +391,10 @@
             $this->persoon_model->delete($gebruikerId);
         }
 
+		/**
+		 * controlleert of een gebruiker meermaals voorkomt of niet.
+		 * @see persoon_model::getWhereNummer
+		 */
         public function controleerJson_DubbelGebruiker()
         {
             $gebruikerId = $this->input->post('gebruikerId');
@@ -364,6 +417,11 @@
             echo json_encode($isDubbel);
         }
 
+		/**
+		 * Voegteen gebruiker toe in de gebruikersCRUD
+		 * @see persoon_model::getWhereNummer
+		 * @see persoon_model::update
+		 */
         public function voegGebruikerToe()
         {
             $object = new stdClass();
@@ -387,6 +445,12 @@
             redirect('Opleidingsmanager/gebruikerBeheer');
         }
 
+		/**
+		 * Laad een excel file in en leest deze uit
+		 * @see persoon_model::deleteWhereType
+		 * @see persoon_model::getWhereNummer
+		 * @see persoon_model::insert
+		 */
         public function uploadGebruikersExcel()
         {
             $config['upload_path'] = './uploads/';
@@ -464,7 +528,12 @@
             }
         }
 
-		//VANAF HEIR MOOI ORDENEN
+		/**
+		 * Laad de pagina om de lessen te beheren
+		 * @see vak_model::getAll
+		 * @see klas_model::getAllKlassenOrderByNaam
+		 * @see beheerlessen.php
+		 */
 		public function lesBeheer($foutmelding = NULL)
         {
             $data['title'] = "Lessen beheren";
@@ -492,6 +561,11 @@
             $this->template->load('main_master', $partials, $data);
         }
 
+		/**
+		 * Haalt de lessen op voor een Ajax call
+		 * @see les_model::getAllWithVakAndKlas
+		 * @see ajax_lessen.php
+		 */
         public function haalAjaxOp_Lessen()
         {
 			// Gets plugins if required
@@ -503,6 +577,10 @@
             $this->load->view('opleidingsmanager/ajax_lessen', $data);
         }
 
+		/**
+		 * Haalt de Persoonlessen op voor een Ajax call in json formaat
+		 * @see persoonLes_model::getAll
+		 */
         public function haalJsonOp_PersoonLessen()
         {
             $this->load->model('persoonLes_model');
@@ -512,6 +590,10 @@
             echo json_encode($object);
         }
 
+		/**
+		 * Haalt de les op voor een Ajax call in json formaat
+		 * @see les_model::getWithVakAndKlasAndDag
+		 */
         public function haalJsonOp_Les()
         {
             $id = $this->input->get('lesId');
@@ -523,6 +605,10 @@
             echo json_encode($object);
         }
 
+		/**
+		 * Schrapt een les
+		 * @see les_model::delete
+		 */
         public function schrapAjax_Les()
         {
             $lesId = $this->input->get('lesId');
@@ -531,6 +617,11 @@
             $this->les_model->delete($lesId);
         }
 
+		/**
+		 * Voegt een les toe
+		 * @see les_model::insert
+		 * @see les_model::update
+		 */
         public function voegLesToe(){
             $object = new stdClass();
             $object->id = $this->input->post('lesId');
@@ -571,6 +662,12 @@
             redirect('Opleidingsmanager/lesBeheer');
         }
 
+		/**
+		 * Laad een excel file in en leest deze uit
+		 * @see persoonLes_model::deleteAll
+		 * @see les_model::deleteAll
+		 * @see klas_model::getWhereNaam
+		 */
         public function uploadLessenExcel() {
             $this->load->model('les_model');
             $this->load->model('persoonLes_model');
@@ -968,6 +1065,10 @@
             }
         }
 
+		/**
+		 * Hernoemt een aantal afkortingen zodat deze makkelijker in de database worden weggeschreven
+		 * @return string
+		 */
         public function renameForDB($string) {
             $vakAfkortingen = array(
                 "po1" => "professioneleontwikkeling1",
@@ -997,6 +1098,14 @@
             return $string;
         }
 
+		/**
+		 * Voegt een vak toe in de database en return true of false om aan te geven of dit gelukt is
+		 * @see vak_model::getIdWhereNaam
+		 * @see les_model::getWhereKlasIdAndVakIdAndDatum
+		 * @see les_model::insert
+		 * @see les_model::update
+		 * @return boolean
+		 */
         public function addInDB($vak, $dag, $aantalBlokken, $startBlok, $klas) {
             $this->load->model('vak_model');
             $vakId = $this->vak_model->getIdWhereNaam($vak);
@@ -1066,11 +1175,12 @@
             }
         }
 
+		/**
+		 *laad alles voorde pagina om mails te beheren
+		 * @see mailBeheer.php
+		 */
 		public function mailBeheer()
 		{
-			//loaden model
-			$this->load->model("mail_model");
-
 			// Defines roles for this page (You can also use "geen" or leave roles empty!).
 			$data['roles'] = getRoles('Ontwikkelaar','geen','geen','geen');
 
@@ -1088,11 +1198,12 @@
 			$this->template->load('main_master', $partials, $data);
 		}
 
+		/**
+		 *laad alles voorde pagina om mails te beheren
+		 * @see KeuzerichtingBeheer.php
+		 */
 		public function keuzerichtingBeheer()
 		{
-			//loaden model
-			$this->load->model("mail_model");
-
 			// Defines roles for this page (You can also use "geen" or leave roles empty!).
 			$data['roles'] = getRoles('Ontwikkelaar','geen','geen','geen');
 
@@ -1110,11 +1221,12 @@
 			$this->template->load('main_master', $partials, $data);
 		}
 
+		/**
+		 *laad alles voorde pagina om mails te beheren
+		 * @see KlasBeheer.php
+		 */
 		public function klasBeheer()
 		{
-			//loaden model
-			//$this->load->model("klas_model");
-
 			// Defines roles for this page (You can also use "geen" or leave roles empty!).
 			$data['roles'] = getRoles('Ontwikkelaar','geen','geen','geen');
 
@@ -1132,8 +1244,11 @@
 			$this->template->load('main_master', $partials, $data);
 		}
 
-
-
+		/**
+		 * Haalt de lessen op voor een Ajax call
+		 * @see mail_model::getAllMail
+		 * @see ajax_MailCRUD.php
+		 */
 		public function haalAjaxOp_Mails(){
 
 			$this->load->model('mail_model');
@@ -1142,6 +1257,11 @@
 			$this->load->view('Opleidingsmanager/ajax_MailCRUD', $data);
 		}
 
+		/**
+		 * Haalt de keuzerichtingen op voor een Ajax call
+		 * @see keuzerichting_model::getAll
+		 * @see ajax_KeuzerichtingCRUD.php
+		 */
 		public function haalAjaxOp_Keuzerichtingen(){
 			$this->load->model('keuzerichting_model');
 			$data['keuzerichtingen'] = $this->keuzerichting_model->getAll();
@@ -1149,6 +1269,11 @@
 			$this->load->view('Opleidingsmanager/BeheerKeuzerichting/ajax_KeuzerichtingCRUD', $data);
 		}
 
+		/**
+		 * Haalt de klassen op voor een Ajax call
+		 * @see klas_model::getAllKlassenOrderByNaam
+		 * @see ajax_KlasCRUD.php
+		 */
 		public function haalAjaxOp_Klassen(){
 			$this->load->model('klas_model');
 			$data['klassen'] = $this->klas_model->getAllKlassenOrderByNaam();
@@ -1156,8 +1281,11 @@
 			$this->load->view('Opleidingsmanager/BeheerKlas/ajax_KlasCRUD', $data);
 		}
 
-
-
+		/**
+		 * Voegt een mail toe of update deze en heeft een beveiligde encapsulation
+		 * @see mail_model::insert
+		 * @see mail_model::update
+		 */
 		public function voegMailToe(){
 
 			$this->load->model("mail_model");
@@ -1178,6 +1306,11 @@
 			redirect('Opleidingsmanager/mailBeheer');
 		}
 
+		/**
+		 * Voegt een keuzerichting toe of update deze en heeft een beveiligde encapsulation
+		 * @see keuzerichting_model::insert
+		 * @see keuzerichting_model::update
+		 */
 		public function voegKeuzerichtingToe(){
 			$this->load->model('keuzerichting_model');
 
@@ -1195,6 +1328,11 @@
 			redirect('Opleidingsmanager/keuzerichtingBeheer');
 		}
 
+		/**
+		 * Voegt een klas toe of update deze en heeft een beveiligde encapsulation
+		 * @see klas_model::insert
+		 * @see klas_model::update
+		 */
 		public function voegKlasToe(){
 			$this->load->model('klas_model');
 
@@ -1214,8 +1352,10 @@
 			redirect('Opleidingsmanager/klasBeheer');
 		}
 
-
-
+		/**
+		 * Schrapt een mail
+		 * @see mail_model::delete
+		 */
 		public function schrapAjax_Mail() {
 			$this->load->model("mail_model");
 
@@ -1225,6 +1365,13 @@
 
 		}
 
+		/**
+		 * Schrapt een Keuzerichting en alle bijhorende dingen zoals keuzerichtingvakken, keuzerichtingklassen en past personen van deze keuzerichting aan
+		 * @see persoon_model::update
+		 * @see keuzerichtingVak_model::deleteAllWhereKeuzerichtingID
+		 * @see keuzerichtingKlas_model::deleteAllWhereKeuzerichtingID
+		 * @see keuzerichting_model::delete
+		 */
 		public function schrapAjax_Keuzerichting() {
 			$this->load->model('keuzerichting_model');
 			$this->load->model('keuzerichtingVak_model');
@@ -1243,26 +1390,24 @@
 
 			//ALLE KEUZERICHTING VAKKEN SCHRAPPEN ALS DIE NOG BESTAAN
 			$this->keuzerichtingVak_model->deleteAllWhereKeuzerichtingID($keuzerichtingId);
-//			$keuzerichtingVakken = $this->keuzerichtingVak_model->getAll();
-//			foreach ($keuzerichtingVakken as $item) {
-//				if ($item->keuzerichtingId == $keuzerichtingId){
-//					$this->keuzerichtingVak_model->delete($item->id);
-//				}
-//        	}
 
         	//ALLE KEUZERICHTING KLASSEN SCHRAPPEN ALS DIE NOG BESTAAN
 			$this->keuzerichtingKlas_model->deleteAllWhereKeuzerichtingID($keuzerichtingId);
-//			$keuzerichtingKlassen = $this->keuzerichtingKlas_model->getAll();
-//			foreach ($keuzerichtingKlassen as $item) {
-//				if ($item->keuzerichtingId == $keuzerichtingId){
-//					$this->keuzerichtingKlas_model->delete($item->id);
-//				}
-//			}
 
         	$this->keuzerichting_model->delete($keuzerichtingId);
 
 		}
-		//DEZE NOG DOEN
+
+		/**
+		 * Schrapt een klas en alle keuzerichtingenklassen, past de personen aan van deze klas, schrapt alle persoonlessen die tot deze klas behorenen ook alle lessen van deze klas
+		 * @see persoon_model::getPersoonWhereKlasId
+		 * @see persoon_model::update
+		 * @see keuzerichtingKlas_model::getPersoonWhereKlasId
+		 * @see les_model::getAllLesWhere
+		 * @see persoonLes_model::deleteAllWhereLesID
+		 * @see les_model::deleteAllWhereKlasID
+		 * @see klas_model::delete
+		 */
 		public function schrapAjax_Klas() {
 			$this->load->model('keuzerichtingKlas_model');
 			$this->load->model('persoon_model');
@@ -1296,6 +1441,10 @@
 
 		}
 
+		/**
+		 * Haalt de mail op voor een Ajax call in json formaat
+		 * @see mail_model::get
+		 */
 		public function haalJsonOp_Mail(){
 			$id = $this->input->get('mailId');
 
@@ -1306,6 +1455,10 @@
 			echo json_encode($mail);
 		}
 
+		/**
+		 * Haalt de keuzerichting op voor een Ajax call in json formaat
+		 * @see keuzerichting_model::get
+		 */
 		public function haalJsonOp_Keuzerichting(){
 			$id = $this->input->get('keuzerichtingId');
 
@@ -1316,6 +1469,10 @@
 			echo json_encode($keuzerichting);
 		}
 
+		/**
+		 * Haalt de klas op voor een Ajax call in json formaat
+		 * @see klas_model::get
+		 */
 		public function haalJsonOp_Klas(){
 			$id = $this->input->get('klasId');
 
@@ -1326,6 +1483,9 @@
 			echo json_encode($klas);
 		}
 
+		/**
+		 * haalt het lege excel bestand op om in te lezen
+		 */
 		public function downloadSjabloon() {
             redirect(base_url('assets/sjabloonStudenten.xlsx'));
         }
