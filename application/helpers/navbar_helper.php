@@ -7,8 +7,7 @@ function getNavbar($role) {
             break;
 
         case 'docent':
-            $buttons = array(   'Home' =>site_url() . '/home/index',
-                                'Afspraken' =>site_url() . '/docent/showAfspraken');
+            $buttons = array(   'Home' =>site_url() . '/home/index');
             break;
 
         case 'ispverantwoordelijke':

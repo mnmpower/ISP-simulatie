@@ -45,60 +45,11 @@
         }
 
         /**
-         * Haalt de persoon-records met ispIngediend=1 (en berekent het aantal opgenomen studiepunten) op via Persoon_model
-         * en toont het resulterende object in de view index.php
-         * @see Persoon_model::getAllWhereIspIngediend()
-         * @see PersoonLes_model::getAllWithLesAndVakAndKlas()
-         * @see Les_model::getAllWithVakAndKlasWhereKlas()
-         * @see Persoon_model::getStudiepunten()
-         * @see index.php
+         * laad de kalender plugin en toont een kalender op de huidige week in de view overzichtAfspraken.php
+         * @see overzichtAfspraken.php
          */
         public function index()
         {
-			$this->load->model('les_model');
-			$this->load->model('persoon_model');
-			$this->load->model('persoonLes_model');
-
-			$data['title'] = "Overzicht van de ingediende ISP simulaties";
-
-			// Defines roles for this page (You can also use "geen" or leave roles empty!).
-			$data['roles'] = getRoles('Ontwikkelaar','Tester','geen','geen');
-
-			// Gets buttons for navbar;
-			$data['buttons'] = getNavbar('docent');
-
-            // Gets plugins if required
-            $data['plugins'] = getPlugin('geen');
-
-			$ingediendeIspStudenten = $this->persoon_model->getAllWhereIspIngediend();
-
-			foreach ($ingediendeIspStudenten as $persoon){
-
-                if($persoon->klasId == null) {
-                    // Persoon zit niet in een klas -> persoonLessen ophalen
-                    $persoon->persoonLessen = $this->persoonLes_model->getAllWithLesAndVakAndKlas($persoon->id);
-                } else {
-                    // Persoon zit wel in een klas -> lessen van de klas ophalen
-                    $persoon->persoonLessen = $this->les_model->getAllWithVakAndKlasWhereKlas($persoon->klasId);
-                }
-
-				$persoon->studiepunten = $this->persoon_model->getStudiepunten($persoon);
-			}
-
-			$data['ingediendeIspStudenten'] = $ingediendeIspStudenten;
-
-			$partials = array(  'hoofding' => 'main_header',
-				'inhoud' => 'Docent/index',
-				'footer' => 'main_footer');
-			$this->template->load('main_master', $partials, $data);
-        }
-
-		/**
-		 * laad de kalender plugin en toont een kalender op de huidige week in de view overzichtAfspraken.php
-		 * @see overzichtAfspraken.php
-		 */
-        public function showAfspraken() {
-
             $data['title'] = "Overzicht van de ingediende ISP simulaties";
 
             // Defines roles for this page (You can also use "geen" or leave roles empty!).
