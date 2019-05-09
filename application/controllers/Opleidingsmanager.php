@@ -238,7 +238,7 @@
 
             $vak = new stdClass();
             $vak->id = $vakId;
-            $vak->naam = $this->input->post("vakNaam");
+            $vak->naam = htmlspecialchars($this->input->post("vakNaam"));
             $vak->studiepunt = $this->input->post("vakStudiepunten");
             $vak->fase = $this->input->post('fase2');
             $vak->semester = $this->input->post('semester');
@@ -1324,9 +1324,12 @@
 			$keuzerichting->id = $this->input->post('KeuzerichtingId');
 			$keuzerichting->naam = htmlspecialchars($this->input->post("KeuzerichtingNaam"));
 
+			$keuzerichtingen = $this->keuzerichting_model->getAll();
+
 			if ($keuzerichting->id == 0) {
 				//nieuw record
 				$this->keuzerichting_model->insert($keuzerichting);
+
 			} else {
 				//bestaand record
 				$this->keuzerichting_model->update($keuzerichting);
@@ -1353,6 +1356,8 @@
             $keuzerichtingKlas->keuzerichtingKlasId = htmlspecialchars($this->input->post("keuzerichtingKlasId"));
             $keuzerichtingKlas->keuzerichtingId = htmlspecialchars($this->input->post("keuzerichting"));
             $keuzerichtingKlas->klasId = $klas->id;
+
+
 
             if ($klas->maximumAantal != 0 && $klas->maximumAantalModel != 0){
                 if ($klas->id == 0) {
