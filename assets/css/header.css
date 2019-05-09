@@ -13,12 +13,14 @@
     color: rgba(255, 255, 255, 0.7);
 }
 
+.uitlogKnopMobile {
+	 display: none;
+ }
+
 @media (min-width: 768px) {
     .uitlogKnop {
-        display: block;
-    }
-
-    .uitlogKnopMobile {
         display: none;
     }
+
+
 }

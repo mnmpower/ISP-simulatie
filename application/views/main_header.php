@@ -17,10 +17,10 @@
                 echo "<a class='nav-link' href=" . $link . ">" . $button . "</a>";
                 echo "</li>";
             }?>
-            <?php if($CI->authex->isAangemeld() != false) {
-                $attributes = array('class'=>'nav-link uitlogKnopMobile');
-                echo anchor('home/uitloggen', 'Uitloggen', $attributes);
-            } ?>
+<!--            --><?php //if($CI->authex->isAangemeld() != false) {
+//                $attributes = array('class'=>'nav-link uitlogKnopMobile');
+//                echo anchor('home/uitloggen', 'Uitloggen', $attributes);
+//            } ?>
         </ul>
         <?php if($CI->authex->isAangemeld() != false) {
             $attributes = array('class'=>'nav-link uitlogKnop');
