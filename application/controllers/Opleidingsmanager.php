@@ -118,7 +118,7 @@
             $data['title'] = "Opleidingsmanager";
 
             // Defines roles for this page (You can also use "geen" or leave roles empty!).
-            $data['roles'] = getRoles('geen','Ontwikkelaar','geen','geen');
+            $data['roles'] = getRoles('geen','Ontwikkelaar','Tester','geen');
 
             // Gets buttons for navbar);
             $data['buttons'] = getNavbar('opleidingsmanager');
@@ -179,7 +179,7 @@
             $data['title'] = "Vakken beheren";
 
             // Defines roles for this page (You can also use "geen" or leave roles empty!).
-            $data['roles'] = getRoles('geen','Ontwikkelaar','geen','geen');
+            $data['roles'] = getRoles('geen','Ontwikkelaar','Tester','geen');
 
             // Gets buttons for navbar);
             $data['buttons'] = getNavbar('opleidingsmanager');
@@ -220,7 +220,7 @@
         }
 
 		/**
-		 * Een volle vak CRUD die mee keuzerichtign vakken verwijderd en toevoegt
+		 * Een volle vak CRUD die mee keuzerichtigen vakken verwijderd en toevoegt
 		 * @see Vak_model::insert
 		 * @see Vak_model::update
 		 * @see keuzerichtingVak_model::getAllWhereVak
@@ -328,7 +328,7 @@
             $data['title'] = "Gebruikers beheren";
 
             // Defines roles for this page (You can also use "geen" or leave roles empty!).
-            $data['roles'] = getRoles('geen','geen','geen','Ontwikkelaar');
+            $data['roles'] = getRoles('geen','Tester','geen','Ontwikkelaar');
 
             // Gets buttons for navbar);
             $data['buttons'] = getNavbar('opleidingsmanager');
@@ -542,7 +542,7 @@
             $data['title'] = "Lessen beheren";
 
             // Defines roles for this page (You can also use "geen" or leave roles empty!).
-            $data['roles'] = getRoles('geen','geen','geen','Ontwikkelaar');
+            $data['roles'] = getRoles('geen','Tester','geen','Ontwikkelaar');
 
             // Gets buttons for navbar);
             $data['buttons'] = getNavbar('opleidingsmanager');
@@ -1185,7 +1185,7 @@
 		public function mailBeheer()
 		{
 			// Defines roles for this page (You can also use "geen" or leave roles empty!).
-			$data['roles'] = getRoles('Ontwikkelaar','geen','geen','geen');
+			$data['roles'] = getRoles('Ontwikkelaar','geen','Tester','geen');
 
 			// Gets buttons for navbar);
 			$data['buttons'] = getNavbar('opleidingsmanager');
@@ -1208,7 +1208,7 @@
 		public function keuzerichtingBeheer()
 		{
 			// Defines roles for this page (You can also use "geen" or leave roles empty!).
-			$data['roles'] = getRoles('Ontwikkelaar','geen','geen','geen');
+			$data['roles'] = getRoles('Ontwikkelaar','geen','geen','Tester');
 
 			// Gets buttons for navbar);
 			$data['buttons'] = getNavbar('opleidingsmanager');
@@ -1231,7 +1231,7 @@
 		public function klasBeheer()
 		{
 			// Defines roles for this page (You can also use "geen" or leave roles empty!).
-			$data['roles'] = getRoles('Ontwikkelaar','geen','geen','geen');
+			$data['roles'] = getRoles('Ontwikkelaar','geen','geen','Tester');
 
 			// Gets buttons for navbar);
 			$data['buttons'] = getNavbar('opleidingsmanager');

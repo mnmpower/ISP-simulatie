@@ -119,7 +119,7 @@
             $data['klassen'] = $klassen;
 
             // Defines roles for this page (You can also use "geen" or leave roles empty!).
-            $data['roles'] = getRoles('geen','Ontwikkelaar','geen','geen');
+            $data['roles'] = getRoles('Tester','Ontwikkelaar','geen','geen');
 
             // Gets buttons for navbar);
             $data['buttons'] = getNavbar('ispverantwoordelijke');
@@ -174,7 +174,7 @@
          * @see Persoon_model::getStudiepunten()
          */
         public function documentExporteren() {
-            $data['roles'] = getRoles('geen','geen','geen','Ontwikkelaar');
+            $data['roles'] = getRoles('Tester','geen','geen','Ontwikkelaar');
             $this->load->library('excel');
 
             $this->load->model('vak_model');
@@ -287,7 +287,7 @@
             $data['studiepunten'] = $studiepunten;
 
             // Defines roles for this page (You can also use "geen" or leave roles empty!).
-            $data['roles'] = getRoles('geen','Ontwikkelaar','geen','geen');
+            $data['roles'] = getRoles('geen','Ontwikkelaar','Tester','geen');
 
             // Gets buttons for navbar);
             $data['buttons'] = getNavbar('ispverantwoordelijke');
@@ -365,7 +365,7 @@
             $data['title'] = "Afspraken";
 
             // Defines roles for this page (You can also use "geen" or leave roles empty!).
-            $data['roles'] = getRoles('geen','geen','Ontwikkelaar','geen');
+            $data['roles'] = getRoles('geen','geen','Ontwikkelaar','Tester');
 
             // Gets buttons for navbar;
             $data['buttons'] = getNavbar('ispverantwoordelijke');

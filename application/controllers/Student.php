@@ -428,7 +428,7 @@
 
             $data['title'] = "ISP Samenstellen";
             // Defines roles for this page (You can also use "geen" or leave roles empty!).
-            $data['roles'] = getRoles('geen','geen','Ontwikkelaar','geen');
+            $data['roles'] = getRoles('geen','Tester','Ontwikkelaar','geen');
 
             // Gets buttons for navbar);
             $data['buttons'] = getNavbar('student');
@@ -459,7 +459,7 @@
 
             $data['title'] = "ISP Samenstellen";
             // Defines roles for this page (You can also use "geen" or leave roles empty!).
-            $data['roles'] = getRoles('geen','geen','Ontwikkelaar','geen');
+            $data['roles'] = getRoles('geen','Tester','Ontwikkelaar','geen');
 
             // Gets buttons for navbar);
             $data['buttons'] = getNavbar('student');
@@ -483,7 +483,7 @@
         public function ispSamenstellenConfirm(){
             $data['title'] = "ISP Samenstellen";
             // Defines roles for this page (You can also use "geen" or leave roles empty!).
-            $data['roles'] = getRoles('geen','geen','Ontwikkelaar','geen');
+            $data['roles'] = getRoles('geen','Tester','Ontwikkelaar','geen');
 
             // Gets buttons for navbar);
             $data['buttons'] = getNavbar('student');
