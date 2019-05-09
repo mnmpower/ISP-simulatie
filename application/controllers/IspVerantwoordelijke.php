@@ -316,7 +316,7 @@
                 $this->persoon_model->update($student);
             }
 
-            redirect('ISPVerantwoordelijke/index');
+            redirect('IspVerantwoordelijke/index');
         }
 
         /**

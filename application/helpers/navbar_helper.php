@@ -14,7 +14,7 @@ function getNavbar($role) {
             $buttons = array(   'Home' =>site_url() . '/home/index',
                                 'Afspraken' =>site_url() . '/IspVerantwoordelijke/afspraken',
                                 'Exporteren' =>site_url() . '/IspVerantwoordelijke/documentExporteren',
-                                'Klassen' => 'toonKlaslijsten');
+                                'Klassen' =>site_url() . '/IspVerantwoordelijke/toonKlaslijsten');
             break;
 
         case 'opleidingsmanager':

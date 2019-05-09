@@ -21,6 +21,7 @@ ksort($keuzerichtingenDropdown);
 			$("#aantalModel").val(0);
 			$("#klasId").val(0);
 			$("#keuzerichting").val("");
+			$("#keuzerichtingKlasId").val(0);
 			$('#modal').modal();
 		});
 

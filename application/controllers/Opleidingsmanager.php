@@ -127,7 +127,7 @@
             $data['plugins'] = getPlugin('geen');
 
             $partials = array(  'hoofding' => 'main_header',
-                'inhoud' => 'opleidingsmanager/beheermenu',
+                'inhoud' => 'Opleidingsmanager/beheermenu',
                 'footer' => 'main_footer');
             $this->template->load('main_master', $partials, $data);
         }
@@ -343,7 +343,7 @@
             $data['persoonTypes'] = $this->persoonType_model->getAll();
 
             $partials = array(  'hoofding' => 'main_header',
-                'inhoud' => 'opleidingsmanager/beheergebruikers',
+                'inhoud' => 'Opleidingsmanager/beheergebruikers',
                 'footer' => 'main_footer');
             $this->template->load('main_master', $partials, $data);
 		}
@@ -364,7 +364,7 @@
             }
             $data['gebruikers'] = $gebruikersNieuw;
 
-            $this->load->view('opleidingsmanager/ajax_gebruikers', $data);
+            $this->load->view('Opleidingsmanager/ajax_gebruikers', $data);
         }
 
 		/**
@@ -559,7 +559,7 @@
             $data['klassen'] = $this->klas_model->getAllKlassenOrderByNaam();
 
             $partials = array(  'hoofding' => 'main_header',
-                'inhoud' => 'opleidingsmanager/beheerlessen',
+                'inhoud' => 'Opleidingsmanager/beheerlessen',
                 'footer' => 'main_footer');
             $this->template->load('main_master', $partials, $data);
         }
@@ -577,7 +577,7 @@
             $this->load->model('les_model');
             $data['lessen'] = $this->les_model->getAllWithVakAndKlas();
 
-            $this->load->view('opleidingsmanager/ajax_lessen', $data);
+            $this->load->view('Opleidingsmanager/ajax_lessen', $data);
         }
 
 		/**
@@ -1199,7 +1199,7 @@
 			$data['title'] = "Mails beheren";
 
 			$partials = array(  'hoofding' => 'main_header',
-				'inhoud' => 'opleidingsmanager/mailBeheer',
+				'inhoud' => 'Opleidingsmanager/mailBeheer',
 				'footer' => 'main_footer');
 			$this->template->load('main_master', $partials, $data);
 		}
@@ -1222,7 +1222,7 @@
 			$data['title'] = "Keuzerichtingen beheren";
 
 			$partials = array(  'hoofding' => 'main_header',
-				'inhoud' => 'opleidingsmanager/BeheerKeuzerichting/KeuzerichtingBeheer',
+				'inhoud' => 'Opleidingsmanager/BeheerKeuzerichting/KeuzerichtingBeheer',
 				'footer' => 'main_footer');
 			$this->template->load('main_master', $partials, $data);
 		}
@@ -1248,7 +1248,7 @@
             $data['keuzerichtingen'] = $this->keuzerichting_model->getAll();
 
 			$partials = array(  'hoofding' => 'main_header',
-				'inhoud' => 'opleidingsmanager/BeheerKlas/KlasBeheer',
+				'inhoud' => 'Opleidingsmanager/BeheerKlas/KlasBeheer',
 				'footer' => 'main_footer');
 			$this->template->load('main_master', $partials, $data);
 		}
