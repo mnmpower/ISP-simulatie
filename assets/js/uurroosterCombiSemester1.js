@@ -8,6 +8,7 @@ $(document).ready(function () {
         minTime: "08:00:00",
         maxTime: "19:00:00",
         header: false,
+        themeSystem: 'bootstrap4',
         columnHeaderFormat: 'dddd',
         height: "auto"
 

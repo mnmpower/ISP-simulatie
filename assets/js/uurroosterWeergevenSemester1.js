@@ -9,6 +9,7 @@ $(document).ready(function () {
 		maxTime: "19:00:00",
 		header: false,
 		columnHeaderFormat: 'dddd',
+		themeSystem: 'bootstrap4',
 		height: "auto"
 
 	});

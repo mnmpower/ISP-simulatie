@@ -48,7 +48,7 @@
 
 </script>
 <div class="container container90 containerISP">
-    <button id="openWalk" class="btn btn-default" data-toggle="modal" data-target=".bs-example-modal-lg">Open walkthrough</button>
+    <button id="openWalk" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Open walkthrough</button>
     <button id="aanuit" class="btn"></button>
     <div class="row">
         <div class="container col-2 flex-column d-flex containersISP">
