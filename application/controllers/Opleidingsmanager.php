@@ -1507,8 +1507,8 @@
 		}
 
 		/**
-		 * haalt het lege excel bestand op om in te lezen
-		 */
+		 * Haalt het lege excel-sjabloon op en download het automatisch in de browser
+         */
 		public function downloadSjabloon() {
             redirect(base_url('assets/sjabloonStudenten.xlsx'));
         }
