@@ -472,12 +472,15 @@
         public function haalAjaxOp_WijzigKlas()
         {
             $this->load->model('persoon_model');
+            $this->load->model('persoonLes_model');
 
             $persoonId = $this->input->get('persoonId');
             $klasId = $this->input->get('klasId');
 
             $persoon = $this->persoon_model->get($persoonId);
             $persoon->klasId = $klasId;
+            $this->persoonLes_model->deletePersoonLesWherePersoonId($persoon->id);
             $this->persoon_model->update($persoon);
+            $this->persoonLes_model->addPersoonLesWhereKlas($persoon);
         }
     }
