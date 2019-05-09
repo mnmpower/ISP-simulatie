@@ -463,6 +463,12 @@
             $this->afspraak_model->updateAfspraakBeschikbaarheid($id, $beschikbaar);
         }
 
+        /**
+         * Haalt het persoon-record met id=$persoonId op via Persoon_model
+         * en update de klasId van het resulterende object
+         * @see Persoon_model::get($persoonId)
+         * @see Persoon_model::update($persoon)
+         */
         public function haalAjaxOp_WijzigKlas()
         {
             $this->load->model('persoon_model');

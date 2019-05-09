@@ -232,7 +232,7 @@
 
             $this->load->model("vak_model");
             $this->load->model("keuzerichtingVak_model");
-            $this->load->model('keuzerichting_model');
+            $this->load->model("keuzerichting_model");
 
             $vakId = $this->input->post('vakId');
 
@@ -246,26 +246,29 @@
             $keuzerichtingen = $this->input->post('keuzerichtingcheckbox');
 
 
-            if ($vak->id == 0) {
-                //nieuw record
-                $vakId = $this->vak_model->insert($vak);
-            } else {
-                //bestaand record
-                $this->vak_model->update($vak);
-            }
+            if ($keuzerichtingen != null && $vak->studiepunt != 0) {
+                if ($vak->id == 0) {
+                    //nieuw record
+                    $vakId = $this->vak_model->insert($vak);
+                } else {
+                    //bestaand record
+                    $this->vak_model->update($vak);
+                }
 
-            $keuzerichtingVakken = $this->keuzerichtingVak_model->getAllWhereVak($vakId);
 
-            foreach ($keuzerichtingVakken as $keuzerichtingVak){
-                $this->keuzerichtingVak_model->delete($keuzerichtingVak->keuzerichtingVakId);
-            }
+                $keuzerichtingVakken = $this->keuzerichtingVak_model->getAllWhereVak($vakId);
 
-            foreach ($keuzerichtingen as $keuzerichtingId){
-                $keuzerichtingvak = new stdClass();
-                $keuzerichtingvak->keuzerichtingId = $keuzerichtingId;
-                $keuzerichtingvak->vakId = $vakId;
-                $this->keuzerichtingVak_model->insert($keuzerichtingvak);
+                foreach ($keuzerichtingVakken as $keuzerichtingVak) {
+                    $this->keuzerichtingVak_model->delete($keuzerichtingVak->keuzerichtingVakId);
+                }
 
+                foreach ($keuzerichtingen as $keuzerichtingId) {
+                    $keuzerichtingvak = new stdClass();
+                    $keuzerichtingvak->keuzerichtingId = $keuzerichtingId;
+                    $keuzerichtingvak->vakId = $vakId;
+                    $this->keuzerichtingVak_model->insert($keuzerichtingvak);
+
+                }
             }
 
 

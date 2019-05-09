@@ -47,7 +47,7 @@
                     $("#vakNaam").val(vak.naam);
                     $("#vakStudiepunten").val(vak.studiepunt);
                     $('input[name*="keuzerichtingcheckbox[]"]').each(function(index) {
-                        if (vak.keuzerichting[index] == this.value){
+                        if (vak.keuzerichting.includes(this.value)){
                             this.checked = true;
                         }
                         else{
@@ -66,6 +66,7 @@
         }
 
         $(document).ready(function () {
+
             $("#keuzerichtingkeuze").change(function () {
                 var keuzerichtingId = $('#keuzerichtingkeuze').val();
                 var faseId = $('#fasekeuze').val();
@@ -91,29 +92,16 @@
                 $("#vakId").val(0);
                 $("#vakNaam").val("");
                 $("#vakStudiepunten").val(0);
+
                 $('input[name*="keuzerichtingcheckbox[]"]').each(function() {
                     this.checked = false;
                 });
-                $("#fasekeuze2").val(0);
-                $("#semesterkeuze").val(0);
+                $("#fasekeuze2").val("");
+                $("#semesterkeuze").val("");
                 $("#vakOpmerking").val("");
                 $('#modal').modal();
             });
 
-            $("#opslaanPopUp").click(function (e) {
-                e.preventDefault();
-                var semesterId = $('#semesterkeuze').val();
-                var faseId = $('#fasekeuze2').val();
-                var keuzerichtingenId = [];
-                $('input[name*="keuzerichtingcheckbox[]"]').each(function(index) {
-                    if (this.checked){
-                        keuzerichtingenId += index;
-                    }
-                });
-                if(semesterId != '0' && faseId != '0' && keuzerichtingenId.length != 0) {
-                    $('#formInvoer').submit();
-                }
-            });
 
             $("#resultaat").on('click', ".wijzig", function () {
                 $('#modalTitle').html('Vak bewerken');
@@ -138,8 +126,8 @@ foreach ($keuzerichtingen as $keuzerichtingOptie) {
     $keuzerichtingOpties[$keuzerichtingOptie->id] = $keuzerichtingOptie->naam;
 }
 
-$faseOpties = array('Kies een fase..', 'Fase 1', 'Fase 2', 'Fase 3');
-$semesterOpties = array('Kies een semester..', 'Semester 1', 'Semester 2');
+$faseOpties = array("" => "Kies een fase..", 1 => "Fase 1", 2 => "Fase 2", 3 => "Fase 3");
+$semesterOpties = array("" => "Kies een semester..", 1 => "Semester 1", 2 => "Semester 2");
 ?>
 <div class="container70 row">
     <h1 class="col-12 mt-3"><?php echo $title ?></h1>
@@ -150,7 +138,7 @@ $semesterOpties = array('Kies een semester..', 'Semester 1', 'Semester 2');
             $keuzerichtingattributes = array('id' => 'keuzerichtingkeuze', 'class' => 'form-control');
             echo form_dropdown('keuzerichting', $keuzerichtingOpties, '0', $keuzerichtingattributes);
             $faseattributes = array('id' => 'fasekeuze', 'class' => 'form-control');
-            echo form_dropdown('fase', $faseOpties, '0', $faseattributes);
+            echo form_dropdown('fase', $faseOpties, "", $faseattributes);
         ?>
         <div id="resultaat"></div>
     </div>
@@ -181,7 +169,7 @@ $semesterOpties = array('Kies een semester..', 'Semester 1', 'Semester 2');
                                     'id' => 'vakNaam',
                                     'class' => 'form-control',
                                     'placeholder' => 'Naam',
-                                    'required' => 'required',
+                                    'required' => 'required'
                                     ));
                                  ?>
                             </td>
@@ -218,8 +206,8 @@ $semesterOpties = array('Kies een semester..', 'Semester 1', 'Semester 2');
                             <td><?php echo form_label("Fase:", "FaseLabel"); ?></td>
                             <td>
                                 <?php
-                                    $faseattributes = array('id' => 'fasekeuze2', 'class' => 'form-control');
-                                    echo form_dropdown('fase2', $faseOpties, '0', $faseattributes);
+                                    $faseattributes = array('id' => 'fasekeuze2', 'class' => 'form-control', 'required' => 'required');
+                                    echo form_dropdown('fase2', $faseOpties, "", $faseattributes);
                                 ?>
                             </td>
                         </tr>
@@ -227,8 +215,8 @@ $semesterOpties = array('Kies een semester..', 'Semester 1', 'Semester 2');
                             <td><?php echo form_label("Semester:", "SemesterLabel"); ?></td>
                             <td>
                                 <?php
-                                $semesterattributes = array('id' => 'semesterkeuze', 'class' => 'form-control');
-                                echo form_dropdown('semester', $semesterOpties, '0', $semesterattributes);
+                                $semesterattributes = array('id' => 'semesterkeuze', 'class' => 'form-control', 'required' => 'required');
+                                echo form_dropdown('semester', $semesterOpties, "", $semesterattributes);
                                 ?>
                             </td>
                         </tr>
