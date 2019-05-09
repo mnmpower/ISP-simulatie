@@ -366,3 +366,7 @@ body, header, footer {
     margin: 0;
     max-width: 300px;
 }
+
+.footerfix-mb120 {
+    margin-bottom: 120px;
+}

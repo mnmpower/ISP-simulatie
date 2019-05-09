@@ -187,7 +187,7 @@
         });
     });
 </script>
-<div class="container70">
+<div class="container70 footerfix-mb120">
     <h1><?php echo $title; ?></h1>
     <?php
         $knop = array("class" => "btn btn-warning text-white", "id" => "voegtoe", "data-toggle" => "tooltip", "title" => "Les toevoegen");
