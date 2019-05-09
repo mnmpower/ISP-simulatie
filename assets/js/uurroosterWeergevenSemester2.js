@@ -9,7 +9,8 @@ $(document).ready(function () {
 		maxTime: "19:00:00",
 		header: false,
 		columnHeaderFormat: 'dddd',
-		height: "auto"
+		height: "auto",
+		themeSystem: 'bootstrap4',
 
 	});
 

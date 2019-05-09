@@ -5,7 +5,7 @@
     */
 ?>
 <div class="container70">
-    <h1>Menu Combi</h1>
+    <h1><i class="fas fa-list-ul"></i> Menu</h1>
     <?php
     $attributen = array(    'name'  => 'mijnFormulier',
         'id'    => 'mijnFormulier',

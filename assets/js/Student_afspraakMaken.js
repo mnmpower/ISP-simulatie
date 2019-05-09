@@ -7,6 +7,7 @@ $('#calendar').fullCalendar({
     minTime: "08:00:00",
     maxTime: "19:00:00",
     height: "auto",
+    themeSystem: 'bootstrap4',
     eventClick: function (calEvent, jsEvent, view) {
         if (calEvent.bezet == 1) {
             var docent = $('#docentId option:selected').text();
