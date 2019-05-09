@@ -75,10 +75,16 @@
 
 	$semesterOpties = array('Semester 1', 'Semester 2');
 ?>
-<div class="container">
-	<h1 class="pt-4 pb-3">
-		<?php echo $title ?>
-	</h1>
+<div class="container70">
+    <div class="row">
+        <h1 class="col-sm">Klasvoorkeur doorgeven</h1>
+        <?php $backButtonAttributes = array('class' => 'backButton col-sm');
+        echo form_open_multipart("student/setType", $backButtonAttributes); ?>
+        <button class="form-control btn-primary text-white btn">
+            <i class="fas fa-chevron-left"></i> Terug naar menu
+        </button>
+        <?php echo form_close(); ?>
+    </div>
 	<?php
 		$attributes = array('name' => 'mijnFormulier');
 		echo form_open('Student/voorkeurBevestigen', $attributes);
@@ -99,7 +105,7 @@
 
 
 		$submitattributes = array(
-			'class' => 'form-control mt-4 mb-3',
+			'class' => 'form-control btn-primary btn menuButton',
 			'id' => 'ButtonSubmitKlas'
 		);
 		echo form_submit('klasvoorkeur', 'Klasvoorkeur bevestigen', $submitattributes);

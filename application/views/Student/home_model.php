@@ -4,8 +4,8 @@
  * View waarin de homepagina van een modelstudent wordt weergegeven
  */
 ?>
-<div class="container">
-    <h1>Menu model</h1>
+<div class="container70">
+    <h1><i class="fas fa-list-ul"></i> Menu</h1>
     <?php
     $attributen = array(    'name'  => 'mijnFormulier',
         'id'    => 'mijnFormulier',

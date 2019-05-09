@@ -36,21 +36,20 @@
 <?php
     $semesterOpties = array('Semester 1', 'Semester 2');
 ?>
-<div class="container">
-    <h1 class=" mt-4 mb-3">Uurrooster <?php if($klas != null ) { echo $klas->naam; }?></h1>
+<div class="container70">
+    <div class="row">
+        <h1 class="col">Uurrooster <?php if($klas != null ) { echo $klas->naam; }?></h1>
+        <?php $backButtonAttributes = array('class' => 'backButton col-sm');
+        echo form_open_multipart("student/setType", $backButtonAttributes); ?>
+        <button class="form-control btn-primary text-white btn">
+            <i class="fas fa-chevron-left"></i> Terug naar menu
+        </button>
+        <?php echo form_close(); ?>
+    </div>
     <?php
         $semesterattributes = array('id' => 'semesterkeuze', 'class' => 'form-control');
         echo form_dropdown('semester', $semesterOpties, '0', $semesterattributes);
     ?>
-	<?php
-		$terugattributes = array(
-			'class' => 'form-control mt-4 mb-3',
-			'id' => 'terugButoon'
-		);
-		echo form_open_multipart("student/setType");
-		echo form_submit("terug", "Terug naar menu",$terugattributes );
-		echo form_close();
-	?>
 
     <div id="uurrooster" class=" mt-4 mb-3"></div>
 </div>

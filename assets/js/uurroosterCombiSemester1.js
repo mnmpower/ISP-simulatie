@@ -42,7 +42,7 @@ function getLessenFromStudent(id) {
                         'start': les.datum + 'T' + les.startuur,
                         'end': les.datum + 'T' + les.einduur,
                         // 'eventid': les.id,
-                        'color': 'grey'
+                        'color': '#6d96ff'
                     });
                 }
             });
