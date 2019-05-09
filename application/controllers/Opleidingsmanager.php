@@ -1327,7 +1327,6 @@
 			$keuzerichting->id = $this->input->post('KeuzerichtingId');
 			$keuzerichting->naam = htmlspecialchars($this->input->post("KeuzerichtingNaam"));
 
-			$keuzerichtingen = $this->keuzerichting_model->getAll();
 
 			if ($keuzerichting->id == 0) {
 				//nieuw record

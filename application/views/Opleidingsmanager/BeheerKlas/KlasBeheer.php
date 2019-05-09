@@ -5,7 +5,8 @@
  */
 $keuzerichtingenDropdown = Array("" => "-- Kies een type --");
 foreach ($keuzerichtingen as $keuzerichting) {
-    $keuzerichtingenDropdown[$keuzerichting->id] = $keuzerichting->naam;
+		$keuzerichtingenDropdown[$keuzerichting->id] = $keuzerichting->naam;
+
 }
 ksort($keuzerichtingenDropdown);
 ?>
