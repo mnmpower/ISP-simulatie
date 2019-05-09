@@ -353,6 +353,15 @@ body, header, footer {
     margin-bottom: 15px;
 }
 
+.titlesBlue {
+    background-color: #007bff;
+    color: white;
+    padding: 7px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    max-width: 300px;
+}
+
 .menuButton {
     margin-top: 5px;
     margin-bottom: 5px;
@@ -367,6 +376,20 @@ body, header, footer {
     max-width: 300px;
 }
 
+<<<<<<< HEAD
 .footerfix-mb120 {
     margin-bottom: 120px;
+=======
+.ISPDetailsMargin {
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.marginButton {
+    margin-top: 10px;
+}
+
+.marginBottom {
+    margin-bottom: 10px;
+>>>>>>> ada7598255c1bdf44ce36a8ac45946d29a311ca7
 }

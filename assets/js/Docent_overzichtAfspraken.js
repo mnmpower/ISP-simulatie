@@ -19,6 +19,7 @@ $('#calendarDocent').fullCalendar({
     allDaySlot: false,
     minTime: "08:00:00",
     maxTime: "19:00:00",
+    themeSystem: 'bootstrap4',
     height: "auto",
     // Clickevent voor evenementen met data
     eventClick: function (calEvent, jsEvent, view) {

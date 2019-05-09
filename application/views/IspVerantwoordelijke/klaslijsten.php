@@ -44,7 +44,7 @@ foreach ($klassen as $klasOptie) {
     $klasOpties[$klasOptie->id] = $klasOptie->naam;
 }
 ?>
-<div class="container">
+<div class="container70">
     <h1>
         <?php
         echo $title
@@ -53,7 +53,7 @@ foreach ($klassen as $klasOptie) {
     <?php
     $attributes = array('name' => 'mijnFormulier');
     echo form_open('ISPVerantwoordelijke/toonKlaslijsten', $attributes);
-    $formattributes = array('id' => 'klaskeuze', 'class' => 'form-control');
+    $formattributes = array('id' => 'klaskeuze', 'class' => 'form-control marginBottom');
     echo form_dropdown('klas', $klasOpties, '0', $formattributes);
     echo form_close();
     ?>

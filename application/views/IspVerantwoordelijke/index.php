@@ -5,10 +5,9 @@
 	 * Krijgt een $persoonobject binnen
 	 */
 ?>
-<div class="container70"><h1>
-		<?php
-			echo $title
-		?>
+<div class="container70">
+    <h1>
+        <i class="fas fa-list-ul"></i> Overzicht van de ingediende ISP simulaties
 	</h1>
 	<table data-toggle="table" class="table-striped table-borderless table-hover ">
 		<thead>
