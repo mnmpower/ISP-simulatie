@@ -5,7 +5,7 @@
  */
 ?>
 <div class="container70">
-    <h1>Beheer</h1>
+    <h1><i class="fas fa-cog"></i> Beheer</h1>
     <?php
     $attributen = array(    'name'  => 'mijnFormulier',
         'id'    => 'mijnFormulier',
