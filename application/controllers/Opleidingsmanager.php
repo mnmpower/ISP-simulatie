@@ -1354,17 +1354,20 @@
             $keuzerichtingKlas->keuzerichtingId = htmlspecialchars($this->input->post("keuzerichting"));
             $keuzerichtingKlas->klasId = $klas->id;
 
-			if ($klas->id == 0) {
-                $klas->id = null;
-				//nieuw record
-				$klasId = $this->klas_model->insert($klas);
-                $keuzerichtingKlas->klasId = $klasId;
-				$this->keuzerichtingKlas_model->insert($keuzerichtingKlas);
-			} else {
-				//bestaand record
-				$this->klas_model->update($klas);
-				$this->keuzerichtingKlas_model->update($keuzerichtingKlas);
-			}
+            if ($klas->maximumAantal != 0 && $klas->maximumAantalModel != 0){
+                if ($klas->id == 0) {
+                    $klas->id = null;
+                    //nieuw record
+                    $klasId = $this->klas_model->insert($klas);
+                    $keuzerichtingKlas->klasId = $klasId;
+                    $this->keuzerichtingKlas_model->insert($keuzerichtingKlas);
+                } else {
+                    //bestaand record
+                    $this->klas_model->update($klas);
+                    $this->keuzerichtingKlas_model->update($keuzerichtingKlas);
+                }
+            }
+
 			redirect('Opleidingsmanager/klasBeheer');
 		}
 
