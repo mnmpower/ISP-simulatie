@@ -7,10 +7,10 @@
  */
 ?>
 
-<div class="container">
+<div class="container70">
     <div class="row">
         <div class="col-12">
-            <h1>Login</h1>
+            <h1><i class="fas fa-key 2x"></i> Login</h1>
         </div>
         <div class="col-md-6">
             <?php
@@ -25,15 +25,13 @@
                 <?php echo form_label('Wachtwoord', 'wachtwoord') . "\n" ?>
                 <?php echo form_password(array('name' => 'wachtwoord', 'id' => 'wachtwoord', 'class' => "form-control", 'placeholder' => "Wachtwoord")); ?>
             </div>
-            <div class="form-group">
-                <?php echo form_submit('knop', 'Inloggen'); ?>
+            <div class="form-group loginButtons">
+                <?php $loginAttributes = array('class' => 'form-control btn-outline-dark btn menuButton'); ?>
+                <?php echo form_submit('knop', 'Inloggen', $loginAttributes); ?>
             </div>
             <?php echo form_close(); ?>
-            <?php echo anchor('home/showWachtwoordWijzigen', 'Wachtwoord vergeten'); ?><br><br>
-            <?php echo anchor('Student/index', 'Student'); ?><br>
-            <?php echo anchor('Docent/index', 'Docent'); ?><br>
-            <?php echo anchor('IspVerantwoordelijke/index', 'IspVerantwoordelijke'); ?><br>
-            <?php echo anchor('Opleidingsmanager/index', 'Opleidingsmanager'); ?>
+            <?php $loginAttributes['class'] .= ' loginButtons'?>
+            <?php echo anchor('home/showWachtwoordWijzigen', 'Wachtwoord vergeten', $loginAttributes); ?>
         </div>
     </div>
 </div>

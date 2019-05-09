@@ -4,7 +4,7 @@
  * View waarin het menu voor het beheer van de database wordt weergegeven
  */
 ?>
-<div class="container">
+<div class="container70">
     <h1>Beheer</h1>
     <?php
     $attributen = array(    'name'  => 'mijnFormulier',
@@ -12,17 +12,17 @@
         'role'  => 'form');
 
     echo form_open('opleidingsmanager/keuzeBeheer', $attributen);
-    $vakattributen = array('name' => 'vakken', "id" => "vakken", 'class' => 'form-control');
+    $vakattributen = array('name' => 'vakken', "id" => "vakken", 'class' => 'form-control btn-outline-dark btn menuButton');
     echo form_submit('vakken', 'Vakkenbeheer', $vakattributen);
-    $gebruikerattributen = array('name' => 'gebruikers', "id" => "gebruikers", 'class' => 'form-control');
+    $gebruikerattributen = array('name' => 'gebruikers', "id" => "gebruikers", 'class' => 'form-control btn-outline-dark btn menuButton');
     echo form_submit('gebruikers', 'Gebruikersbeheer', $gebruikerattributen);
-    $klasattributen = array('name' => 'klassen', "id" => "klassen", 'class' => 'form-control');
+    $klasattributen = array('name' => 'klassen', "id" => "klassen", 'class' => 'form-control btn-outline-dark btn menuButton');
     echo form_submit('klassen', 'Klassenbeheer', $klasattributen);
-    $lesattributen = array('name' => 'lessen', "id" => "lessen", 'class' => 'form-control');
+    $lesattributen = array('name' => 'lessen', "id" => "lessen", 'class' => 'form-control btn-outline-dark btn menuButton');
     echo form_submit('lessen', 'Lessenbeheer', $lesattributen);
-    $mailattributen = array('name' => 'mails', "id" => "mails", 'class' => 'form-control');
+    $mailattributen = array('name' => 'mails', "id" => "mails", 'class' => 'form-control btn-outline-dark btn menuButton');
     echo form_submit('mails', 'Mailbeheer', $mailattributen);
-    $keuzerichtingattributen = array('name' => 'keuzerichtingen', "id" => "keuzerichtingen", 'class' => 'form-control');
+    $keuzerichtingattributen = array('name' => 'keuzerichtingen', "id" => "keuzerichtingen", 'class' => 'form-control btn-outline-dark btn menuButton');
     echo form_submit('keuzerichtingen', 'Keuzerichtingenbeheer', $keuzerichtingattributen);
     echo form_close();
     ?>

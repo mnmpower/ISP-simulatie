@@ -12,11 +12,11 @@
         'role'  => 'form');
 
     echo form_open('student/keuzemenu', $attributen);
-    $klasattributen = array('name' => 'klasvoorkeur', "id" => "klasvoorkeur", 'class' => 'form-control');
+    $klasattributen = array('name' => 'klasvoorkeur', "id" => "klasvoorkeur", 'class' => 'form-control btn-outline-dark btn menuButton');
     echo form_submit('klasvoorkeur', 'Klasvoorkeur geven', $klasattributen);
-    $vakattributen = array('name' => 'vakken', "id" => "vakken", 'class' => 'form-control');
+    $vakattributen = array('name' => 'vakken', "id" => "vakken", 'class' => 'form-control btn-outline-dark btn menuButton');
     echo form_submit('vakken', 'Vakken per fase bekijken', $vakattributen);
-    $uurroosterattributen = array('name' => 'uurrooster', "id" => "uurrooster", 'class' => 'form-control');
+    $uurroosterattributen = array('name' => 'uurrooster', "id" => "uurrooster", 'class' => 'form-control btn-outline-dark btn menuButton');
     echo form_submit('uurrooster', 'Mijn uurrooster ', $uurroosterattributen);
     echo form_close();
     ?>

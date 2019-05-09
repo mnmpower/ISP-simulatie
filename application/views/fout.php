@@ -7,12 +7,12 @@
  */
 ?>
 
-<div class="container">
+<div class="container70">
     <div class="row">
         <div class="col-12">
-            <h1>Er is iets fout gegaan ...</h1>
+            <h1><i class="fas fa-exclamation-triangle"></i> Er is iets fout gegaan ...</h1>
             <p><?php echo $foutmelding; ?></p>
-            <a href="javascript:history.go(-1);">Terug</a>
+            <a href="javascript:history.go(-1);" class="form-control btn-outline-dark btn menuButton loginButtons">Terug</a>
         </div>
     </div>
 </div>

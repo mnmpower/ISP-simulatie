@@ -1,7 +1,7 @@
-<div class="container">
+<div class="container70">
     <div class="row">
         <div class="col-12">
-            <h1>Wachtwoord vergeten</h1>
+            <h1><i class="fas fa-question-circle"></i> Wachtwoord vergeten</h1>
         </div>
         <div class="col-md-6">
             <?php
@@ -13,7 +13,7 @@
                 <?php echo form_input(array('name' => 'nummer', 'id' => 'nummer', 'class' => "form-control", 'placeholder' => "Studentennummer / Personeelsnummer")); ?>
             </div>
             <div class="form-group">
-                <?php echo form_button(array('id' => 'editPasswordButton', 'content' => 'Wijzigen')); ?>
+                <?php echo form_button(array('id' => 'editPasswordButton', 'content' => 'Wijzigen', 'class' => 'form-control btn-outline-dark btn menuButton loginButtons')); ?>
             </div>
         </div>
     </div>

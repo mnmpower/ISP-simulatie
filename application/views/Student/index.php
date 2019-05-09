@@ -4,7 +4,7 @@
  * View waarin de de student kan aanduiden of hij een model- of combi-student is
  */
 ?>
-<div class="container">
+<div class="container70">
     <h1>
         Wat voor traject volg je?
     </h1>
@@ -17,9 +17,9 @@
 
         echo form_open('Student/setType', $attributen);
         echo "<h3>Gelieve een keuze te maken</h3>";
-        $modelattributen = array('name' => 'model', "id" => "model", 'class' => 'form-control');
+        $modelattributen = array('name' => 'model', "id" => "model", 'class' => 'form-control btn-outline-dark btn menuButton');
         echo form_submit('model', 'Modelstudent', $modelattributen);
-        $combiattributen = array('name' => 'combi', "id" => "combi", 'class' => 'form-control');
+        $combiattributen = array('name' => 'combi', "id" => "combi", 'class' => 'form-control btn-outline-dark btn menuButton');
         echo form_submit('combi', 'Combistudent', $combiattributen);
         echo form_close();
     ?>

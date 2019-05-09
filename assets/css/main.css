@@ -361,3 +361,8 @@ body, header, footer {
 .formMenu {
     text-align: center;
 }
+
+.loginButtons {
+    margin: 0;
+    max-width: 300px;
+}
