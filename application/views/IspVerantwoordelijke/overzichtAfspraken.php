@@ -74,7 +74,6 @@
                 </div>
                 <div class="modal-body">
                     <?php echo form_open(); ?>
-                    <?php echo form_open(); ?>
                     <div class="form-group row">
                         <?php
                         echo form_label('Locatie:', 'calendarModalPlaatsToevoegen', array('class' => 'col-sm-3 col-form-label'));

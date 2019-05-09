@@ -312,7 +312,7 @@
 
             if(isset($_POST['opslaan'])){
                 $student = json_decode($this->input->post('student'));
-                $student->advies = $this->input->post('advies');
+                $student->advies = htmlspecialchars($this->input->post('advies'));
                 $this->persoon_model->update($student);
             }
 
