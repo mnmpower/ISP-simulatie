@@ -3,7 +3,7 @@
  * @file KlasBeheer.php
  * View waarin de admin aan de hand van een CRUD de klassen kan wijzigen
  */
-$keuzerichtingenDropdown = Array(0 => "-- Kies een type --");
+$keuzerichtingenDropdown = Array("" => "-- Kies een type --");
 foreach ($keuzerichtingen as $keuzerichting) {
     $keuzerichtingenDropdown[$keuzerichting->id] = $keuzerichting->naam;
 }
@@ -19,7 +19,7 @@ ksort($keuzerichtingenDropdown);
 			$("#aantalLeerlingen").val(0);
 			$("#aantalModel").val(0);
 			$("#klasId").val(0);
-			$("#keuzerichting").val(0);
+			$("#keuzerichting").val("");
 			$('#modal').modal();
 		});
 
