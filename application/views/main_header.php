@@ -24,7 +24,7 @@
         </ul>
         <?php if($CI->authex->isAangemeld() != false) {
             $attributes = array('class'=>'nav-link uitlogKnop');
-            echo anchor('home/uitloggen', 'Uitloggen', $attributes);
+            echo anchor('home/uitloggen', 'Uitloggen <i class="fas fa-sign-out-alt"></i>', $attributes);
         } ?>
     </div>
 
