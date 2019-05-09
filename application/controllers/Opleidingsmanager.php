@@ -616,6 +616,9 @@
         {
             $lesId = $this->input->get('lesId');
 
+            $this->load->model('persoonLes_model');
+            $this->persoonLes_model->deleteWhereLes($lesId);
+
             $this->load->model('les_model');
             $this->les_model->delete($lesId);
         }
@@ -686,7 +689,7 @@
             }
             else
             {
-                // Alle lessen verwijderen indien aangeduid
+                // Alle persoonLessen verwijderen indien aangeduid
                 $deletePersoonLessen = $this->input->post('deletePersoonLessenExcel');
                 if($deletePersoonLessen == true) {
                     $this->persoonLes_model->deleteAll();

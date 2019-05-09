@@ -376,10 +376,10 @@ body, header, footer {
     max-width: 300px;
 }
 
-<<<<<<< HEAD
 .footerfix-mb120 {
     margin-bottom: 120px;
-=======
+}
+
 .ISPDetailsMargin {
     margin-top: 5px;
     margin-bottom: 10px;
@@ -391,5 +391,4 @@ body, header, footer {
 
 .marginBottom {
     margin-bottom: 10px;
->>>>>>> ada7598255c1bdf44ce36a8ac45946d29a311ca7
 }
