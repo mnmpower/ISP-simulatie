@@ -31,11 +31,9 @@
     });
 
 </script>
-<div class="container">
+<div class="container70">
     <h1>
-        <?php
-        echo $title
-        ?>
+        <i class="fas fa-info-circle"></i> ISP Details
     </h1>
     <div class="row">
         <?php
@@ -46,6 +44,7 @@
         }
         ?>
     </div>
+    <h5 class="titlesBlue"> Vakken</h5>
     <div class="row">
         <div class="col-6">
             <h3>Semester 1</h3>
@@ -84,15 +83,19 @@
             </table>
         </div>
     </div>
+    <h5 class="titlesBlue"> Studiepunten</h5>
     <?php
-        echo "<h5>Totaal opgenomen studiepunten: " . $studiepunten . "</h5></br>";
+        echo "<h5>Totaal opgenomen studiepunten: " . $studiepunten . "</h5></br>"; ?>
+    <h5 class="titlesBlue"> Uurrooster</h5>
+    <?php
         $semesterOpties = array('Semester 1', 'Semester 2');
-        $semesterattributes = array('id' => 'semesterkeuze', 'class' => 'form-control');
+        $semesterattributes = array('id' => 'semesterkeuze', 'class' => 'form-control ISPDetailsMargin');
         echo form_dropdown('semester', $semesterOpties, '0', $semesterattributes);
     ?>
+
     <div id="uurrooster"></div>
     </br>
-    <h5>Advies voor de student:</h5>
+    <h5 class="titlesBlue"> Advies voor studenten:</h5>
     <?php
     $attributes = array('name' => 'mijnFormulier');
     echo form_open('IspVerantwoordelijke/adviesOpslaan', $attributes);
@@ -100,10 +103,10 @@
     $adviesattributes = array('class' => 'form-control', 'id' => 'TextBoxAdvies');
     echo form_textarea('advies', $student->advies, $adviesattributes);
     echo "<div class='row'><div class='col-6'>";
-    $submitattributes = array('class' => 'form-control', 'id' => 'ButtonSubmitAdvies' );
+    $submitattributes = array('class' => 'form-control btn-primary btn menuButton marginButton', 'id' => 'ButtonSubmitAdvies' );
     echo form_submit('opslaan', 'Advies opslaan', $submitattributes);
     echo "</div><div class='col-6'>";
-    $overzichtattributes = array('class' => 'form-control', 'id' => 'ButtonOverzicht' );
+    $overzichtattributes = array('class' => 'form-control btn-primary btn menuButton marginButton', 'id' => 'ButtonOverzicht' );
     echo form_submit('overzicht', 'Naar ISP overzicht', $overzichtattributes);
     echo "</div></div>";
     echo form_close();

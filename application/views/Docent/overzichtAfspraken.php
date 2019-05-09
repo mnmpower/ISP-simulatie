@@ -4,6 +4,7 @@
  * View waarin een kalender met de docent zijn afspraken en vrije momenten wordt weergegeven
  */
 ?>
+<div class="container70">
 <div id="showOverzichtAfspraken">
     <div id="calendarContainer">
         <div id="calendarDocent">
@@ -114,6 +115,7 @@
             </div>
         </div>
     </div>
+</div>
 
     <script src='<?php echo base_url() ?>assets/js/Docent_overzichtAfspraken.js'></script>
 </div>
