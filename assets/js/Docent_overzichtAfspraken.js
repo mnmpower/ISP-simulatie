@@ -86,7 +86,7 @@ function afspraakUpdate(id) {
 
     $.ajax({
         type: "GET",
-        url: site_url + "/docent/afspraakUpdate/",
+        url: site_url + "/Docent/afspraakUpdate/",
         data: {
             'id': id,
             'plaats': plaats,
@@ -113,7 +113,7 @@ function afspraakUpdate(id) {
 function afspraakEmpty(id) {
     $.ajax({
         type: "GET",
-        url: site_url + "/docent/afspraakEmpty/",
+        url: site_url + "/Docent/afspraakEmpty/",
         data: {
             'id': id,
         },
@@ -136,7 +136,7 @@ function afspraakEmpty(id) {
 function afspraakVerwijder(id) {
     $.ajax({
         type: "GET",
-        url: site_url + "/docent/afspraakVerwijder/",
+        url: site_url + "/Docent/afspraakVerwijder/",
         data: {
             'id': id,
         },
@@ -181,7 +181,7 @@ function momentToevoegen() {
     var herhaal = $('#calendarModalHerhaalToevoegen').val();
     $.ajax({
         type: "GET",
-        url: site_url + "/docent/momentToevoegen/",
+        url: site_url + "/Docent/momentToevoegen/",
         data: {
             'plaats': plaats,
             'datum': datum,
@@ -205,7 +205,7 @@ function momentToevoegen() {
 function getAfsprakenByDocent() {
     $.ajax({
         type: "GET",
-        url: site_url + "/docent/haalAjaxOp_AfsprakenDocent/",
+        url: site_url + "/Docent/haalAjaxOp_AfsprakenDocent/",
         success: function (output) {
             var outputJSON = JSON.parse(output);
             var outputBezet = outputJSON.filter(filterByBeschikbaar);
